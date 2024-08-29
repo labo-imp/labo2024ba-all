@@ -5,11 +5,11 @@ require("data.table")
 require("rpart")
 
 PARAM <- list()
-PARAM$semilla <- 102191
+PARAM$semilla <- 271279
 PARAM$training_pct <- 70L  # entre  1L y 99L 
 
 PARAM$rpart <- list (
-  "cp" = -1, # complejidad minima
+  "cp" = -1, # complejidad minima --- #que cazzo hace el cp?
   "minsplit" = 170, # minima cantidad de regs en un nodo para hacer el split
   "minbucket" = 70, # minima cantidad de regs en una hoja
   "maxdepth" = 7 # profundidad máxima del arbol
@@ -43,8 +43,8 @@ particionar <- function(
 setwd("~/buckets/b1/")
 
 # cargo los datos,  alternar comentario segun corresponda
-dataset <- fread("~/datasets/vivencial_dataset_pequeno.csv")
-# dataset <- fread("~/datasets/conceptual_dataset_pequeno.csv")
+# dataset <- fread("~/datasets/vivencial_dataset_pequeno.csv")
+dataset <- fread("~/datasets/conceptual_dataset_pequeno.csv")
 
 # trabajo solo con los datos con clase, es decir 202107
 dataset <- dataset[clase_ternaria != ""]
