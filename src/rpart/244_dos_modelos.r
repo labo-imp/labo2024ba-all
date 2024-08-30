@@ -21,17 +21,17 @@ PARAM$training_pct <- 70L  # entre  1L y 99L
 
 PARAM$rpart1 <- list (
   "cp" = -1,
-  "minsplit" = 170,
-  "minbucket" = 70,
-  "maxdepth" = 7
+  "minsplit" = 600,
+  "minbucket" = 225,
+  "maxdepth" = 6
 )
 
 
 PARAM$rpart2 <- list (
-  "cp" = -1,
-  "minsplit" = 1900,
-  "minbucket" = 800,
-  "maxdepth" = 3
+  "cp" = -0.5,
+  "minsplit" = 600,
+  "minbucket" = 225,
+  "maxdepth" = 6
 )
 
 
@@ -175,7 +175,7 @@ print( tb_salida[ , list( "arbol1" = mean( ganancia1),  "arbol2" = mean(ganancia
 print( tb_salida[ , list( "prob( m1 > m2)" = sum(ganancia1 > ganancia2 )/ .N ) ]  )
 
 
-# wt <- wilcox.test(  tb_salida$ganancia1,  tb_salida$ganancia2 )
-# cat( "Wilcoxon Test p-value ", wt$p.value, "\n" )
+wt <- wilcox.test(  tb_salida$ganancia1,  tb_salida$ganancia2 )
+cat( "Wilcoxon Test p-value ", wt$p.value, "\n" )
 
 

@@ -20,18 +20,18 @@ PARAM$dataset_nom <- "~/datasets/vivencial_dataset_pequeno.csv"
 PARAM$training_pct <- 50L  # entre  1L y 99L 
 
 PARAM$rpart1 <- list (
-  "cp" = -1,
+  "cp" = -0.5,
   "minsplit" = 999,
-  "minbucket" = 469,
+  "minbucket" = 470,
   "maxdepth" = 6
 )
 
 
 PARAM$rpart2 <- list (
-  "cp" = -1,
-  "minsplit" = 4945,
-  "minbucket" = 2472,
-  "maxdepth" = 4
+  "cp" = -0.5,
+  "minsplit" = 1049,
+  "minbucket" = 460,
+  "maxdepth" = 6
 )
 
 
