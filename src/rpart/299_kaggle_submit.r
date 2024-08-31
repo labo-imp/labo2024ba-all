@@ -7,13 +7,13 @@ require("yaml")
 
 PARAM <- list()
 
-PARAM$modalidad <- "vivencial"  # "conceptual"
+PARAM$modalidad <- "conceptual"
 
 PARAM$rpart <- list (
-  "cp" = -1,
-  "minsplit" = 170,
-  "minbucket" = 70,
-  "maxdepth" = 7
+  "cp" = -0.5,
+  "minsplit" = 10,
+  "minbucket" = 5,
+  "maxdepth" = 4
 )
 
 #------------------------------------------------------------------------------
@@ -37,7 +37,7 @@ generarmodelo <- function( pmodalidad, param )
   dapply <- dataset[foto_mes == 202109] # defino donde voy a aplicar el modelo
 
   # genero el modelo,  aqui se construye el arbol
-  # quiero predecir clase_ternaria a partir de el resto de las variables
+  # quiero predecir clase_ternaria a partir de el resto devi las variables
   modelo <- rpart(
       formula = "clase_ternaria ~ .",
       data = dtrain, # los datos donde voy a entrenar
