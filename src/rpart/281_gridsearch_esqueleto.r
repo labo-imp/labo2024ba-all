@@ -12,13 +12,13 @@ require("primes")
 
 PARAM <- list()
 # reemplazar por su primer semilla
-PARAM$semilla_primigenia <- 102191
+PARAM$semilla_primigenia <- 197123
 PARAM$qsemillas <- 20
 
 PARAM$training_pct <- 70L  # entre  1L y 99L 
 
 # elegir SU dataset comentando/ descomentando
-PARAM$dataset_nom <- "~/datasets/vivencial_dataset_pequeno.csv"
+PARAM$dataset_nom <- "~/datasets/conceptual_dataset_pequeno.csv"
 # PARAM$dataset_nom <- "~/datasets/conceptual_dataset_pequeno.csv"
 
 #------------------------------------------------------------------------------
@@ -142,8 +142,8 @@ tb_grid_search_detalle <- data.table(
 
 # itero por los loops anidados para cada hiperparametro
 
-for (vmax_depth in c(4, 6, 8, 10, 12, 14)) {
-  for (vmin_split in c(1000, 800, 600, 400, 200, 100, 50, 20, 10)) {
+for (vmax_depth in c(7, 8, 9, 10, 11, 12)) {
+  for (vmin_split in c(8000, 3000, 1500, 1000, 500, 200, 100, 50, 20)) {
     # notar como se agrega
 
     # vminsplit  minima cantidad de registros en un nodo para hacer el split
@@ -151,7 +151,7 @@ for (vmax_depth in c(4, 6, 8, 10, 12, 14)) {
       "cp" = -0.5, # complejidad minima
       "maxdepth" = vmax_depth, # profundidad máxima del arbol
       "minsplit" = vmin_split, # tamaño minimo de nodo para hacer split
-      "minbucket" = 5 # minima cantidad de registros en una hoja
+      "minbucket" = 7 # minima cantidad de registros en una hoja
     )
 
     # Un solo llamado, con la semilla 17
