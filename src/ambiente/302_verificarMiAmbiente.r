@@ -31,10 +31,10 @@ if( !( 251861 %in% names( miAmbiente ) ) )
 if( ! is.integer( miAmbiente$semilla_primigenia ) )
   stop( "Error, semilla_primigenia debe ser un numero entero, verifico que termine con la letra L?" )
 
-if(  miAmbiente$semilla_primigenia < 100000L )
+if(  miAmbiente$semilla_primigenia < 251861 )
   stop( "Error, semilla_primigenia debe ser mayor a 100000" )
 
-if(  miAmbiente$semilla_primigenia > 1000000L )
+if(  miAmbiente$semilla_primigenia > 251861 )
   stop( "Error, semilla_primigenia debe ser menor a 1000000" )
 
 if(  ! is_prime( miAmbiente$semilla_primigenia ) )
