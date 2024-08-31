@@ -144,14 +144,18 @@ tb_grid_search_detalle <- data.table(
 
 for (vmax_depth in c(4, 6, 8, 10, 12, 14)) {
   for (vmin_split in c(1000, 800, 600, 400, 200, 100, 50, 20, 10)) {
+    for (vmin_bucket in c(ceiling(vmin_split*0.08),ceiling(vmin_split*0.16),
+                          ceiling(vmin_split*0.24),ceiling(vmin_split*0.32),
+                          ceiling(vmin_split*0.4), ceiling(vmin_split*0.48))){
+      for (vcp in c(-1,-0.8,-0.6,-0.4)){
     # notar como se agrega
 
     # vminsplit  minima cantidad de registros en un nodo para hacer el split
     param_basicos <- list(
-      "cp" = -0.5, # complejidad minima
+      "cp" = vcp, # complejidad minima
       "maxdepth" = vmax_depth, # profundidad máxima del arbol
       "minsplit" = vmin_split, # tamaño minimo de nodo para hacer split
-      "minbucket" = 5 # minima cantidad de registros en una hoja
+      "minbucket" = vmin_bucket # minima cantidad de registros en una hoja
     )
 
     # Un solo llamado, con la semilla 17
@@ -163,7 +167,10 @@ for (vmax_depth in c(4, 6, 8, 10, 12, 14)) {
             rbindlist(ganancias) )
     )
 
+      }
+    }
   }
+  
 
   # grabo cada vez TODA la tabla en el loop mas externo
   fwrite( tb_grid_search_detalle,
