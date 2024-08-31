@@ -3,7 +3,8 @@ gc() # Garbage Collection
 
 require("data.table")
 require("rpart")
-
+library(rpart)
+library(data.table)
 PARAM <- list()
 PARAM$semilla <- 100181
 PARAM$training_pct <- 70L  # entre  1L y 99L 
