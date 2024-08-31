@@ -144,16 +144,20 @@ tb_grid_search_detalle <- data.table(
 
 for (vmax_depth in c(4, 6, 8, 10, 12, 14)) {
   for (vmin_split in c(1000, 800, 600, 400, 200, 100, 50, 20, 10)) {
-    # notar como se agrega
-
-    # vminsplit  minima cantidad de registros en un nodo para hacer el split
-    param_basicos <- list(
-      "cp" = -0.5, # complejidad minima
-      "maxdepth" = vmax_depth, # profundidad máxima del arbol
-      "minsplit" = vmin_split, # tamaño minimo de nodo para hacer split
-      "minbucket" = 5 # minima cantidad de registros en una hoja
-    )
-
+        for (div_minsplit in c(2,3,4,5,10,20,50,100)) {
+          
+          # si la division da menos de 5, entonces usamos 5
+          vmin_bucket = vmin_split %/% div_minsplit
+          if (vmin_bucket <= 5) vmin_bucket = 5
+          
+          # vminsplit  minima cantidad de registros en un nodo para hacer el split
+          param_basicos <- list(
+            "cp" = -0.6, # complejidad minima
+            "maxdepth" = vmax_depth, # profundidad máxima del arbol
+            "minsplit" = vmin_split, # tamaño minimo de nodo para hacer split
+            "minbucket" = vmin_bucket # minima cantidad de registros en una hoja
+          )
+          
     # Un solo llamado, con la semilla 17
     ganancias <- ArbolesMontecarlo(PARAM$semillas, param_basicos)
 
@@ -169,7 +173,8 @@ for (vmax_depth in c(4, 6, 8, 10, 12, 14)) {
   fwrite( tb_grid_search_detalle,
           file = "gridsearch_detalle.txt",
           sep = "\t" )
-}
+  }
+  }
 
 #----------------------------
 

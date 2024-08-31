@@ -6,7 +6,7 @@ require("rpart")
 library(rpart)
 library(data.table)
 PARAM <- list()
-PARAM$semilla <- 100181
+PARAM$semilla <- 956801
 PARAM$training_pct <- 70L  # entre  1L y 99L 
 
 PARAM$rpart <- list (
