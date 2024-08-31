@@ -122,7 +122,6 @@ dataset <- fread(PARAM$dataset_nom)
 dataset <- dataset[clase_ternaria != ""]
 
 #showWarnings = FALSE)
-setwd( "~/buckets/b1/exp/HT2810/" )
 # creo la carpeta donde va el experimento
 # HT  representa  Hiperparameter Tuning
 dir.create("~/buckets/b1/exp/HT2810soto/", showWarnings = FALSE)
@@ -143,12 +142,12 @@ tb_grid_search_detalle <- data.table(
 
 # itero por los loops anidados para cada hiperparametro
 
-for (vmax_depth in c(4, 6)){
+for (vmax_depth in c(4, 6, 8, 10, 15)){
   for (vmin_split in c(1000, 800)){
     for (vmin_bucket in c(ceiling(vmin_split*0.2),ceiling(vmin_split*0.3),
                           ceiling(vmin_split*0.4),ceiling(vmin_split*0.6),
                           ceiling(vmin_split*0.78))){
-      for (vcp in c(-1)){
+      for (vcp in c(-1, -0.75,-0.25,-0.5)){
         
         param_basicos <- list(
           "cp" = vcp, # complejidad minima
