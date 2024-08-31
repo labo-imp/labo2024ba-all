@@ -142,13 +142,13 @@ tb_grid_search_detalle <- data.table(
 
 # itero por los loops anidados para cada hiperparametro
 
-for (vcp in c(-0.5, -1, 0.1, 0.5, 1)) {
-  for (vmin_bucket in c(209, 159, 129, 109, 89, 69, 49, 29, 19)) {
-    for (vmax_depth in c(2, 3, 5, 8, 13, 15)) {
-      for (vmin_split in c(450, 320, 260, 220, 185, 150, 100, 60, 50)) {
+#for (vcp in c(-0.5, -1)) {
+  for (vmin_bucket in c(25:35)) {
+    for (vmax_depth in c(4, 5, 6, 7)) {
+      for (vmin_split in c(800, 775, 425, 400, 375)) {
         # Defino los parametros basicos
         param_basicos <- list(
-          "cp" = vcp,  # complejidad minima
+          "cp" = -1,  # complejidad minima
           "maxdepth" = vmax_depth,  # profundidad máxima del arbol
           "minsplit" = vmin_split,  # tamaño minimo de nodo para hacer split
           "minbucket" = vmin_bucket  # minima cantidad de registros en una hoja
@@ -164,12 +164,12 @@ for (vcp in c(-0.5, -1, 0.1, 0.5, 1)) {
         )
       }
     }
-  }
+#  }
   
   
   # grabo cada vez TODA la tabla en el loop más externo
   fwrite( tb_grid_search_detalle,
-          file = "gridsearch_detalle.txt",
+          file = "gridsearch_detalle6.txt",
           sep = "\t" )
 }
 
@@ -189,7 +189,7 @@ setorder( tb_grid_search, -ganancia_mean )
 tb_grid_search[, id := .I ]
 
 fwrite( tb_grid_search,
-  file = "gridsearch.txt",
+  file = "gridsearch6.txt",
   sep = "\t"
 )
 
