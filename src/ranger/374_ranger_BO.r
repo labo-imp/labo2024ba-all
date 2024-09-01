@@ -10,6 +10,7 @@ gc() # garbage collection
 require("data.table")
 require("rlist")
 require("yaml")
+require("primes")
 
 require("ranger")
 require("randomForest") # solo se usa para imputar nulos

@@ -5,20 +5,20 @@ require("data.table")
 require("rpart")
 require("parallel")
 require("primes")
-require("yaml")
 
 
 PARAM <- list()
 # reemplazar por las propias semillas
 PARAM$qsemillas <- 200
 
+
 PARAM$training_pct <- 70L  # entre  1L y 99L 
 
 PARAM$rpart <- list (
   "cp" = -1,
-  "minsplit" = 800,
-  "minbucket" = 200,
-  "maxdepth" = 6
+  "minsplit" = 1000,
+  "minbucket" = 2,
+  "maxdepth" = 4
 )
 
 #------------------------------------------------------------------------------
