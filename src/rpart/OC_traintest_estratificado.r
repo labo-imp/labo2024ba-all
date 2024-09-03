@@ -101,8 +101,3 @@ cat("Aciertos (BAJA+2): ", aciertos, "\n")
 
 cat("Ganancia en testing (normalizada): ", ganancia_test_normalizada, "\n")
 
-# solo los campos para Kaggle
-fwrite(dapply[, list(numero_de_cliente, Predicted)],
-       file = "./exp/KA2001/OC101_001_viv.csv",
-       sep = ","
-)

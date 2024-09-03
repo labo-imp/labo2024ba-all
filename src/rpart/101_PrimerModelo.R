@@ -22,10 +22,10 @@ modelo <- rpart(
     formula = "clase_ternaria ~ .",
     data = dtrain, # los datos donde voy a entrenar
     xval = 0,
-    cp = -1, # esto significa no limitar la complejidad de los splits
-    minsplit = 170, # minima cantidad de registros para que se haga el split
-    minbucket = 70, # tamaño minimo de una hoja
-    maxdepth = 7  # profundidad maxima del arbol
+    cp = -0.5, # esto significa no limitar la complejidad de los splits
+    minsplit = 600, # minima cantidad de registros para que se haga el split
+    minbucket = 30, # tamaño minimo de una hoja
+    maxdepth = 9  # profundidad maxima del arbol
 )
 
 
@@ -52,7 +52,7 @@ dapply[, prob_baja2 := prediccion[, "BAJA+2"]]
 
 # solo le envio estimulo a los registros
 #  con probabilidad de BAJA+2 mayor  a  1/40
-dapply[, Predicted := as.numeric(prob_baja2 > 1 / 80)]
+dapply[, Predicted := as.numeric(prob_baja2 > 1 / 40)]
 
 # genero el archivo para Kaggle
 # primero creo la carpeta donde va el experimento

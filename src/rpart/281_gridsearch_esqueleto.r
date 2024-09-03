@@ -141,11 +141,11 @@ tb_grid_search_detalle <- data.table(
 
 # itero por los loops anidados para cada hiperparametro
 
-for (vcp in c(-0.5,-0.4, -0.3, -0.2, -0.1)) {    
-  for (vmax_depth in c(5, 6, 7, 8, 9, 10)) {
-    for (vmin_split in c(1000, 800, 600, 400, 200, 100, 50, 20, 10)) {
+for (vcp in c(-0.5,-0.4)) {    
+  for (vmax_depth in c(7, 8, 9)) {
+    for (vmin_split in c(1000, 800, 600)) {
       # notar como se agrega
-      for (rel_minsplit in c(2,3,4,5,10,20,50,100)) {
+      for (rel_minsplit in c(2,10,20,50)) {
         
         # si la division da menos de 5, entonces usamos 5
         vmin_bucket = vmin_split %/% rel_minsplit
@@ -167,6 +167,11 @@ for (vcp in c(-0.5,-0.4, -0.3, -0.2, -0.1)) {
           list( tb_grid_search_detalle,
                 rbindlist(ganancias) )
         )
+        cat("vcp: ", vcp, "\n")
+        cat("vmax_depth: ", vmax_depth, "\n")
+        cat("vmin_split: ", vmin_split, "\n")
+        cat("vmin_bucket: ", vmin_bucket, "\n")
+        
       }
   
     }

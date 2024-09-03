@@ -6,8 +6,8 @@ require("yaml")
 
 miAmbiente <- list()
 
-miAmbiente$modalidad <-  "conceptual"
-# miAmbiente$modalidad <-  "vivencial"
+#miAmbiente$modalidad <-  "conceptual"
+miAmbiente$modalidad <-  "vivencial"
 
 #miAmbiente$dataset_pequeno <- "~/datasets/conceptual_dataset_pequeno.csv"
 miAmbiente$dataset_pequeno <- "~/datasets/vivencial_dataset_pequeno.csv"
