@@ -16,10 +16,10 @@ PARAM$experimento <- 3720
 
 # hiperparámetros de Random Forest
 PARAM$ranger <- list(
-  "num.trees" = 300, # cantidad de arboles
-  "mtry" = 7, # cantidad de atributos que participan en cada split
-  "min.node.size" = 5, # tamaño minimo de las hojas
-  "max.depth" = 15 # 0 significa profundidad infinita
+  "num.trees" = 500, # cantidad de arboles
+  "mtry" = 6, # cantidad de atributos que participan en cada split
+  "min.node.size" = 869, # tamaño minimo de las hojas
+  "max.depth" = 20 # 0 significa profundidad infinita
 )
 
 #------------------------------------------------------------------------------
