@@ -16,10 +16,10 @@ PARAM$experimento <- 3720
 
 # hiperparámetros de Random Forest
 PARAM$ranger <- list(
-  "num.trees" = 1000, # cantidad de arboles
-  "mtry" = 13, # cantidad de atributos que participan en cada split
-  "min.node.size" = 1, # tamaño minimo de las hojas
-  "max.depth" = 0 #0 significa profundidad infinita
+  "num.trees" = 500, # cantidad de arboles
+  "mtry" = 12, # cantidad de atributos que participan en cada split
+  "min.node.size" = 40, # tamaño minimo de las hojas
+  "max.depth" = 10 # 0 significa profundidad infinita
 )
 
 #------------------------------------------------------------------------------
@@ -46,10 +46,10 @@ dataset <- fread( miAmbiente$dataset_pequeno )
 
 # asigno un valor muy negativo
 #  estas dos lineas estan relacionadas con el Data Drifting
-if( "Master_Finiciomora" %in% colanames(dataset) )
+if( "Master_Finiciomora" %in% colnames(dataset) )
   dataset[ is.na(Master_Finiciomora) , Master_Finiciomora := -999 ]
 
-if( "Visa_Finiciomora" %in% colanames(dataset) )
+if( "Visa_Finiciomora" %in% colnames(dataset) )
   dataset[ is.na(Visa_Finiciomora) , Visa_Finiciomora :=  -999 ]
 
 # defino donde entreno y donde aplico el modelo
@@ -134,5 +134,3 @@ cat( paste0( ganancia, "\t", nom_arch_kaggle, "\n"),
   file="tb_ganancias.txt",
   append=TRUE
 )
-
-
