@@ -15,12 +15,12 @@ PARAM <- list()
 PARAM$experimento <- 3720
 
 # hiperparámetros de Random Forest
-PARAM$ranger <- list(
-  "num.trees" = 500, # cantidad de arboles
-  "mtry" = 51, # cantidad de atributos que participan en cada split
-  "min.node.size" = 7, # tamaño minimo de las hojas
-  "max.depth" = 12 # 0 significa profundidad infinita
-)
+# PARAM$ranger <- list(
+#   "num.trees" = 296, # cantidad de arboles
+#   "mtry" = 12, # cantidad de atributos que participan en cada split
+#   "min.node.size" = 336, # tamaño minimo de las hojas
+#   "max.depth" = 15 # 0 significa profundidad infinita
+# )
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
@@ -42,7 +42,23 @@ miAmbiente <- read_yaml( "~/buckets/b1/miAmbiente.yml" )
 
 # cargo los datos
 dataset <- fread( miAmbiente$dataset_pequeno )
+parametros <- fread("~/buckets/b1/exp/HT3740/HT3740_4.txt", header = TRUE, sep = "\t")
 
+for (i in 1:nrow(parametros)) {
+  # Extraer los parámetros de la fila actual
+  num_trees <- parametros$num.trees[i]
+  max_depth <- parametros$max.depth[i]
+  min_node_size <- parametros$min.node.size[i]
+  mtry <- parametros$mtry[i]
+  iteracion_id <- parametros$iteracion[i]
+  
+
+  PARAM$ranger <- list(
+    "num.trees" = num_trees,
+    "mtry" = mtry,
+    "min.node.size" = min_node_size,
+    "max.depth" = max_depth
+  )
 
 # asigno un valor muy negativo
 #  estas dos lineas estan relacionadas con el Data Drifting
@@ -102,7 +118,7 @@ entrega <- as.data.table(list(
 
 
 
-nom_arch_kaggle <- "KA3720_001.csv"
+nom_arch_kaggle <- paste0("KA3720_001_", iteracion_id, ".csv")
 
 # genero el archivo para Kaggle
 fwrite(entrega,
@@ -134,5 +150,7 @@ cat( paste0( ganancia, "\t", nom_arch_kaggle, "\n"),
   file="tb_ganancias.txt",
   append=TRUE
 )
+
+paste0("iteracion: ", iteracion_id)}
 
 
