@@ -12,7 +12,7 @@ require("primes")
 
 PARAM <- list()
 # reemplazar por su primer semilla
-PARAM$semilla_primigenia <- 110003
+PARAM$semilla_primigenia <- 110017
 PARAM$qsemillas <- 20
 
 PARAM$training_pct <- 70L  # entre  1L y 99L 
@@ -146,7 +146,7 @@ tb_grid_search_detalle <- data.table(
 for (vcp in c(0.01, 0.05, 0.1)) { 
   for (vmax_depth in c(4, 6, 8, 10, 12, 14)) {
     for (vmin_split in c(1000, 800, 600, 400, 200, 100, 50, 20, 10)) {
-      for (vmin_bucket in c(1, 5, 10, 20)) {  
+      for (vmin_bucket in c(5, 10, 20, 50)) {  
         
         param_basicos <- list(
           "cp" = vcp,  # complejidad minima
