@@ -6,8 +6,8 @@ require("yaml")
 
 miAmbiente <- list()
 
-miAmbiente$modalidad <-  "conceptual"
-# miAmbiente$modalidad <-  "vivencial"
+#miAmbiente$modalidad <-  "conceptual"
+miAmbiente$modalidad <-  "vivencial"
 
 #miAmbiente$dataset_pequeno <- "~/datasets/conceptual_dataset_pequeno.csv"
 miAmbiente$dataset_pequeno <- "~/datasets/vivencial_dataset_pequeno.csv"
@@ -33,4 +33,3 @@ dir.create("~/buckets/b1/repos/labo2024ba", showWarnings = FALSE)
 cat("Espere unos minutos mientras se hace un backup\n")
 system( "~/install/repobrutalcopy.sh" )
 
-cat("\nel ambiente ha sido GRABADO\n")
