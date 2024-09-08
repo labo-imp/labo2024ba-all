@@ -143,7 +143,7 @@ tb_grid_search_detalle <- data.table(
 # itero por los loops anidados para cada hiperparametro
 
 # Itero por los loops anidados para cada hiperparametro
-for (vcp in c(0.01, 0.05, 0.1)) { 
+for (vcp in seq(-1, 1, by = 0.1)) { 
   for (vmax_depth in c(4, 6, 8, 10, 12, 14)) {
     for (vmin_split in c(1000, 800, 600, 400, 200, 100, 50, 20, 10)) {
       for (vmin_bucket in c(5, 10, 20, 50)) {  
