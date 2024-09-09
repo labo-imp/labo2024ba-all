@@ -15,15 +15,15 @@ require("yaml")
 
 # parametros experimento
 PARAM <- list()
-PARAM$experimento <- 3610
+PARAM$experimento <- 3611
 
 # parametros rpart
 
 #  cargue aqui los hiperparametros elegidos
 PARAM$rpart <- data.table( 
   "cp" = -1,
-  "minsplit" = 400,
-  "minbucket" = 3,
+  "minsplit" = 30,
+  "minbucket" = 5,
   "maxdepth" = 6
 )
 
