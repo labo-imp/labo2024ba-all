@@ -12,14 +12,14 @@ require("primes")
 
 PARAM <- list()
 # reemplazar por su primer semilla
-PARAM$semilla_primigenia <- 102191
+PARAM$semilla_primigenia <- 100019
 PARAM$qsemillas <- 20
 
 PARAM$training_pct <- 70L  # entre  1L y 99L 
 
 # elegir SU dataset comentando/ descomentando
-PARAM$dataset_nom <- "~/datasets/vivencial_dataset_pequeno.csv"
-# PARAM$dataset_nom <- "~/datasets/conceptual_dataset_pequeno.csv"
+#PARAM$dataset_nom <- "~/datasets/vivencial_dataset_pequeno.csv"
+PARAM$dataset_nom <- "~/datasets/conceptual_dataset_pequeno.csv"
 
 #------------------------------------------------------------------------------
 # particionar agrega una columna llamada fold a un dataset
