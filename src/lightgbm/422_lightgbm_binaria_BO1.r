@@ -4,10 +4,12 @@
 # 5-fold cross validation el cual es muuuy lento
 # la cantidad de envios es un hiperparametro
 
+
 # limpio la memoria
 rm(list = ls()) # remove all objects
 gc() # garbage collection
-
+library(paradox)
+library(ParamHelpers) 
 require("data.table")
 require("rlist")
 require("yaml")
@@ -50,22 +52,13 @@ PARAM$hyperparametertuning$NEG_ganancia <- -3000
 
 # Aqui se cargan los bordes de los hiperparametros
 hs <- makeParamSet(
-  # Parámetros principales
-  makeNumericParam("learning_rate", lower = 0.001, upper = 0.3),
+  makeNumericParam("learning_rate", lower = 0.0001, upper = 0.1),
   makeIntegerParam("num_leaves", lower = 8L, upper = 512L),
-  makeNumericParam("feature_fraction", lower = 0.1, upper = 1.0),  # Controla el muestreo de características
-  makeNumericParam("bagging_fraction", lower = 0.1, upper = 1.0),  # Controla el muestreo de filas
-  makeIntegerParam("min_data_in_leaf", lower = 1L, upper = 8000L),
-  makeNumericParam("min_sum_hessian_in_leaf", lower = 1e-5, upper = 10),  # Regularización en hojas
-  makeNumericParam("lambda_l1", lower = 0.0, upper = 10.0),  # Regularización L1
-  makeNumericParam("lambda_l2", lower = 0.0, upper = 10.0),  # Regularización L2
-  
-  # Parámetros adicionales
-  makeIntegerParam("max_depth", lower = -1L, upper = 16L),  # Profundidad del árbol
-  makeIntegerParam("n_estimators", lower = 100L, upper = 10000L),  # Número de iteraciones (reemplazo de 'envios')
-  makeNumericParam("min_gain_to_split", lower = 0.0, upper = 15.0)  # Ganancia mínima para un split
+  makeNumericParam("feature_fraction", lower = 0.1, upper = 1.0),
+  makeIntegerParam("min_data_in_leaf", lower = 20L, upper = 5000L),
+  makeIntegerParam("envios", lower = 1000L, upper = 5000L),
+  makeIntegerParam("max_depth", lower = 3L, upper = 15L)
 )
-
 
 
 #------------------------------------------------------------------------------
