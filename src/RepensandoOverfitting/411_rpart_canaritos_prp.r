@@ -16,7 +16,7 @@ dir.create("./exp/CN4110/", showWarnings = FALSE)
 setwd("./exp/CN4110/")
 
 # uso esta semilla para los canaritos
-set.seed(271279)
+set.seed(102191)
 
 
 # agrego los siguientes canaritos
