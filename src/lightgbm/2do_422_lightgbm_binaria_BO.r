@@ -33,7 +33,7 @@ options(error = function() {
 #  muy pronto esto se leera desde un archivo formato .yaml
 PARAM <- list()
 
-PARAM$experimento <- "HT4220"
+PARAM$experimento <- "HT4221"
 
 PARAM$input$training <- c(202107) # los meses en los que vamos a entrenar
 
@@ -50,19 +50,18 @@ PARAM$hyperparametertuning$NEG_ganancia <- -3000
 
 # Aqui se cargan los bordes de los hiperparametros
 hs <- makeParamSet(
-  makeNumericParam("learning_rate", lower = 0.01, upper = 0.3),
+  makeNumericParam("learning_rate", lower = 0.0001, upper = 0.1),
   makeIntegerParam("num_leaves", lower = 8L, upper = 1024L),
   makeNumericParam("feature_fraction", lower = 0.1, upper = 1.0),
-  makeIntegerParam("min_data_in_leaf", lower = 10L, upper = 8000L),
-  makeIntegerParam("envios", lower = 5000L, upper = 15000L),
-  makeNumericParam("min_gain_to_split", lower = 0.0, upper = 0.1),
-  makeIntegerParam("max_bin", lower = 15L, upper = 255L),
-  makeIntegerParam("max_depth", lower = -1, upper = 20L),
-  makeNumericParam("lambda_l1", lower = 0.0, upper = 0.5),
-  makeNumericParam("lambda_l2", lower = 0.0, upper = 0.5),
+  makeIntegerParam("min_data_in_leaf", lower = 10L, upper = 2000L),
+  makeIntegerParam("envios", lower = 7000L, upper = 17000L),
+  makeNumericParam("min_gain_to_split", lower = 0.0, upper = 0.5),
+  makeIntegerParam("max_bin", lower = 15L, upper = 155L),
+  makeNumericParam("lambda_l1", lower = 0.0, upper = 1.5),
+  makeNumericParam("lambda_l2", lower = 0.0, upper = 2.0),
   makeNumericParam("bagging_fraction", lower = 0.5, upper = 1.0),
-  makeIntegerParam("bagging_freq", lower = 1L, upper = 10L),
-  makeNumericParam("cat_smooth", lower = 1.0, upper = 20.0)
+  makeIntegerParam("bagging_freq", lower = 1L, upper = 15L),
+  makeNumericParam("cat_smooth", lower = 1.0, upper = 13.0)
 )
 
 #------------------------------------------------------------------------------
@@ -148,7 +147,8 @@ EstimarGanancia_lightgbm <- function(x) {
     max_bin = 31, # por ahora, lo dejo fijo
     num_iterations = 9999, # valor grande, lo limita early_stopping_rounds
     force_row_wise = TRUE, # para evitar warning
-    seed = ksemilla_azar1
+    seed = ksemilla_azar1,
+    max_depth = -1
   )
 
   # el parametro discolo, que depende de otro
