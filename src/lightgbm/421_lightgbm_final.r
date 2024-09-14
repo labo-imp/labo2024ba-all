@@ -17,12 +17,17 @@ PARAM$input$training <- c(202107) # meses donde se entrena el modelo
 PARAM$input$future <- c(202109) # meses donde se aplica el modelo
 
 
-PARAM$finalmodel$num_iterations <- 154
-PARAM$finalmodel$learning_rate <- 0.0748788543
-PARAM$finalmodel$feature_fraction <- 0.7055013377
-PARAM$finalmodel$min_data_in_leaf <- 1074
-PARAM$finalmodel$num_leaves <- 901
-PARAM$finalmodel$max_bin <- 31
+PARAM$finalmodel$num_iterations <- 958
+PARAM$finalmodel$learning_rate <- 0.01121789827
+PARAM$finalmodel$feature_fraction <- 0.992024363
+PARAM$finalmodel$min_data_in_leaf <- 1105
+PARAM$finalmodel$num_leaves <- 428
+PARAM$finalmodel$max_bin <- 35
+PARAM$finalmodel$lambda_l1 <- 3.554902731
+PARAM$finalmodel$lambda_l2 <- 9.701399077
+PARAM$finalmodel$min_sum_hessian_in_leaf <- 5
+PARAM$finalmodel$min_gain_split <- 6.865841923
+
 
 #------------------------------------------------------------------------------
 # graba a un archivo los componentes de lista
@@ -116,7 +121,12 @@ modelo <- lgb.train(
     num_leaves = PARAM$finalmodel$num_leaves,
     min_data_in_leaf = PARAM$finalmodel$min_data_in_leaf,
     feature_fraction = PARAM$finalmodel$feature_fraction,
-    seed = miAmbiente$semilla_primigenia
+    seed = miAmbiente$semilla_primigenia,
+    lambda_l1 = PARAM$finalmodel$lambda_l1,
+    lambda_l2 = PARAM$finalmodel$lambda_l2,
+    min_sum_hessian_in_leaf = PARAM$finalmodel$min_sum_hessian_in_leaf,
+    min_gain_split = PARAM$finalmodel$min_gain_split
+    
   )
 )
 
@@ -163,7 +173,7 @@ setorder(tb_entrega, -prob)
 # genero archivos con los  "envios" mejores
 # suba TODOS los archivos a Kaggle
 
-cortes <- seq(1971, 4071, by = 100)
+cortes <- seq(1556, 2556, by = 100)
 for (envios in cortes) {
   tb_entrega[, Predicted := 0L]
   tb_entrega[1:envios, Predicted := 1L]

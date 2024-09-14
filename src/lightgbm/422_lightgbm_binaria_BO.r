@@ -33,7 +33,7 @@ options(error = function() {
 #  muy pronto esto se leera desde un archivo formato .yaml
 PARAM <- list()
 
-PARAM$experimento <- "HT4220b"
+PARAM$experimento <- "HT4220c"
 
 PARAM$input$training <- c(202107) # los meses en los que vamos a entrenar
 
@@ -47,14 +47,20 @@ PARAM$hyperparametertuning$POS_ganancia <- 117000
 PARAM$hyperparametertuning$NEG_ganancia <- -3000
 
 #------------------------------------------------------------------------------
-?lightgbm
+
 # Aqui se cargan los bordes de los hiperparametros
 hs <- makeParamSet(
   makeNumericParam("learning_rate", lower = 0.01, upper = 0.3),
   makeIntegerParam("num_leaves", lower = 8L, upper = 1024L),
   makeNumericParam("feature_fraction", lower = 0.1, upper = 1.0),
   makeIntegerParam("min_data_in_leaf", lower = 1L, upper = 8000L),
-  makeIntegerParam("envios", lower = 1L, upper = 5001L)
+  makeIntegerParam("envios", lower = 1L, upper = 10000L),
+  makeIntegerParam("maxbin", lower = 1L, upper = 62L),
+  makeNumericParam("lambda_l1", lower = 0.1, upper = 10.0),
+  makeNumericParam("lambda_l2", lower = 0.1, upper = 10.0),
+  makeIntegerParam("num_iterations", lower = 10L, upper = 1000L),
+  makeIntegerParam("min_sum_hessian_in_leaf", lower = 1L, upper = 8000L),  
+  makeNumericParam("min_gain_split", lower = 0.1, upper = 10.0)
 )
 
 
@@ -138,8 +144,8 @@ EstimarGanancia_lightgbm <- function(x) {
     boost_from_average = TRUE,
     feature_pre_filter = FALSE,
     verbosity = -100,
-    max_bin = 31, # por ahora, lo dejo fijo
-    num_iterations = 9999, # valor grande, lo limita early_stopping_rounds
+##    max_bin = 31, # por ahora, lo dejo fijo
+##    num_iterations = 9999, # valor grande, lo limita early_stopping_rounds
     force_row_wise = TRUE, # para evitar warning
     seed = ksemilla_azar1
   )
