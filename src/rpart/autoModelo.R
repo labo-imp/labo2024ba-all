@@ -17,7 +17,8 @@ version = args[1]
 setwd("~/buckets/b1") # Establezco el Working Directory
 
 # cargo el dataset pequeno vivencial del disco local
-dataset <- fread("~/datasets/vivencial_dataset_pequeno.csv")
+# dataset <- fread("~/datasets/vivencial_dataset_pequeno.csv")
+dataset <- fread("~/datasets/conceptual_dataset_pequeno.csv")
 
 dtrain <- dataset[foto_mes == 202107] # defino donde voy a entrenar
 dapply <- dataset[foto_mes == 202109] # defino donde voy a aplicar el modelo
@@ -81,7 +82,7 @@ dapply[, Predicted := as.numeric(prob_baja2 > 1 / 40)]
 dir.create("./exp/")
 dir.create("./exp/KA2001")
 
-nombre_archivo <- paste0("~/buckets/b1/exp/KA2001/K101_",version,"_viv.csv",collapse = "")
+nombre_archivo <- paste0("~/buckets/b1/exp/KA2001/K101_",version,"_con.csv",collapse = "")
 paste("Escribiendo predicción en ",nombre_archivo)
 # solo los campos para Kaggle
 fwrite(dapply[, list(numero_de_cliente, Predicted)],
@@ -89,6 +90,6 @@ fwrite(dapply[, list(numero_de_cliente, Predicted)],
         sep = ","
 )
 
-comando_kaggle_submit <- paste0("kaggle competitions submit -c labo-i-vivencial-2024-ba -f ",nombre_archivo," -m '",hpstring,"'")
+comando_kaggle_submit <- paste0("kaggle competitions submit -c labo-i-conceptual-2024-ba -f ",nombre_archivo," -m '",hpstring,"'")
 print(comando_kaggle_submit)
 cat(comando_kaggle_submit, file = "kaggle_submit")

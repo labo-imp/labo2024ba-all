@@ -1,0 +1,30 @@
+Inicio: Sat Aug 31 16:56:55 UTC 2024
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   200  100    41  100   159    108    421 --:--:-- --:--:-- --:--:--   531
+{"result":"success","msg":"","id":86564}
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 294435 15.8     692240   37   478377 25.6
+Vcells 510708  3.9    8388608   64  1923812 14.7
+Loading required package: data.table
+Loading required package: yaml
+Loading required package: ranger
+Loading required package: randomForest
+randomForest 4.7-1.1
+Type rfNews() to see new features/changes/bug fixes.
+
+Attaching package: ‘randomForest’
+
+The following object is masked from ‘package:ranger’:
+
+    importance
+
+Growing trees.. Progress: 45%. Estimated remaining time: 37 seconds.
+Growing trees.. Progress: 90%. Estimated remaining time: 6 seconds.
+  0%|          | 0.00/1.79M [00:00<?, ?B/s] 67%|██████▋   | 1.20M/1.79M [00:00<00:00, 6.76MB/s]100%|██████████| 1.79M/1.79M [00:01<00:00, 1.20MB/s]
+Final: Sat Aug 31 16:58:30 UTC 2024
+Duración total: 95 segundos
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   224  100    41  100   183     80    357 --:--:-- --:--:-- --:--:--   437
+{"result":"success","msg":"","id":86565}
