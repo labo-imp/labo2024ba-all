@@ -17,14 +17,15 @@ PARAM$input$training <- c(202107) # meses donde se entrena el modelo
 PARAM$input$future <- c(202109) # meses donde se aplica el modelo
 
 
-PARAM$finalmodel$num_iterations <- 134
-PARAM$finalmodel$learning_rate <- 0.086109424
-PARAM$finalmodel$feature_fraction <- 0.862505047
-PARAM$finalmodel$min_data_in_leaf <- 27
-PARAM$finalmodel$num_leaves <- 83
-PARAM$finalmodel$envios <-14518
-PARAM$finalmodel$lambda_l1 <- 2.519382046
-PARAM$finalmodel$lambda_l2 <- 1.922774881
+PARAM$finalmodel$num_iterations <- 356L
+PARAM$finalmodel$learning_rate <- 0.047537087
+PARAM$finalmodel$feature_fraction <- 0.813280342
+PARAM$finalmodel$min_data_in_leaf <- 1517L
+PARAM$finalmodel$num_leaves <- 1520L
+PARAM$finalmodel$envios <-10746L
+PARAM$finalmodel$lambda_l1 <- 2.1558002
+PARAM$finalmodel$lambda_l2 <- 4.60595345
+PARAM$finalmodel$min_gain_to_split <- 0.012229061
 PARAM$finalmodel$max_bin <- 31
 
 #------------------------------------------------------------------------------
@@ -124,6 +125,7 @@ modelo <- lgb.train(
     lambda_l1 = PARAM$finalmodel$lambda_l1,
     lambda_l2 = PARAM$finalmodel$lambda_l2,
     envios = PARAM$finalmodel$envios,
+    min_gain_to_split = PARAM$finalmodel$min_gain_to_split,
     metric = "custom",
     first_metric_only = TRUE,
     boost_from_average = TRUE,
