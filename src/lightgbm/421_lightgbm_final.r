@@ -17,21 +17,21 @@ PARAM$input$training <- c(202107) # meses donde se entrena el modelo
 PARAM$input$future <- c(202109) # meses donde se aplica el modelo
 
 
-PARAM$finalmodel$num_iterations <- 429  
-PARAM$finalmodel$learning_rate <- 0.0343247562380638 
-PARAM$finalmodel$feature_fraction <- 0.395434718211633  
-PARAM$finalmodel$min_data_in_leaf <- 587  
-PARAM$finalmodel$num_leaves <- 520  
-PARAM$finalmodel$max_bin <- 54 
+PARAM$finalmodel$num_iterations <- 701  
+PARAM$finalmodel$learning_rate <- 0.0200378919061657
+PARAM$finalmodel$feature_fraction <- 0.756431441448248  
+PARAM$finalmodel$min_data_in_leaf <- 1236  
+PARAM$finalmodel$num_leaves <- 2036  
+PARAM$finalmodel$max_bin <- 31 
 
 
-PARAM$finalmodel$lambda_l1 <- 0.562316823431996
-PARAM$finalmodel$lambda_l2 <- 0.758980643806169
-PARAM$finalmodel$min_gain_to_split <- 0.134660570286048
+PARAM$finalmodel$lambda_l1 <- 0
+PARAM$finalmodel$lambda_l2 <- 0
+PARAM$finalmodel$min_gain_to_split <- 0
 
 
-PARAM$finalmodel$bagging_fraction <- 0.872871475552322
-PARAM$finalmodel$bagging_freq <- 4 
+PARAM$finalmodel$bagging_fraction <- 1
+#PARAM$finalmodel$bagging_freq <- 4 
 
 #------------------------------------------------------------------------------
 # graba a un archivo los componentes de lista
@@ -129,7 +129,7 @@ modelo <- lgb.train(
     lambda_l2 = PARAM$finalmodel$lambda_l2,
     min_gain_to_split = PARAM$finalmodel$min_gain_to_split,
     bagging_fraction = PARAM$finalmodel$bagging_fraction,
-    bagging_freq = PARAM$finalmodel$bagging_freq,
+    #bagging_freq = PARAM$finalmodel$bagging_freq,
     seed = miAmbiente$semilla_primigenia
   )
 )
