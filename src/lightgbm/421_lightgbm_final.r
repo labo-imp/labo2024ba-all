@@ -17,13 +17,18 @@ PARAM$input$training <- c(202107) # meses donde se entrena el modelo
 PARAM$input$future <- c(202109) # meses donde se aplica el modelo
 
 
-PARAM$finalmodel$num_iterations <- 5000
-PARAM$finalmodel$learning_rate <- 0.01
-PARAM$finalmodel$feature_fraction <- 0.8
-PARAM$finalmodel$min_data_in_leaf <- 100
-PARAM$finalmodel$num_leaves <- 16
+PARAM$finalmodel$num_iterations <- 91
+PARAM$finalmodel$learning_rate <-0.0675783170429493
+PARAM$finalmodel$feature_fraction <- 0.594857451900826
+PARAM$finalmodel$min_data_in_leaf <- 517
+PARAM$finalmodel$num_leaves <- 631
+PARAM$finalmodel$num_iterations <- 85
+PARAM$finalmodel$max_depth<- 14
+PARAM$finalmodel$n_estimators- 1763
+PARAM$finalmodel$max_bin <- 31 
+PARAM$finalmodel$lambda_l1 <- 1.11063737974713
+PARAM$finalmodel$lambda_l2 <-1.3091464705494
 
-PARAM$finalmodel$max_bin <- 31
 
 #------------------------------------------------------------------------------
 # graba a un archivo los componentes de lista
@@ -117,9 +122,13 @@ modelo <- lgb.train(
     num_leaves = PARAM$finalmodel$num_leaves,
     min_data_in_leaf = PARAM$finalmodel$min_data_in_leaf,
     feature_fraction = PARAM$finalmodel$feature_fraction,
+    max_depth = PARAM$finalmodel$max_depth,
+    n_estimators = PARAM$finalmodel$n_estimators,
     seed = miAmbiente$semilla_primigenia
   )
 )
+
+
 
 #--------------------------------------
 # ahora imprimo la importancia de variables
@@ -164,7 +173,7 @@ setorder(tb_entrega, -prob)
 # genero archivos con los  "envios" mejores
 # suba TODOS los archivos a Kaggle
 
-cortes <- seq(9000, 13500, by = 500)
+cortes <- seq(1500, 3000, by = 100)
 for (envios in cortes) {
   tb_entrega[, Predicted := 0L]
   tb_entrega[1:envios, Predicted := 1L]

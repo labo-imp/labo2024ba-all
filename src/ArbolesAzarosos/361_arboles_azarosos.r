@@ -22,8 +22,8 @@ PARAM$experimento <- 3611
 #  cargue aqui los hiperparametros elegidos
 PARAM$rpart <- data.table( 
   "cp" = -1,
-  "minsplit" = 30,
-  "minbucket" = 5,
+  "minsplit" = 325,
+  "minbucket" = 4,
   "maxdepth" = 6
 )
 
@@ -36,7 +36,7 @@ PARAM$feature_fraction <- 0.5
 # voy a generar 512 arboles,
 #  a mas arboles mas tiempo de proceso y MEJOR MODELO,
 #  pero ganancias marginales
-PARAM$num_trees_max <- 512
+PARAM$num_trees_max <- 32
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
