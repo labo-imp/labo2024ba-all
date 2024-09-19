@@ -209,16 +209,16 @@ AgregarVariables_IntraMes <- function(dataset) {
 
   # Aqui debe usted agregar sus propias nuevas variables
 
-  if( atributos_presentes("mcaja_ahorro", "mcuenta_corriente" ,"mplazo_fijo_pesos","mplazo_fijo_dolares",
-                          "minversion1_pesos" ,"minversion1_dolares" ,"minversion2"))
+  if( atributos_presentes(c("mcaja_ahorro", "mcuenta_corriente" ,"mplazo_fijo_pesos","mplazo_fijo_dolares",
+                          "minversion1_pesos" ,"minversion1_dolares" ,"minversion2")))
     dataset[,activos_cliente := mcaja_ahorro + mcuenta_corriente + mplazo_fijo_pesos + mplazo_fijo_dolares +
               minversion1_pesos + minversion1_dolares + minversion2]
   
-  if( atributos_presentes("mprestamos_personales","mprestamos_prendarios","mprestamos_hipotecarios"))
+  if( atributos_presentes(c("mprestamos_personales","mprestamos_prendarios","mprestamos_hipotecarios")))
     dataset[,deuda_cliente_prestamos := mprestamos_personales + mprestamos_prendarios + 
               mprestamos_hipotecarios]
   
-  if( atributos_presentes("activos_cliente","deuda_cliente_prestamos"))
+  if( atributos_presentes(c("activos_cliente","deuda_cliente_prestamos")))
     dataset[, ratio_deudas_activos := deuda_cliente_prestamos / activos_cliente]
   
   
@@ -264,7 +264,7 @@ AgregarVariables_IntraMes <- function(dataset) {
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 # Aqui comienza el programa
-cat( "z1301_FE_intrames_manual.r  START\n")
+cat( "1301_FE_intrames_manual_002.r  START\n")
 action_inicializar() 
 
 
@@ -336,4 +336,4 @@ GrabarOutput()
 #  archivos tiene a los files que debo verificar existen para no abortar
 
 action_finalizar( archivos = c("dataset.csv.gz","dataset_metadata.yml")) 
-cat( "z1301_FE_intrames_manual.r  END\n")
+cat( "1301_FE_intrames_manual_002.r  END\n")
