@@ -3,7 +3,7 @@
 # si hay un empate ( dos máximos) se queda con la que esta primera en el vector
 
 
-set.seed( 271279 )
+set.seed( 102191 )
 
 # calcula cuantos encestes logra una jugadora con indice de enceste prob que hace qyt tiros libres
 ftirar  <- function( prob, qty ){
