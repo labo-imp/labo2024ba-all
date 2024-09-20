@@ -213,3 +213,6 @@ GrabarOutput()
 
 action_finalizar( archivos = archivos_salida) 
 cat( "z2101_TS_training_strategy.r  END\n" )
+
+
+
