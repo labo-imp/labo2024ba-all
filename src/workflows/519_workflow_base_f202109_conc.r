@@ -348,6 +348,9 @@ HT_tuning_base <- function( pinputexps, bypass=FALSE)
     min_data_in_leaf = c( 20L, 2000L, "integer" )
   )
 
+  ## Preguntar si la optimizacion es solo con los variables o incluye los fijos
+  ## Los comentados por ejemplo drop_rate, puedo transformarlos en variables?
+  ## Que definimos como funcional?
 
   # una Bayesian humilde, pero no descabellada
   param_local$bo_iteraciones <- 60 # iteraciones de la Optimizacion Bayesiana
