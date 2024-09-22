@@ -173,6 +173,47 @@ FEhist_base <- function( pinputexps)
 #  atencion, parmetros para generar variables, NO para buen modelo
 #  azaroso, utiliza semilla
 
+FEhist_base_2 <- function( pinputexps)
+{
+  if( -1 == (param_local <- exp_init())$resultado ) return( 0 ) # linea fija
+  
+  
+  param_local$meta$script <- "/src/wf-etapas/z1501_FE_historia.r"
+  
+  param_local$lag1 <- FALSE
+  param_local$lag2 <- TRUE # no me engraso con los lags de orden 2
+  param_local$lag3 <- FALSE # no me engraso con los lags de orden 3
+  
+  # no me engraso las manos con las tendencias
+  param_local$Tendencias1$run <- FALSE  # FALSE, no corre nada de lo que sigue
+  param_local$Tendencias1$ventana <- 6
+  param_local$Tendencias1$tendencia <- TRUE
+  param_local$Tendencias1$minimo <- FALSE
+  param_local$Tendencias1$maximo <- FALSE
+  param_local$Tendencias1$promedio <- FALSE
+  param_local$Tendencias1$ratioavg <- FALSE
+  param_local$Tendencias1$ratiomax <- FALSE
+  
+  # no me engraso las manos con las tendencias de segundo orden
+  param_local$Tendencias2$run <- TRUE
+  param_local$Tendencias2$ventana <- 12
+  param_local$Tendencias2$tendencia <- FALSE
+  param_local$Tendencias2$minimo <- FALSE
+  param_local$Tendencias2$maximo <- FALSE
+  param_local$Tendencias2$promedio <- FALSE
+  param_local$Tendencias2$ratioavg <- FALSE
+  param_local$Tendencias2$ratiomax <- FALSE
+  
+  param_local$semilla <- NULL # no usa semilla, es deterministico
+  
+  return( exp_correr_script( param_local ) ) # linea fija
+}
+#------------------------------------------------------------------------------
+#  Agregado de variables de Random Forest, corrido desde LightGBM
+#  atencion, parmetros para generar variables, NO para buen modelo
+#  azaroso, utiliza semilla
+
+
 FErf_attributes_base <- function( pinputexps, ratio, desvio)
 {
   if( -1 == (param_local <- exp_init())$resultado ) return( 0 )# linea fija
@@ -432,6 +473,8 @@ wf_septiembre <- function( pnombrewf )
   DR_drifting_base(metodo="rank_cero_fijo")
   FEhist_base()
   FErf_attributes_base()
+  CN_canaritos_asesinos_base(ratio=0.95, desvio=2.35)
+  FEhist_base_2()
   CN_canaritos_asesinos_base(ratio=0.95, desvio=2.35)
 
   ts9 <- TS_strategy_base9()
