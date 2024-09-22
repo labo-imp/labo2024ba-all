@@ -17,13 +17,11 @@ PARAM$input$training <- c(202107) # meses donde se entrena el modelo
 PARAM$input$future <- c(202109) # meses donde se aplica el modelo
 
 
-PARAM$finalmodel$num_iterations <- 1025
-PARAM$finalmodel$learning_rate <- 0.0185
-PARAM$finalmodel$feature_fraction <- 0.839
-PARAM$finalmodel$min_data_in_leaf <- 37
-PARAM$finalmodel$num_leaves <- 467
-PARAM$finalmodel$lambda_l1 <- 0.194535302481166
-PARAM$finalmodel$lambda_l2 <- 44.5975263183999
+PARAM$finalmodel$num_iterations <- 1000
+PARAM$finalmodel$learning_rate <- 0.027
+PARAM$finalmodel$feature_fraction <- 0.8
+PARAM$finalmodel$min_data_in_leaf <- 76
+PARAM$finalmodel$num_leaves <- 8
 
 PARAM$finalmodel$max_bin <- 31
 
@@ -119,8 +117,6 @@ modelo <- lgb.train(
     num_leaves = PARAM$finalmodel$num_leaves,
     min_data_in_leaf = PARAM$finalmodel$min_data_in_leaf,
     feature_fraction = PARAM$finalmodel$feature_fraction,
-    lambda_l1 = PARAM$finalmodel$lambda_l1,
-    lambda_l2 = PARAM$finalmodel$lambda_l2,
     seed = miAmbiente$semilla_primigenia
   )
 )
