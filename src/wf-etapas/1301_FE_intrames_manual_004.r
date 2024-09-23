@@ -395,7 +395,7 @@ AgregarVariables_IntraMes <- function(dataset) {
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 # Aqui comienza el programa
-cat( "1301_FE_intrames_manual_003.r  START\n")
+cat( "1301_FE_intrames_manual_004.r  START\n")
 action_inicializar() 
 
 
@@ -467,4 +467,4 @@ GrabarOutput()
 #  archivos tiene a los files que debo verificar existen para no abortar
 
 action_finalizar( archivos = c("dataset.csv.gz","dataset_metadata.yml")) 
-cat( "1301_FE_intrames_manual_003.r  END\n")
+cat( "1301_FE_intrames_manual_004.r  END\n")
