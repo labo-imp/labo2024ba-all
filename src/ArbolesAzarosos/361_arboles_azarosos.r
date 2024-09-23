@@ -15,7 +15,7 @@ require("yaml")
 
 # parametros experimento
 PARAM <- list()
-PARAM$experimento <- 3611
+PARAM$experimento <- 3610
 
 # parametros rpart
 
@@ -23,8 +23,8 @@ PARAM$experimento <- 3611
 PARAM$rpart <- data.table( 
   "cp" = -1,
   "minsplit" = 250,
-  "minbucket" = 20,
-  "maxdepth" = 8
+  "minbucket" = 100,
+  "maxdepth" = 6
 )
 
 # parametros  arbol
