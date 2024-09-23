@@ -318,6 +318,37 @@ AgregarVariables_IntraMes <- function(dataset) {
   if(atributos_presentes(c("ccuenta_debitos_automaticos")))
     dataset[, flag_ccuenta_debitos_automaticos_exagerado := ifelse(ccuenta_debitos_automaticos > 9, 1, 0)]
   
+  if(atributos_presentes(c("ctarjeta_visa_debitos_automaticos")))
+    dataset[, flag_ctarjeta_visa_debitos_automaticos := ifelse(ctarjeta_visa_debitos_automaticos > 0, 1, 0)]
+  
+  if(atributos_presentes(c("ctarjeta_visa_debitos_automaticos")))
+    dataset[, flag_ctarjeta_visa_debitos_automaticos_exagerado := ifelse(ctarjeta_visa_debitos_automaticos > 9, 1, 0)]
+  
+  if(atributos_presentes(c("ctarjeta_master_debitos_automaticos")))
+    dataset[, flag_ctarjeta_master_debitos_automaticos := ifelse(ctarjeta_master_debitos_automaticos > 0, 1, 0)]
+  
+  if(atributos_presentes(c("ctarjeta_master_debitos_automaticos")))
+    dataset[, flag_ctarjeta_master_debitos_automaticos_exagerado := ifelse(ctarjeta_master_debitos_automaticos > 9, 1, 0)]
+  
+  if(atributos_presentes(c("ctarjeta_master_debitos_automaticos","ctarjeta_visa_debitos_automaticos",
+                           "ccuenta_debitos_automaticos")))
+    dataset[, flag_total_debitos_automaticos_exagerado := 
+              ifelse(ctarjeta_master_debitos_automaticos + ctarjeta_visa_debitos_automaticos + 
+                       ccuenta_debitos_automaticos > 15,1,0)]
+  
+  if(atributos_presentes(c("cpagodeservicios")))
+    dataset[, flag_paga_ventanilla := ifelse(cpagodeservicios > 0, 1, 0)]
+  
+  
+  if(atributos_presentes(c("cpagodeservicios","cliente_edad")))
+    dataset[, flag_ventanilla_viejito := ifelse(cpagodeservicios > 0 & cliente_edad >49, 1, 0)]
+  
+  if(atributos_presentes(c("cpagomiscuentas")))
+    dataset[, flag_cpagomiscuentas := ifelse(cpagomiscuentas > 0, 1, 0)]
+  
+  if(atributos_presentes(c("cpagomiscuentas")))
+    dataset[, flag_cpagomiscuentas_masquemedia := ifelse(cpagomiscuentas > mean(cpagomiscuentas), 1, 0)]
+  
   
   
   
