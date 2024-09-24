@@ -251,6 +251,10 @@ AgregarVariables_IntraMes <- function(dataset) {
   autovec_pca <- as.data.table(pca_datos$x[,1:20])
   dataset <- dataset[, names(autovec_pca) := autovec_pca]
   
+  # Borramos las porquerias creadas para que no ocupen espacio
+  rm(pca_datos)
+  rm(autovec_pca)
+  
 
   cat( "fin AgregarVariables_IntraMes()\n")
 }
