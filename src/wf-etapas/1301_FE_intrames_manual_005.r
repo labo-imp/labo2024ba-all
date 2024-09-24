@@ -259,9 +259,6 @@ AgregarVariables_IntraMes <- function(dataset) {
   rm(autovec_pca) # borramos para ahorrar espacio
   
   cat("Si llegaste hasta aca es porque PCA no te hizo volar por los aires la corrida. Felicitaciones.\n")
-  # Borramos las porquerias creadas para que no ocupen espacio
-  rm(pca_datos)
-  rm(autovec_pca)
   
 
   cat( "fin AgregarVariables_IntraMes()\n")
