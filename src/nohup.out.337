@@ -1,0 +1,40 @@
+Inicio: Sat Aug 31 12:54:30 UTC 2024
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   182    0     0  100   182      0    375 --:--:-- --:--:-- --:--:--   374100   223  100    41  100   182     72    320 --:--:-- --:--:-- --:--:--   392
+{"result":"success","msg":"","id":86486}
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 294435 15.8     692240   37   478377 25.6
+Vcells 510708  3.9    8388608   64  1923812 14.7
+Loading required package: data.table
+Loading required package: rpart
+Loading required package: parallel
+Loading required package: primes
+Loading required package: yaml
+ganancia media : 50511900 
+Final: Sat Aug 31 13:02:28 UTC 2024
+Duración total: 478 segundos
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   248  100    41  100   207    106    536 --:--:-- --:--:-- --:--:--   642
+{"result":"success","msg":"","id":86489}
+Inicio: Sat Aug 31 13:07:33 UTC 2024
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   223  100    41  100   182    100    446 --:--:-- --:--:-- --:--:--   547
+{"result":"success","msg":"","id":86491}
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 294435 15.8     692240   37   478377 25.6
+Vcells 510708  3.9    8388608   64  1923812 14.7
+Loading required package: data.table
+Loading required package: rpart
+Loading required package: parallel
+Loading required package: primes
+Loading required package: yaml
+ganancia media : 50751600 
+Final: Sat Aug 31 13:15:27 UTC 2024
+Duración total: 474 segundos
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   248  100    41  100   207    104    528 --:--:-- --:--:-- --:--:--   634
+{"result":"success","msg":"","id":86492}
