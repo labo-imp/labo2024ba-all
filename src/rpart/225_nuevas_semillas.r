@@ -12,3 +12,5 @@ set.seed(100049) # inicializo
 semillas <- sample(primos, 20 )
 
 print( semillas )
+
+
