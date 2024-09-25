@@ -255,7 +255,8 @@ AgregarVariables_IntraMes <- function(dataset) {
   rm(datasetsinNA) # borramos este dataset creado para ahorrar espacio
   autovec_pca <- as.data.table(pca_datos$x[,1:20])
   rm(pca_datos) # borramos para ahorrar espacio
-  dataset <- dataset[, names(autovec_pca) := autovec_pca]
+  #dataset <-- dataset[, names(autovec_pca) := autovec_pca]
+  dataset <-- cbind(dataset,autovec_pca)
   rm(autovec_pca) # borramos para ahorrar espacio
   
   cat("Si llegaste hasta aca es porque PCA no te hizo volar por los aires la corrida. Felicitaciones.\n")
