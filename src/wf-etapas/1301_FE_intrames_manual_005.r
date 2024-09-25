@@ -377,16 +377,16 @@ AgregarVariables_IntraMes <- function(dataset) {
   if(atributos_presentes(c("Master_mpagominimo","Visa_mpagominimo","mpayroll","mpayroll2")))
     dataset[, responsabilidad_comprador := (Master_mpagominimo + Visa_mpagominimo) / (mpayroll + mpayroll2)]
   
-  if(atributos_presentes(c("Master_mconsumospesos ","Visa_mconsumospesos","mpayroll","mpayroll2")))
+  if(atributos_presentes(c("Master_mconsumospesos","Visa_mconsumospesos","mpayroll","mpayroll2")))
     dataset[, responsabilidad_comprador2 := (Master_mconsumospesos + Visa_mconsumospesos) / (mpayroll + mpayroll2)]
   
-  if(atributos_presentes(c("ccomisiones_mantenimiento ","ccomisiones_otras")))
+  if(atributos_presentes(c("ccomisiones_mantenimiento","ccomisiones_otras")))
     dataset[, cantidad_total_comisiones := ccomisiones_mantenimiento + ccomisiones_otras]
   
-  if(atributos_presentes(c("mcomisiones_mantenimiento ","mcomisiones_otras")))
+  if(atributos_presentes(c("mcomisiones_mantenimiento","mcomisiones_otras")))
     dataset[, monto_total_comisiones := mcomisiones_mantenimiento + mcomisiones_otras]
   
-  if(atributos_presentes(c("mcomisiones_mantenimiento ","mcomisiones_otras","cproductos")))
+  if(atributos_presentes(c("mcomisiones_mantenimiento","mcomisiones_otras","cproductos")))
     dataset[, ratio_comisiones_productos := (mcomisiones_mantenimiento +  mcomisiones_otras) / cproductos]
   
   
@@ -440,8 +440,10 @@ AgregarVariables_IntraMes <- function(dataset) {
   pca_datos <- prcomp(datasetsinNA[,1:154],center=TRUE,scale=TRUE)
   rm(datasetsinNA) # borramos este dataset creado para ahorrar espacio
   autovec_pca <- as.data.table(pca_datos$x[,1:20])
+  head(autovec_pca)
   rm(pca_datos) # borramos para ahorrar espacio
-  dataset <- dataset[, names(autovec_pca) := autovec_pca]
+  dataset <-- dataset[, names(autovec_pca) := autovec_pca]
+  head(dataset)
   rm(autovec_pca) # borramos para ahorrar espacio
   
   cat("Si llegaste hasta aca es porque PCA no te hizo volar por los aires la corrida. Felicitaciones.\n")
