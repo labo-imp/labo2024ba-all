@@ -175,7 +175,7 @@ print( tb_salida[ , list( "arbol1" = mean( ganancia1),  "arbol2" = mean(ganancia
 print( tb_salida[ , list( "prob( m1 > m2)" = sum(ganancia1 > ganancia2 )/ .N ) ]  )
 
 
-wt <- wilcox.test(  tb_salida$ganancia1,  tb_salida$ganancia2 )
-cat( "Wilcoxon Test p-value ", wt$p.value, "\n" )
+# wt <- wilcox.test(  tb_salida$ganancia1,  tb_salida$ganancia2 )
+# cat( "Wilcoxon Test p-value ", wt$p.value, "\n" )
 
 
