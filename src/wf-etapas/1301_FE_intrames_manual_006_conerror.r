@@ -408,7 +408,7 @@ AgregarVariables_IntraMes <- function(dataset) {
     dataset[,flag_tiene_td := (ifelse(ctarjeta_debito>0,1,0))] 
   
   if(atributos_presentes(c("Master_fechaalta","Master_Finiciomora"))) 
-    dataset[,cdias_mora_desde_alta_master := ifelse(ctarjeta_debito>0,1,0)]  
+    dataset[,cdias_mora_desde_alta_master := Master_fechaalta-Master_Finiciomora]  
   
   if(atributos_presentes(c("Visa_fechaalta","Visa_Finiciomora"))) 
     dataset[,cdias_mora_desde_alta_visa := Visa_fechaalta-Visa_Finiciomora] 
@@ -455,6 +455,12 @@ AgregarVariables_IntraMes <- function(dataset) {
   
   if(atributos_presentes(c("Visa_msaldototal","Visa_mconsumototal")))
     dataset[, delta_saldo_total_visa := Visa_msaldototal - Visa_mconsumototal] 
+  
+  
+  
+  
+  
+  
   
   if(atributos_presentes(c('Master_madelantodolares','Master_mconsumosdolares')))
     dataset[, ratio_adelanto_consumos_dolares_master := (Master_madelantodolares / Master_mconsumosdolares)]

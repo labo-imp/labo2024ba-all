@@ -391,6 +391,75 @@ AgregarVariables_IntraMes <- function(dataset) {
   
   # Quinta tanda
   
+  if(atributos_presentes(c("ctarjeta_debito_transacciones","ctarjeta_visa_transacciones","ctarjeta_master_transacciones",
+                           "cpagodeservicios","cpagomiscuentas","cforex","ctransferencias_recibidas",
+                           "ctransferencias_emitidas","cextraccion_autoservicio","ccheques_depositados",
+                           "ccallcenter_transacciones","chomebanking_transacciones","ccajas_transacciones",
+                           "ccajas_depositos","catm_trx","catm_trx_other","cmobile_app_trx","Master_cconsumos",
+                           "Master_cadelantosefectivo","Visa_cconsumos","Visa_cadelantosefectivo")))
+    dataset[, frecuencia_transacciones := (ctarjeta_debito_transacciones + ctarjeta_visa_transacciones + 
+                                             ctarjeta_master_transacciones + cpagodeservicios + cpagomiscuentas + cforex + ctransferencias_recibidas + 
+                                             ctransferencias_emitidas + cextraccion_autoservicio + ccheques_depositados + ccallcenter_transacciones + 
+                                             chomebanking_transacciones + ccajas_transacciones + ccajas_depositos + catm_trx + catm_trx_other + 
+                                             cmobile_app_trx + Master_cconsumos + Master_cadelantosefectivo + Visa_cconsumos + Visa_cadelantosefectivo)/30] 
+  
+  if(atributos_presentes(c("ctarjeta_debito"))) 
+    dataset[,flag_tiene_td := (ifelse(ctarjeta_debito>0,1,0))] 
+  
+  if(atributos_presentes(c("Master_fechaalta","Master_Finiciomora"))) 
+    dataset[,cdias_mora_desde_alta_master := Master_fechaalta-Master_Finiciomora]  
+  
+  if(atributos_presentes(c("Visa_fechaalta","Visa_Finiciomora"))) 
+    dataset[,cdias_mora_desde_alta_visa := Visa_fechaalta-Visa_Finiciomora] 
+  
+  if(atributos_presentes(c("ctarjeta_visa","ctarjeta_master"))) 
+    dataset[,flag_tiene_tc := ifelse(ctarjeta_visa+ctarjeta_master>0,1,0)] 
+  
+  
+  if(atributos_presentes(c("ctarjeta_visa","ctarjeta_master")))
+    dataset[,flag_tiene_ambas_tarjetas := ifelse(ctarjeta_visa>0 & ctarjeta_master > 0,1,0)] 
+  
+  if(atributos_presentes(c("Visa_msaldopesos","Visa_msaldodolares")))
+    dataset[,ratio_saldo_pesos_dolares_visa := Visa_msaldopesos / Visa_msaldodolares] 
+  
+  if(atributos_presentes(c("Visa_mconsumospesos","Visa_mconsumosdolares"))) 
+    dataset[,ratio_consumos_pesos_dolares_visa := Visa_mconsumospesos / Visa_mconsumosdolares]
+  
+  if(atributos_presentes(c("Visa_mpagospesos","Visa_mpagosdolares"))) 
+    dataset[,ratio_pagos_pesos_dolares_visa := Visa_mpagospesos / Visa_mpagosdolares] 
+  
+  if(atributos_presentes(C("Visa_Finiciomora","Visa_Fvencimiento"))) 
+    dataset[, dias_a_vencimiento_mora_visa := Visa_Finiciomora - Visa_Fvencimiento] 
+  
+  if(atributos_presentes(c("Visa_mpagado","Visa_mconsumototal"))) 
+    dataset[, ratio_pago_consumo_total_visa := Visa_mpagado / Visa_mconsumototal] 
+  
+  if(atributos_presentes(c("Visa_mpagominimo", "Visa_mpagado"))) 
+    dataset[, ratio_pago_minimo_total_visa := Visa_mpagominimo / Visa_mpagado] 
+  
+  if(atributos_presentes(c("Visa_status"))) 
+    dataset[,flag_estado_cuenta_visa_cerrada := ifelse(Visa_status == 9,1,0)] 
+  
+  if(atributos_presentes(c("Visa_status")))  
+    dataset[, flag_estado_cuenta_visa_por_cerrar:= ifelse(Visa_status %in% c(6,7),1,0)] 
+  
+  if(atributos_presentes(c("Visa_status")))    
+    dataset[, flag_estado_cuenta_visa_activa := ifelse(Visa_status == 0,1,0)] 
+  
+  if(atributos_presentes(c("Visa_status"))) 
+    dataset[, flag_estado_cuenta_visa_proceso_cierre_y_cerradas := ifelse(Visa_status %in% c(6,7,9),1,0)] 
+  
+  if(atributos_presentes(c("Visa_msaldototal","Visa_mconsumototal"))) 
+    dataset[, delta_saldo_total_visa := Visa_msaldototal - Visa_mconsumototal] 
+  
+  if(atributos_presentes(c("Visa_msaldototal","Visa_mconsumototal")))
+    dataset[, delta_saldo_total_visa := Visa_msaldototal - Visa_mconsumototal]
+  
+  
+  
+  
+  
+  
   if(atributos_presentes(c('Master_madelantodolares','Master_mconsumosdolares')))
     dataset[, ratio_adelanto_consumos_dolares_master := (Master_madelantodolares / Master_mconsumosdolares)]
   
