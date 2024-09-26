@@ -460,7 +460,7 @@ AgregarVariables_IntraMes <- function(dataset) {
     dataset[, ratio_adelanto_consumos_dolares_master := (Master_madelantodolares / Master_mconsumosdolares)]
   
   if(atributos_presentes(c('Master_madelantopesos','Master_mconsumospesos')))
-    dataset[, (Master_madelantopesos / Master_mconsumospesos) := (Master_madelantopesos / Master_mconsumospesos)]
+    dataset[, ratio_adelanto_consumos_pesos_master := (Master_madelantopesos / Master_mconsumospesos)]
   
   if(atributos_presentes(c('Master_msaldototal','Master_mconsumototal')))
     dataset[, delta_saldo_total_master := (Master_msaldototal - Master_mconsumototal)]
