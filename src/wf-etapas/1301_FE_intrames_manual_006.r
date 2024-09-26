@@ -428,7 +428,7 @@ AgregarVariables_IntraMes <- function(dataset) {
   if(atributos_presentes(c("Visa_mpagospesos","Visa_mpagosdolares"))) 
     dataset[,ratio_pagos_pesos_dolares_visa := Visa_mpagospesos / Visa_mpagosdolares] 
   
-  if(atributos_presentes(C("Visa_Finiciomora","Visa_Fvencimiento"))) 
+  if(atributos_presentes(c("Visa_Finiciomora","Visa_Fvencimiento"))) 
     dataset[, dias_a_vencimiento_mora_visa := Visa_Finiciomora - Visa_Fvencimiento] 
   
   if(atributos_presentes(c("Visa_mpagado","Visa_mconsumototal"))) 
