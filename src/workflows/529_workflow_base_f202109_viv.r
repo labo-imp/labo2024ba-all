@@ -298,6 +298,35 @@ CN_canaritos_asesinos_base <- function( pinputexps, ratio, desvio)
   return( exp_correr_script( param_local ) ) # linea fija
 }
 #------------------------------------------------------------------------------
+# Canaritos Asesinos   Baseline
+#  azaroso, utiliza semilla
+
+CN_canaritos_asesinos_base_2 <- function( pinputexps, ratio, desvio)
+{
+  if( -1 == (param_local <- exp_init())$resultado ) return( 0 )# linea fija
+  
+  
+  param_local$meta$script <- "/src/wf-etapas/z1601_CN_canaritos_asesinos.r"
+  
+  # Parametros de un LightGBM que se genera para estimar la column importance
+  param_local$train$clase01_valor1 <- c( "BAJA+2", "BAJA+1")
+  param_local$train$positivos <- c( "BAJA+2")
+  param_local$train$training <- c(202010, 202011, 202012, 202101, 202102, 202103)
+  param_local$train$validation <- c( 202105 )
+  param_local$train$undersampling <- 0.1
+  param_local$train$gan1 <- 117000
+  param_local$train$gan0 <-  -3000
+  
+  
+  # ratio varia de 0.0 a 2.0
+  # desvio varia de -4.0 a 4.0
+  param_local$CanaritosAsesinos$ratio <- ratio
+  # desvios estandar de la media, para el cutoff
+  param_local$CanaritosAsesinos$desvios <- desvio
+  
+  return( exp_correr_script( param_local ) ) # linea fija
+}
+#------------------------------------------------------------------------------
 # Training Strategy  Baseline
 #   y solo incluyo en el dataset al 20% de los CONTINUA
 #  azaroso, utiliza semilla
@@ -474,7 +503,7 @@ wf_septiembre <- function( pnombrewf )
   CN_canaritos_asesinos_base(ratio=0.95, desvio=2.35)
   FEhist_base_2()
   FErf_attributes_base()
-  CN_canaritos_asesinos_base(ratio=0.95, desvio=2.35)
+  CN_canaritos_asesinos_base_2(ratio=0.95, desvio=2.35)
 
 
   ts9 <- TS_strategy_base9()
