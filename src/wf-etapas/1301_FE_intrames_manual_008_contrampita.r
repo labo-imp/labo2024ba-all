@@ -17,6 +17,7 @@ gc(full = TRUE) # garbage collection
 require("data.table")
 require("yaml")
 require("dplyr")
+require("lubridate")
 
 
 #cargo la libreria
@@ -244,8 +245,12 @@ AgregarVariables_IntraMes <- function(dataset) {
                                              by=c('codigo'='codigo'))[,'cantidad_total_transacciones.y']
     dataset$transaccionesmenos2 <- left_join(dataset,auxiliarmenos2,
                                              by=c('codigo'='codigo'))[,'cantidad_total_transacciones.y']
-    dataset$cantidad_total_transacciones_quarter <<- rowSums(cbind(dataset$cantidad_total_transacciones + 
-                                                                     dataset$transaccionesmenos1 + dataset$transaccionesmenos2),na.rm=T)
+    #dataset$cantidad_total_transacciones_quarter <<- rowSums(cbind(dataset$cantidad_total_transacciones + 
+    #                                                                 dataset$transaccionesmenos1 + dataset$transaccionesmenos2),na.rm=T)
+    
+    dataset[,cantidad_total_transacciones_quarter := rowSums(cbind(dataset$cantidad_total_transacciones + 
+                                                                    dataset$transaccionesmenos1 +
+                                                                     dataset$transaccionesmenos2),na.rm=T)]
     dataset$codigo <- NULL
     dataset$transaccionesmenos1 <- NULL
     dataset$transaccionesmenos2 <- NULL
