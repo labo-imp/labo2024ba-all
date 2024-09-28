@@ -1,3 +1,6 @@
+# Script para conmemorar la curiosidad científica de Mariano Taha
+# 10-repated 5-fold cross validation
+
 rm(list = ls()) # Borro todos los objetos
 gc() # Garbage Collection
 
@@ -11,13 +14,14 @@ require("ggplot2")
 PARAM <- list()
 # reemplazar por su primer semilla
 PARAM$semilla_primigenia <- 100103
-PARAM$qsemillas <- 200
+PARAM$qsemillas <- 10  # la parte de 10-repeated
+PARAM$qfolds <- 5  # cantidad de folds del  k-fold Cross Validation
+
 
 # elegir SU dataset comentando/ descomentando
 PARAM$dataset_nom <- "~/datasets/vivencial_dataset_pequeno.csv"
 # PARAM$dataset_nom <- "~/datasets/conceptual_dataset_pequeno.csv"
 
-PARAM$training_pct <- 70L  # entre  1L y 99L 
 
 PARAM$rpart1 <- list (
   "cp" = -1,
@@ -53,72 +57,81 @@ particionar <- function(data, division, agrupa = "", campo = "fold", start = 1, 
   ]
 }
 #------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+# fold_test  tiene el numero de fold que voy a usar para testear,
+#  entreno en el resto de los folds
+# param tiene los hiperparametros del arbol
 
-DosArbolesEstimarGanancia <- function(semilla, training_pct, param_rpart1, param_rpart2) {
-  # particiono estratificadamente el dataset
-  particionar(dataset,
-    division = c(training_pct, 100L -training_pct), 
-    agrupa = "clase_ternaria",
-    seed = semilla # aqui se usa SU semilla
+ArbolSimple <- function(fold_test, param_rpart) {
+  # genero el modelo
+  # entreno en todo MENOS el fold_test que uso para testing
+  modelo <- rpart("clase_ternaria ~ .",
+    data = dataset[fold != fold_test, ],
+    xval = 0,
+    control = param_rpart
   )
 
-  # genero el modelo
-  # predecir clase_ternaria a partir del resto
-  modelo1 <- rpart("clase_ternaria ~ .",
-    data = dataset[fold == 1], # fold==1  es training,  el 70% de los datos
-    xval = 0,
-    control = param_rpart1
-  ) # aqui van los parametros del arbol
-
   # aplico el modelo a los datos de testing
-  prediccion1 <- predict(modelo1, # el modelo que genere recien
-    dataset[fold == 2], # fold==2  es testing, el 30% de los datos
+  # aplico el modelo sobre los datos de testing
+  # quiero que me devuelva probabilidades
+  prediccion <- predict(modelo,
+    dataset[fold == fold_test, ],
     type = "prob"
-  ) # type= "prob"  es que devuelva la probabilidad
+  )
 
+  # esta es la probabilidad de baja
+  prob_baja2 <- prediccion[, "BAJA+2"]
 
-  # calculo la ganancia en testing  qu es fold==2
-  ganancia_test1 <- dataset[
-    fold == 2,
-    sum(ifelse(prediccion1[, "BAJA+2"] > 0.025,
-      ifelse(clase_ternaria == "BAJA+2", 117000, -3000),
-      0
+  # calculo la ganancia
+  ganancia_testing <- dataset[fold == fold_test][
+    prob_baja2 > 1 / 40,
+    sum(ifelse(clase_ternaria == "BAJA+2",
+      117000, -3000
     ))
   ]
 
-  # escalo la ganancia como si fuera todo el dataset
-  ganancia_test_normalizada1 <- ganancia_test1 / (( 100 - training_pct ) / 100 )
+  # esta es la ganancia sobre el fold de testing, NO esta normalizada
+  return(ganancia_testing)
+}
+#------------------------------------------------------------------------------
 
-  modelo2 <- rpart("clase_ternaria ~ .",
-    data = dataset[fold == 1], # fold==1  es training,  el 70% de los datos
-    xval = 0,
-    control = param_rpart2
-  ) # aqui van los parametros del arbol
+DosArbolesCrossValidation <- function(semilla, param_rpart1, param_rpart2, qfolds, pagrupa) {
+  # generalmente  c(1, 1, 1, 1, 1 )  cinco unos
+  divi <- rep(1, qfolds)
 
-  # aplico el modelo a los datos de testing
-  prediccion2 <- predict(modelo2, # el modelo que genere recien
-    dataset[fold == 2], # fold==2  es testing, el 30% de los datos
-    type = "prob"
-  ) # type= "prob"  es que devuelva la probabilidad
+  # particiono en dataset en folds
+  particionar(dataset, 
+    divi,
+    seed = semilla,
+    agrupa = pagrupa
+  )
 
 
-  # calculo la ganancia en testing  qu es fold==2
-  ganancia_test2 <- dataset[
-    fold == 2,
-    sum(ifelse(prediccion2[, "BAJA+2"] > 0.025,
-      ifelse(clase_ternaria == "BAJA+2", 117000, -3000),
-      0
-    ))
-  ]
+  ganancias1 <- mcmapply(ArbolSimple,
+    seq(qfolds), # 1 2 3 4 5
+    MoreArgs = list(param_rpart1),
+    SIMPLIFY = FALSE,
+    mc.cores = 1  # dentro NO quiero paralelismo
+  )
 
-  # escalo la ganancia como si fuera todo el dataset
-  ganancia_test_normalizada2 <- ganancia_test2 / (( 100 - training_pct ) / 100 )
+  ganancias2 <- mcmapply(ArbolSimple,
+    seq(qfolds), # 1 2 3 4 5
+    MoreArgs = list(param_rpart2),
+    SIMPLIFY = FALSE,
+    mc.cores = 1  # dentro NO quiero paralelismo
+  )
 
-  return(list(
-    "semilla" = semilla,
-    "ganancia1" = ganancia_test_normalizada1,
-    "ganancia2" = ganancia_test_normalizada2
-  ))
+  # elimino el campo fold del dataset, para no ensuciar
+  dataset[, fold := NULL]
+
+
+  tb_salida <- as.data.table( list(
+    "semilla" = rep( semilla, qfolds ),
+    "ganancia1" = unlist( ganancias1 ) * qfolds,
+    "ganancia2" = unlist( ganancias2 ) * qfolds
+   ) )
+
+  return(tb_salida)
 }
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
@@ -140,15 +153,17 @@ dataset <- fread(PARAM$dataset_nom)
 dataset <- dataset[clase_ternaria != ""]
 
 
-dir.create("~/buckets/b1/exp/EX2440", showWarnings = FALSE)
-setwd("~/buckets/b1/exp/EX2440")
+dir.create("~/buckets/b1/exp/EX2460", showWarnings = FALSE)
+setwd("~/buckets/b1/exp/EX2460")
+
 
 
 # la funcion mcmapply  llama a la funcion ArbolEstimarGanancia
 #  tantas veces como valores tenga el vector  PARAM$semillas
-salidas <- mcmapply(DosArbolesEstimarGanancia,
+salidas <- mcmapply(
+  DosArbolesCrossValidation,
   PARAM$semillas, # paso el vector de semillas
-  MoreArgs = list(PARAM$training_pct, PARAM$rpart1, PARAM$rpart2), # aqui paso el segundo parametro
+  MoreArgs = list(PARAM$rpart1, PARAM$rpart2, PARAM$qfolds, "clase_ternaria"), # aqui paso el segundo parametro
   SIMPLIFY = FALSE,
   mc.cores = detectCores()
 )
