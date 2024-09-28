@@ -357,9 +357,8 @@ HT_tuning_base <- function( pinputexps, bypass=FALSE)
     feature_fraction_bynode = c(0.001, 1.0)
   )
   
-  
   # una Bayesian humilde, pero no descabellada
-  param_local$bo_iteraciones <- 225 # iteraciones de la Optimizacion Bayesiana
+  param_local$bo_iteraciones <- 20 # iteraciones de la Optimizacion Bayesiana
  
   return( exp_correr_script( param_local ) ) # linea fija
 }
