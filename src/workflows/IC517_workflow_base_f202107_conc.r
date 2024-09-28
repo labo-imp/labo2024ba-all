@@ -354,7 +354,7 @@ HT_tuning_base <- function( pinputexps, bypass=FALSE)
     lambda_l2 = c(1.0, 10.0), # lambda_l2 >= 0.0
     n_estimators = c(50L, 400L, 'integer'),
     max_delta_step = c(0L, 10L, 'integer'),
-    feature_fraction_bynode = c(0, 1.0, 'integer')
+    feature_fraction_bynode = c(0.001, 1.0)
   )
 
 
