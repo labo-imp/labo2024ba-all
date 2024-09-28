@@ -224,11 +224,17 @@ AgregarVariables_IntraMes <- function(dataset) {
               cmobile_app_trx + Master_cconsumos + Master_cadelantosefectivo + Visa_cconsumos + Visa_cadelantosefectivo]
   
   
-  dataset$foto_mes_formato_fecha <<- as.Date(paste(substr(dataset$foto_mes,1,4),substr(dataset$foto_mes,5,6),"01",sep='-'))
+  
+  if(atributos_presentes(c("foto_mes")))
+    dataset[,foto_mes_formato_fecha := as.Date(paste(substr(dataset$foto_mes,1,4),substr(dataset$foto_mes,5,6),"01",sep='-'))]
+  
+  #dataset$foto_mes_formato_fecha <<- as.Date(paste(substr(dataset$foto_mes,1,4),substr(dataset$foto_mes,5,6),"01",sep='-'))
   
   if(atributos_presentes(c("cantidad_total_transacciones"))){
     auxiliarmenos1 <- dataset[,c('numero_de_cliente','foto_mes_formato_fecha','cantidad_total_transacciones')]
     auxiliarmenos2 <- dataset[,c('numero_de_cliente','foto_mes_formato_fecha','cantidad_total_transacciones')]
+    auxiliarmenos1$foto_mes_formato_fecha <- as.Date(auxiliarmenos1$foto_mes_formato_fecha)
+    auxiliarmenos2$foto_mes_formato_fecha <- as.Date(auxiliarmenos2$foto_mes_formato_fecha)
     auxiliarmenos1$foto_mes_formato_fecha <- auxiliarmenos1$foto_mes_formato_fecha - months(1)
     auxiliarmenos2$foto_mes_formato_fecha <- auxiliarmenos2$foto_mes_formato_fecha - months(2)
     auxiliarmenos1$codigo <- paste(auxiliarmenos1$numero_de_cliente,auxiliarmenos1$foto_mes_formato_fecha,sep='-')
