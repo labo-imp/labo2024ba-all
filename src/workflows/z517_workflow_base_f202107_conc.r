@@ -340,7 +340,7 @@ HT_tuning_base <- function( pinputexps, bypass=FALSE)
     
     extra_trees = FALSE,
     # Parte variable
-    num_leaves = c( 0L, 2048L,  "integer" ), 
+    num_leaves = c( 8L, 2048L,  "integer" ), 
     learning_rate = c( 0.02, 0.3 ),
     max_depth = c( 0L, 2048L,  "integer" ), # -1 significa no limitar,  por ahora lo dejo fijof
     min_data_in_leaf = c( 20L, 2000L, "integer"),
