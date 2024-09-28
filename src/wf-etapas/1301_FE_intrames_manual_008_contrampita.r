@@ -225,8 +225,10 @@ AgregarVariables_IntraMes <- function(dataset) {
   
   
   
+  if(atributos_presentes(c("foto_mes")))
+    dataset[,foto_mes_formato_fecha := as.Date(paste(substr(dataset$foto_mes,1,4),substr(dataset$foto_mes,5,6),"01",sep='-'))]
   
-  dataset$foto_mes_formato_fecha <<- as.Date(paste(substr(dataset$foto_mes,1,4),substr(dataset$foto_mes,5,6),"01",sep='-'))
+  #dataset$foto_mes_formato_fecha <<- as.Date(paste(substr(dataset$foto_mes,1,4),substr(dataset$foto_mes,5,6),"01",sep='-'))
   
   if(atributos_presentes(c("cantidad_total_transacciones"))){
     auxiliarmenos1 <- dataset[,c('numero_de_cliente','foto_mes_formato_fecha','cantidad_total_transacciones')]
