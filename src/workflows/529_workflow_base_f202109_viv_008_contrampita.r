@@ -407,9 +407,9 @@ KA_evaluate_kaggle <- function( pinputexps )
 
   param_local$isems_submit <- 1:20 # misterioso parametro, no preguntar
 
-  param_local$envios_desde <-   1000L
-  param_local$envios_hasta <-  8000L
-  param_local$envios_salto <-    1000L
+  param_local$envios_desde <-   100L
+  param_local$envios_hasta <-  1000L
+  param_local$envios_salto <-    100L
   param_local$competition <- "labo-i-vivencial-2024-ba"
 
   return( exp_correr_script( param_local ) ) # linea fija
