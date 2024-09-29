@@ -193,7 +193,7 @@ FErf_attributes_base <- function( pinputexps, ratio, desvio)
     num_iterations = 20,
     num_leaves  = 16,
     min_data_in_leaf = 2,
-    feature_fraction_bynode  = 0.5,
+    feature_fraction_bynode  = 0.8,
 
     # para que LightGBM emule Random Forest
     boosting = "rf",
