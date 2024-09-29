@@ -602,7 +602,74 @@ AgregarVariables_IntraMes <- function(dataset) {
   
   
   
+  if(atributos_presentes(c("Visa_mpagado", "Visa_mlimitecompra"))) 
+    dataset[, ratio_pagos_limite_visa := Visa_mpagado / Visa_mlimitecompra]
   
+  if(atributos_presentes(c("Master_mpagado", "Master_mlimitecompra"))) 
+    dataset[, ratio_pagos_limite_master := Master_mpagado / Master_mlimitecompra]
+  
+  if(atributos_presentes(c("mtarjeta_visa_debitos_automaticos", "Visa_mlimitecompra")))
+    dataset[, ratio_da_limite_visa := mtarjeta_visa_debitos_automaticos / Visa_mlimitecompra]
+  
+  if(atributos_presentes(c("mttarjeta_master_debitos_automaticos", "Master_mlimitecompra")))
+    dataset[, ratio_da_limite_master := mttarjeta_master_debitos_automaticos / Master_mlimitecompra]
+  
+  if(atributos_presentes(c("mtarjeta_visa_debitos_automaticos", "mttarjeta_master_debitos_automaticos","Visa_mlimitecompra","Master_mlimitecompra")))
+    dataset[, ratio_da_limite_vm := (mtarjeta_visa_debitos_automaticos + mttarjeta_master_debitos_automaticos) / (Visa_mlimitecompra + Master_mlimitecompra)]
+  
+  if(atributos_presentes(c("Visa_mpagominimo", "Visa_mlimitecompra")))
+    dataset[, ratio_minimo_pendiente_visa := Visa_mpagominimo / Visa_mlimitecompra]
+  
+  if(atributos_presentes(c("Master_mlimitecompra", "Visa_mlimitecompra")))
+    dataset[, comparacion_limitescompras_tarjetas := Master_mlimitecompra/Visa_mlimitecompra]
+  
+  if(atributos_presentes(c("mpayroll", "mpayroll2","Visa_mlimitecompra")))
+    dataset[, relacion_mpayroll_limitecompra_visa := (mpayroll+mpayroll2)/Visa_mlimitecompra]
+  
+  if(atributos_presentes(c("mpayroll", "mpayroll2","Master_mlimitecompra")))
+    dataset[, relacion_mpayroll_limitecompra_master := (mpayroll+mpayroll2)/Master_mlimitecompra]
+  
+  if(atributos_presentes(c("mtarjeta_visa_consumo", "Visa_mlimitecompra")))
+    dataset[, relacion_consumo_vs_limitecompra_visa := mtarjeta_visa_consumo/Visa_mlimitecompra]
+  
+  if(atributos_presentes(c("mtarjeta_master_consumo", "Master_mlimitecompra")))
+    dataset[, relacion_consumo_vs_limitecompra_master := mtarjeta_master_consumo/Master_mlimitecompra]
+  
+  if(atributos_presentes(c("Visa_mlimitecompra", "cliente_antiguedad")))
+    dataset[, relación_limitecompra_vs_antiguedad_visa := Visa_mlimitecompra/cliente_antiguedad]
+  
+  if(atributos_presentes(c("Master_mlimitecompra", "cliente_antiguedad")))
+    dataset[, relación_limitecompra_vs_antiguedad_master := Master_mlimitecompra/cliente_antiguedad]
+  
+  if(atributos_presentes(c("deuda_cliente_prestamos", "Master_mlimitecompra")))
+    dataset[, relacion_deuda_vs_limitecompra_master := deuda_cliente_prestamos/Master_mlimitecompra]
+  
+  if(atributos_presentes(c("deuda_cliente_prestamos", "Visa_mlimitecompra")))
+    dataset[, relacion_deuda_vs_limitecompra_visa := deuda_cliente_prestamos/Visa_mlimitecompra]
+  
+  if(atributos_presentes(c("minversion1_pesos", "Master_mlimitecompra")))
+    dataset[, relacion_minversión_vs_limitecompra_visa := minversion1_pesos/Master_mlimitecompra]
+  
+  if(atributos_presentes(c("minversion1_pesos", "Visa_mlimitecompra")))
+    dataset[, relacion_minversión_vs_limitecompra_master := minversion1_pesos/Visa_mlimitecompra]
+  
+  if(atributos_presentes(c("mtarjeta_visa_debitos_automaticos", "Visa_mlimitecompra")))
+    dataset[, relacion_mdebitautom_tcredito_vs_limitecompra_visa := mtarjeta_visa_debitos_automaticos/Visa_mlimitecompra]
+  
+  if(atributos_presentes(c("mtarjeta_master_debitos_automaticos", "Master_mlimitecompra")))
+    dataset[, relacion_mdebitautom_tcredito_vs_limitecompra_master := mtarjeta_master_debitos_automaticos/Master_mlimitecompra]
+  
+  if(atributos_presentes(c("mpayroll","mpayroll2","deuda_cliente_prestamos","Visa_mlimitecompra")))
+    dataset[, relacion_ingresodisponible_vs_limitetarjeta_visa := ((mpayroll+mpayroll2)-deuda_cliente_prestamos)/Visa_mlimitecompra]
+  
+  if(atributos_presentes(c("mpayroll","mpayroll2","deuda_cliente_prestamos","Master_mlimitecompra")))
+    dataset[, relacion_ingresodisponible_vs_limitetarjeta_master := ((mpayroll+mpayroll2)-deuda_cliente_prestamos)/Master_mlimitecompra]
+  
+  if(atributos_presentes(c("Visa_mconsumospesos","Visa_mconsumosdolares","Visa_mlimitecompra")))
+    dataset[, relacion_consumos_vs_limitetarjeta_visa := (Visa_mconsumospesos+Visa_mconsumosdolares)/Visa_mlimitecompra]
+  
+  if(atributos_presentes(c("Master_mconsumospesos","Master_mconsumosdolares","Master_mlimitecompra")))
+    dataset[, relacion_consumos_vs_limitetarjeta_master := (Master_mconsumospesos+Master_mconsumosdolares)/Master_mlimitecompra]
   
   
   
