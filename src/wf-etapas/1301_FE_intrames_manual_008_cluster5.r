@@ -264,8 +264,6 @@ AgregarVariables_IntraMes <- function(dataset) {
   dataset <<- dummy_cols(dataset,select_columns = "clusters_creados", remove_first_dummy = F)
   dataset$clusters_creados <<- NULL
   
-  rm(autovec_pca) # borramos para ahorrar espacio
-  
   cat("Si llegaste hasta aca es porque K medias no te hizo volar por los aires la corrida. Felicitaciones.\n")
   
 
@@ -274,7 +272,7 @@ AgregarVariables_IntraMes <- function(dataset) {
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 # Aqui comienza el programa
-cat( "z1301_FE_intrames_manual_007_pca.r  START\n")
+cat( "z1301_FE_intrames_manual_008_cluster5.r  START\n")
 action_inicializar() 
 
 
@@ -346,4 +344,4 @@ GrabarOutput()
 #  archivos tiene a los files que debo verificar existen para no abortar
 
 action_finalizar( archivos = c("dataset.csv.gz","dataset_metadata.yml")) 
-cat( "z1301_FE_intrames_manual_007_pca.r  END\n")
+cat( "z1301_FE_intrames_manual_008_cluster5.r  END\n")
