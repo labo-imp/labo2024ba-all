@@ -16,6 +16,7 @@ gc(full = TRUE) # garbage collection
 
 require("data.table")
 require("yaml")
+require("lubridate")
 
 
 #cargo la libreria
