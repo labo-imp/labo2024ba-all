@@ -212,6 +212,11 @@ AgregarVariables_IntraMes <- function(dataset) {
   # Aqui debe usted agregar sus propias nuevas variables
 
   
+  
+  
+  # Magia absoluta de Gustavo el numero 1
+  
+  
   if(atributos_presentes(c("ctarjeta_debito_transacciones","ctarjeta_visa_transacciones","ctarjeta_master_transacciones",
                            "cpagodeservicios","cpagomiscuentas","cforex","ctransferencias_recibidas",
                            "ctransferencias_emitidas","cextraccion_autoservicio","ccheques_depositados",
@@ -336,6 +341,37 @@ AgregarVariables_IntraMes <- function(dataset) {
   
   
   
+  # Variables que ya teniamos
+  
+  
+  if( atributos_presentes(c("mprestamos_personales","mprestamos_prendarios","mprestamos_hipotecarios")))
+    dataset[,deuda_cliente_prestamos := mprestamos_personales + mprestamos_prendarios + 
+              mprestamos_hipotecarios]
+  
+  if( atributos_presentes(c("mcaja_ahorro", "mcuenta_corriente" ,"mplazo_fijo_pesos","mplazo_fijo_dolares",
+                            "minversion1_pesos" ,"minversion1_dolares" ,"minversion2")))
+    dataset[,activos_cliente := mcaja_ahorro + mcuenta_corriente + mplazo_fijo_pesos + mplazo_fijo_dolares +
+              minversion1_pesos + minversion1_dolares + minversion2]
+  
+  if(atributos_presentes(c("cliente_antiguedad", "cproductos")))
+    dataset[, adopcion_productos := cliente_antiguedad / cproductos]
+  
+  if(atributos_presentes(c("mtarjeta_visa_consumo", "mtarjeta_master_consumo", 
+                           "ctarjeta_visa_transacciones", "ctarjeta_master_transacciones")))
+    dataset[, promedio_transacciones_credito := (mtarjeta_visa_consumo + mtarjeta_master_consumo) / 
+              (ctarjeta_visa_transacciones + ctarjeta_master_transacciones)]
+  
+  if(atributos_presentes(c("mcomisiones_mantenimiento","mcomisiones_otras","cproductos")))
+    dataset[, ratio_comisiones_productos := (mcomisiones_mantenimiento +  mcomisiones_otras) / cproductos]
+  
+  if(atributos_presentes(c("ccomisiones_mantenimiento","ccomisiones_otras")))
+    dataset[, cantidad_total_comisiones := ccomisiones_mantenimiento + ccomisiones_otras]
+  
+  
+  
+  
+  
+  
   # valvula de seguridad para evitar valores infinitos
   # paso los infinitos a NULOS
   infinitos <- lapply(
@@ -372,6 +408,31 @@ AgregarVariables_IntraMes <- function(dataset) {
     dataset[mapply(is.nan, dataset)] <<- 0
   }
 
+  
+  # Aca agregamos los primeros 20 componentes principales que salen haciendo PCA
+  
+  
+  cat("Aca empieza a correr PCA. Suerte.\n")
+  datasetsinNA <- dataset
+  datasetsinNA[is.na(datasetsinNA)] <- 0
+  pca_datos <- prcomp(datasetsinNA[,1:154],center=TRUE,scale=TRUE)
+  rm(datasetsinNA) # borramos este dataset creado para ahorrar espacio
+  autovec_pca <- as.data.table(pca_datos$x[,1:20])
+  rm(pca_datos) # borramos para ahorrar espacio
+  #dataset <-- dataset[, names(autovec_pca) := autovec_pca]
+  dataset <<- cbind(dataset,autovec_pca)
+  rm(autovec_pca) # borramos para ahorrar espacio
+  
+  cat("Si llegaste hasta aca es porque PCA no te hizo volar por los aires la corrida. Felicitaciones.\n")
+  
+  
+  
+  
+  
+  
+  
+  
+  
   cat( "fin AgregarVariables_IntraMes()\n")
 }
 #------------------------------------------------------------------------------
