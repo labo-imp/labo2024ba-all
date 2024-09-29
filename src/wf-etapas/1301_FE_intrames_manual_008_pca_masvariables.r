@@ -602,6 +602,8 @@ AgregarVariables_IntraMes <- function(dataset) {
   
   
   
+  
+  
   if(atributos_presentes(c("Visa_mpagado", "Visa_mlimitecompra"))) 
     dataset[, ratio_pagos_limite_visa := Visa_mpagado / Visa_mlimitecompra]
   
@@ -665,11 +667,165 @@ AgregarVariables_IntraMes <- function(dataset) {
   if(atributos_presentes(c("mpayroll","mpayroll2","deuda_cliente_prestamos","Master_mlimitecompra")))
     dataset[, relacion_ingresodisponible_vs_limitetarjeta_master := ((mpayroll+mpayroll2)-deuda_cliente_prestamos)/Master_mlimitecompra]
   
-  if(atributos_presentes(c("Visa_mconsumospesos","Visa_mconsumosdolares","Visa_mlimitecompra")))
-    dataset[, relacion_consumos_vs_limitetarjeta_visa := (Visa_mconsumospesos+Visa_mconsumosdolares)/Visa_mlimitecompra]
+  if(atributos_presentes(c("Visa_mconsumototal","Visa_mlimitecompra")))
+    dataset[, relacion_consumos_vs_limitetarjeta_visa := Visa_mconsumototal/Visa_mlimitecompra]
   
-  if(atributos_presentes(c("Master_mconsumospesos","Master_mconsumosdolares","Master_mlimitecompra")))
-    dataset[, relacion_consumos_vs_limitetarjeta_master := (Master_mconsumospesos+Master_mconsumosdolares)/Master_mlimitecompra]
+  if(atributos_presentes(c("Master_mconsumototal","Master_mlimitecompra")))
+    dataset[, relacion_consumos_vs_limitetarjeta_master := Master_mconsumototal/Master_mlimitecompra]
+  
+  if(atributos_presentes(c("Master_mlimitecompra","Master_mfinanciacion_limite")))
+    dataset[, dif_limitecompra_limitefinancia_master := Master_mlimitecompra - Master_mfinanciacion_limite]
+  
+  if(atributos_presentes(c("Visa_mlimitecompra","Visa_mfinanciacion_limite")))
+    dataset[, dif_limitecompra_limitefinancia_visa := Visa_mlimitecompra - Visa_mfinanciacion_limite]
+  
+  if(atributos_presentes(c("Master_mfinanciacion_limite","Master_mlimitecompra")))
+    dataset[, ratio_mfinancion_limite_vs_limitecompra_master := Master_mfinanciacion_limite / Master_mlimitecompra]
+  
+  if(atributos_presentes(c("Visa_mfinanciacion_limite","Visa_mlimitecompra")))
+    dataset[, ratio_mfinancion_limite_vs_limitecompra_master := Visa_mfinanciacion_limite / Visa_mlimitecompra]
+  
+  if(atributos_presentes(c("Visa_mfinanciacion_limite","Visa_mlimitecompra","Master_mfinanciacion_limite","Master_mlimitecompra")))
+    dataset[, ratio_mfinancion_limite_vs_limitecompra_master := (Master_mfinanciacion_limite+Visa_mfinanciacion_limite)/(Master_mlimitecompra+Visa_mlimitecompra)]
+  
+  if(atributos_presentes(c("Visa_mpagominimo","Visa_mlimitecompra")))
+    dataset[, relacion_mpagomin_limitecompra_visa := Visa_mpagominimo/Visa_mlimitecompra ]
+  
+  if(atributos_presentes(c("Master_mpagominimo","Master_mlimitecompra")))
+    dataset[, relacion_mpagomin_limitecompra_master := Master_mpagominimo/Master_mlimitecompra ]
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  # Variables de la corrida polemica
+  
+  if(atributos_presentes(c("ctarjeta_debito_transacciones","ctarjeta_visa_transacciones","ctarjeta_master_transacciones",
+                           "cpagodeservicios","cpagomiscuentas","cforex","ctransferencias_recibidas",
+                           "ctransferencias_emitidas","cextraccion_autoservicio","ccheques_depositados",
+                           "ccallcenter_transacciones","chomebanking_transacciones","ccajas_transacciones",
+                           "ccajas_depositos","catm_trx","catm_trx_other","cmobile_app_trx","Master_cconsumos",
+                           "Master_cadelantosefectivo","Visa_cconsumos","Visa_cadelantosefectivo")))
+    dataset[, cantidad_total_transacciones :=
+              ifelse( is.na(ctarjeta_debito_transacciones), 0, ctarjeta_debito_transacciones) +
+              ifelse( is.na(ctarjeta_visa_transacciones), 0, ctarjeta_visa_transacciones) +
+              ifelse( is.na(ctarjeta_master_transacciones), 0, ctarjeta_master_transacciones) + 
+              ifelse( is.na(cpagodeservicios), 0, cpagodeservicios) +
+              ifelse( is.na(cpagomiscuentas), 0, cpagomiscuentas) +
+              ifelse( is.na(cforex), 0, cforex) +
+              ifelse( is.na(ctransferencias_recibidas), 0, ctransferencias_recibidas) +
+              ifelse( is.na(ctransferencias_emitidas), 0, ctransferencias_emitidas) +
+              ifelse( is.na(cextraccion_autoservicio), 0, cextraccion_autoservicio) +
+              ifelse( is.na(ccheques_depositados), 0, ccheques_depositados) +
+              ifelse( is.na(ccallcenter_transacciones), 0, ccallcenter_transacciones) +
+              ifelse( is.na(chomebanking_transacciones), 0, chomebanking_transacciones) +
+              ifelse( is.na(ccajas_transacciones), 0, ccajas_transacciones) +
+              ifelse( is.na(ccajas_depositos), 0, ccajas_depositos) +
+              ifelse( is.na(catm_trx), 0, catm_trx) +
+              ifelse( is.na(catm_trx_other), 0, catm_trx_other) +
+              ifelse( is.na(cmobile_app_trx), 0, cmobile_app_trx) +
+              ifelse( is.na(Master_cconsumos), 0, Master_cconsumos) +
+              ifelse( is.na(Master_cadelantosefectivo), 0, Master_cadelantosefectivo) +
+              ifelse( is.na(Visa_cconsumos), 0, Visa_cconsumos) +
+              ifelse( is.na(Visa_cadelantosefectivo), 0, Visa_cadelantosefectivo)
+    ]
+  
+  if(atributos_presentes(c("foto_mes")))
+    dataset[,foto_mes_formato_fecha := as.Date(paste(substr(dataset$foto_mes,1,4),substr(dataset$foto_mes,5,6),"01",sep='-'))]
+  
+  
+  if(atributos_presentes(c("cantidad_total_transacciones"))){
+    auxiliarmenos1 <- dataset[,list(numero_de_cliente,foto_mes_formato_fecha, cantidad_total_transacciones)]
+    auxiliarmenos2 <- dataset[,list(numero_de_cliente,foto_mes_formato_fecha,cantidad_total_transacciones)]
+    auxiliarmenos1$foto_mes_formato_fecha <- auxiliarmenos1$foto_mes_formato_fecha  %m-%  months(1)
+    auxiliarmenos2$foto_mes_formato_fecha <- auxiliarmenos2$foto_mes_formato_fecha %m-% months(2)
+    auxiliarmenos1$codigo <- paste(auxiliarmenos1$numero_de_cliente,auxiliarmenos1$foto_mes_formato_fecha,sep='-')
+    auxiliarmenos2$codigo <- paste(auxiliarmenos2$numero_de_cliente,auxiliarmenos2$foto_mes_formato_fecha,sep='-')
+    
+    dataset[, codigo := paste(numero_de_cliente, foto_mes_formato_fecha, sep='-') ]
+    
+    dataset[ auxiliarmenos1,
+             on = "codigo",
+             transaccionesmenos1 := i.cantidad_total_transacciones ]
+    
+    dataset[ auxiliarmenos2,
+             on = "codigo",
+             transaccionesmenos2 := i.cantidad_total_transacciones ]
+    
+    dataset[, cantidad_total_transacciones_quarter := rowSums(cbind(cantidad_total_transacciones +
+                                                                      transaccionesmenos1 + transaccionesmenos2),na.rm=T) ]
+    
+    dataset[, codigo := NULL ]
+    dataset[, transaccionesmenos1 := NULL ]
+    dataset[, transaccionesmenos2 := NULL ]
+    #dataset[, foto_mes_formato_fecha := NULL ]
+    rm(auxiliarmenos1)
+    rm(auxiliarmenos2)
+  }
+  
+  if( atributos_presentes( c("cantidad_total_transacciones_quarter") ))
+    dataset[, cantidad_total_transacciones_quarter_normalizado := cantidad_total_transacciones_quarter]
+  
+  if( atributos_presentes( c("cantidad_total_transacciones_quarter", "cliente_antiguedad") ))
+    dataset[cliente_antiguedad == 1, cantidad_total_transacciones_quarter_normalizado := cantidad_total_transacciones_quarter * 5]
+  
+  if( atributos_presentes( c("cantidad_total_transacciones_quarter", "cliente_antiguedad") ))
+    dataset[cliente_antiguedad == 2, cantidad_total_transacciones_quarter_normalizado := cantidad_total_transacciones_quarter * 2]
+  
+  if( atributos_presentes( c("cantidad_total_transacciones_quarter", "cliente_antiguedad") ))
+    dataset[cliente_antiguedad == 3, cantidad_total_transacciones_quarter_normalizado := cantidad_total_transacciones_quarter * 1.2]
+  
+  
+  
+  
+  
+  if(atributos_presentes(c("vm_cconsumos"))){
+    auxiliarmenos1 <- dataset[,list(numero_de_cliente,foto_mes_formato_fecha, vm_cconsumos)]
+    auxiliarmenos2 <- dataset[,list(numero_de_cliente,foto_mes_formato_fecha,vm_cconsumos)]
+    auxiliarmenos1$foto_mes_formato_fecha <- auxiliarmenos1$foto_mes_formato_fecha  %m-%  months(1)
+    auxiliarmenos2$foto_mes_formato_fecha <- auxiliarmenos2$foto_mes_formato_fecha %m-% months(2)
+    auxiliarmenos1$codigo <- paste(auxiliarmenos1$numero_de_cliente,auxiliarmenos1$foto_mes_formato_fecha,sep='-')
+    auxiliarmenos2$codigo <- paste(auxiliarmenos2$numero_de_cliente,auxiliarmenos2$foto_mes_formato_fecha,sep='-')
+    
+    dataset[, codigo := paste(numero_de_cliente, foto_mes_formato_fecha, sep='-') ]
+    
+    dataset[ auxiliarmenos1,
+             on = "codigo",
+             transaccionesmenos1 := i.vm_cconsumos ]
+    
+    dataset[ auxiliarmenos2,
+             on = "codigo",
+             transaccionesmenos2 := i.vm_cconsumos ]
+    
+    dataset[, vm_cconsumos_quarter := rowSums(cbind(vm_cconsumos + transaccionesmenos1 + transaccionesmenos2),na.rm=T) ]
+    
+    dataset[, codigo := NULL ]
+    dataset[, transaccionesmenos1 := NULL ]
+    dataset[, transaccionesmenos2 := NULL ]
+    dataset[, foto_mes_formato_fecha := NULL ]
+    rm(auxiliarmenos1)
+    rm(auxiliarmenos2)
+  }
+  
+  
+  if( atributos_presentes( c("vm_cconsumos_quarter") ))
+    dataset[, vm_cconsumos_quarter_normalizado := vm_cconsumos_quarter]
+  
+  if( atributos_presentes( c("vm_cconsumos_quarter", "cliente_antiguedad") ))
+    dataset[cliente_antiguedad == 1, vm_cconsumos_quarter_normalizado := vm_cconsumos_quarter * 5]
+  
+  if( atributos_presentes( c("vm_cconsumos_quarter", "cliente_antiguedad") ))
+    dataset[cliente_antiguedad == 2, vm_cconsumos_quarter_normalizado := vm_cconsumos_quarter * 2]
+  
+  if( atributos_presentes( c("vm_cconsumos_quarter", "cliente_antiguedad") ))
+    dataset[cliente_antiguedad == 3, vm_cconsumos_quarter_normalizado := vm_cconsumos_quarter * 1.2]
+  
   
   
   
