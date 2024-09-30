@@ -42,7 +42,6 @@ options(error = function() {
 # inicializaciones varias
 
 dir.create( envg$EXPENV$exp_dir, showWarnings = FALSE)
-dir.create( envg$EXPENV$wf_dir, showWarnings = FALSE)
 #------------------------------------------------------------------------------
 
 # ambiente

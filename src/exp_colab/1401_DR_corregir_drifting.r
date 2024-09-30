@@ -219,16 +219,16 @@ drift_estandarizar <- function(campos_drift) {
 #------------------------------------------------------------------------------
 
 # Experimento colaborativo 2024.
-drift_indice_medias <- function(campos_monetarios) {
-  cat( "inicio drift_indice_medias()\n")
+drift_Indice_medias <- function(campos_monetarios) {
+  cat( "inicio drift_Indice_medias()\n")
   
   dataset[tb_indices,
           on = c(envg$PARAM$dataset_metadata$periodo),
-          (campos_monetarios) := .SD * i.indice_medias,
+          (campos_monetarios) := .SD * i.Indice_medias,
           .SDcols = campos_monetarios
   ]
   
-  cat( "fin drift_indice_medias()\n")
+  cat( "fin drift_Indice_medias()\n")
 }
 
 #------------------------------------------------------------------------------
@@ -283,7 +283,7 @@ switch(envg$PARAM$metodo,
   "dolar_oficial"  = drift_dolaroficial(campos_monetarios),
   "UVA"            = drift_UVA(campos_monetarios),
   "estandarizar"   = drift_estandarizar(campos_monetarios),
-  "Indice_medias"  = drift_indice_medias(campos_monetarios)
+  "Indice_medias"  = drift_Indice_medias(campos_monetarios)
 )
 
 
