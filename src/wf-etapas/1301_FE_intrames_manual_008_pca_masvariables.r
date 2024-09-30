@@ -744,8 +744,8 @@ AgregarVariables_IntraMes <- function(dataset) {
   if(atributos_presentes(c("cantidad_total_transacciones"))){
     auxiliarmenos1 <- dataset[,list(numero_de_cliente,foto_mes_formato_fecha, cantidad_total_transacciones)]
     auxiliarmenos2 <- dataset[,list(numero_de_cliente,foto_mes_formato_fecha,cantidad_total_transacciones)]
-    auxiliarmenos1$foto_mes_formato_fecha <- auxiliarmenos1$foto_mes_formato_fecha  %m-%  months(1)
-    auxiliarmenos2$foto_mes_formato_fecha <- auxiliarmenos2$foto_mes_formato_fecha %m-% months(2)
+    auxiliarmenos1$foto_mes_formato_fecha <- auxiliarmenos1$foto_mes_formato_fecha  %m+%  months(1)
+    auxiliarmenos2$foto_mes_formato_fecha <- auxiliarmenos2$foto_mes_formato_fecha %m+% months(2)
     auxiliarmenos1$codigo <- paste(auxiliarmenos1$numero_de_cliente,auxiliarmenos1$foto_mes_formato_fecha,sep='-')
     auxiliarmenos2$codigo <- paste(auxiliarmenos2$numero_de_cliente,auxiliarmenos2$foto_mes_formato_fecha,sep='-')
     
@@ -759,8 +759,9 @@ AgregarVariables_IntraMes <- function(dataset) {
              on = "codigo",
              transaccionesmenos2 := i.cantidad_total_transacciones ]
     
-    dataset[, cantidad_total_transacciones_quarter := rowSums(cbind(cantidad_total_transacciones +
-                                                                      transaccionesmenos1 + transaccionesmenos2),na.rm=T) ]
+    dataset[, cantidad_total_transacciones_quarter := rowSums(cbind(cantidad_total_transacciones + 
+                                                                      ifelse(is.na(transaccionesmenos1),0,transaccionesmenos1) + 
+                                                                      ifelse(is.na(transaccionesmenos2),0,transaccionesmenos2)),na.rm=T) ]
     
     dataset[, codigo := NULL ]
     dataset[, transaccionesmenos1 := NULL ]
