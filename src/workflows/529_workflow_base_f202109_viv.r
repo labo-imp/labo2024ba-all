@@ -120,7 +120,7 @@ DR_drifting_base <- function( pinputexps, metodo)
   if( -1 == (param_local <- exp_init())$resultado ) return( 0 ) # linea fija
 
 
-  param_local$meta$script <- "/src/exp_colab/1401_DR_corregir_drifting.r" # Ruta al exp colaborativo.
+  param_local$meta$script <- "/src/wf-etapas/z1401_DR_corregir_drifting.r"
 
   # valores posibles
   #  "ninguno", "rank_simple", "rank_cero_fijo", "deflacion", "estandarizar"
@@ -429,7 +429,7 @@ wf_septiembre <- function( pnombrewf )
   DT_incorporar_dataset_competencia2024()
   CA_catastrophe_base( metodo="MachineLearning")
   FEintra_manual_base()
-  DR_drifting_base(metodo="Indice_medias")
+  DR_drifting_base(metodo="rank_cero_fijo")
   FEhist_base()
   FErf_attributes_base()
   #CN_canaritos_asesinos_base(ratio=0.2, desvio=4.0)
