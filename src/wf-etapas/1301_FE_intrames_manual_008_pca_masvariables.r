@@ -765,7 +765,7 @@ AgregarVariables_IntraMes <- function(dataset) {
     dataset[, codigo := NULL ]
     dataset[, transaccionesmenos1 := NULL ]
     dataset[, transaccionesmenos2 := NULL ]
-    #dataset[, foto_mes_formato_fecha := NULL ]
+    dataset[, foto_mes_formato_fecha := NULL ]
     rm(auxiliarmenos1)
     rm(auxiliarmenos2)
   }
@@ -781,51 +781,6 @@ AgregarVariables_IntraMes <- function(dataset) {
   
   if( atributos_presentes( c("cantidad_total_transacciones_quarter", "cliente_antiguedad") ))
     dataset[cliente_antiguedad == 3, cantidad_total_transacciones_quarter_normalizado := cantidad_total_transacciones_quarter * 1.2]
-  
-  
-  
-  
-  
-  if(atributos_presentes(c("vm_cconsumos"))){
-    auxiliarmenos1 <- dataset[,list(numero_de_cliente,foto_mes_formato_fecha, vm_cconsumos)]
-    auxiliarmenos2 <- dataset[,list(numero_de_cliente,foto_mes_formato_fecha,vm_cconsumos)]
-    auxiliarmenos1$foto_mes_formato_fecha <- auxiliarmenos1$foto_mes_formato_fecha  %m-%  months(1)
-    auxiliarmenos2$foto_mes_formato_fecha <- auxiliarmenos2$foto_mes_formato_fecha %m-% months(2)
-    auxiliarmenos1$codigo <- paste(auxiliarmenos1$numero_de_cliente,auxiliarmenos1$foto_mes_formato_fecha,sep='-')
-    auxiliarmenos2$codigo <- paste(auxiliarmenos2$numero_de_cliente,auxiliarmenos2$foto_mes_formato_fecha,sep='-')
-    
-    dataset[, codigo := paste(numero_de_cliente, foto_mes_formato_fecha, sep='-') ]
-    
-    dataset[ auxiliarmenos1,
-             on = "codigo",
-             transaccionesmenos1 := i.vm_cconsumos ]
-    
-    dataset[ auxiliarmenos2,
-             on = "codigo",
-             transaccionesmenos2 := i.vm_cconsumos ]
-    
-    dataset[, vm_cconsumos_quarter := rowSums(cbind(vm_cconsumos + transaccionesmenos1 + transaccionesmenos2),na.rm=T) ]
-    
-    dataset[, codigo := NULL ]
-    dataset[, transaccionesmenos1 := NULL ]
-    dataset[, transaccionesmenos2 := NULL ]
-    dataset[, foto_mes_formato_fecha := NULL ]
-    rm(auxiliarmenos1)
-    rm(auxiliarmenos2)
-  }
-  
-  
-  if( atributos_presentes( c("vm_cconsumos_quarter") ))
-    dataset[, vm_cconsumos_quarter_normalizado := vm_cconsumos_quarter]
-  
-  if( atributos_presentes( c("vm_cconsumos_quarter", "cliente_antiguedad") ))
-    dataset[cliente_antiguedad == 1, vm_cconsumos_quarter_normalizado := vm_cconsumos_quarter * 5]
-  
-  if( atributos_presentes( c("vm_cconsumos_quarter", "cliente_antiguedad") ))
-    dataset[cliente_antiguedad == 2, vm_cconsumos_quarter_normalizado := vm_cconsumos_quarter * 2]
-  
-  if( atributos_presentes( c("vm_cconsumos_quarter", "cliente_antiguedad") ))
-    dataset[cliente_antiguedad == 3, vm_cconsumos_quarter_normalizado := vm_cconsumos_quarter * 1.2]
   
   
   
