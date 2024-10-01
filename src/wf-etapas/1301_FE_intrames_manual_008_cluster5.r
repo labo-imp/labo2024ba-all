@@ -16,6 +16,10 @@ gc(full = TRUE) # garbage collection
 
 require("data.table")
 require("yaml")
+
+install.packages("ClusterR")
+install.packages("fastDummies")
+
 require("ClusterR")
 require("fastDummies")
 
@@ -261,8 +265,7 @@ AgregarVariables_IntraMes <- function(dataset) {
   rm(kmedias) # borramos para ahorrar espacio
   dataset <<- cbind(dataset,clusters_creados)
   rm(clusters_creados) # borramos para ahorrar espacio
-  dataset <<- dummy_cols(dataset,select_columns = "clusters_creados", remove_first_dummy = F)
-  dataset$clusters_creados <<- NULL
+  dataset <<- dummy_cols(dataset,select_columns = "clusters_creados", remove_first_dummy = F,remove_selected_columns = T)
   
   cat("Si llegaste hasta aca es porque K medias no te hizo volar por los aires la corrida. Felicitaciones.\n")
   
