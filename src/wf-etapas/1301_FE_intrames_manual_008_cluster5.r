@@ -17,9 +17,6 @@ gc(full = TRUE) # garbage collection
 require("data.table")
 require("yaml")
 
-install.packages("ClusterR")
-install.packages("fastDummies")
-
 require("ClusterR")
 require("fastDummies")
 
