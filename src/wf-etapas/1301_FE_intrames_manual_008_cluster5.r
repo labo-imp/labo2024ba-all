@@ -260,9 +260,10 @@ AgregarVariables_IntraMes <- function(dataset) {
   rm(datasetsinNA) # borramos este dataset creado para ahorrar espacio
   clusters_creados <- as.integer(kmedias$clusters)
   rm(kmedias) # borramos para ahorrar espacio
-  dataset <<- cbind(dataset,clusters_creados)
+  #dataset <<- cbind(dataset,clusters_creados)
+  dataset[,clusters := clusters_creados]
   rm(clusters_creados) # borramos para ahorrar espacio
-  dataset <<- dummy_cols(dataset,select_columns = "clusters_creados", remove_first_dummy = F,remove_selected_columns = T)
+  dataset <<- dummy_cols(dataset,select_columns = "clusters", remove_first_dummy = F,remove_selected_columns = T)
   
   cat("Si llegaste hasta aca es porque K medias no te hizo volar por los aires la corrida. Felicitaciones.\n")
   
