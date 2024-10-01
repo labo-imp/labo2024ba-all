@@ -151,7 +151,7 @@ FEhist_base <- function( pinputexps)
   param_local$Tendencias1$minimo <- FALSE
   param_local$Tendencias1$maximo <- FALSE
   param_local$Tendencias1$promedio <- TRUE
-  param_local$Tendencias1$ratioavg <- FALSE
+  param_local$Tendencias1$ratioavg <- TRUE
   param_local$Tendencias1$ratiomax <- FALSE
 
   # no me engraso las manos con las tendencias de segundo orden
@@ -190,7 +190,7 @@ FEhist_base_2 <- function( pinputexps)
   param_local$Tendencias1$tendencia <- TRUE
   param_local$Tendencias1$minimo <- FALSE
   param_local$Tendencias1$maximo <- FALSE
-  param_local$Tendencias1$promedio <- TRUE
+  param_local$Tendencias1$promedio <- FALSE
   param_local$Tendencias1$ratioavg <- FALSE
   param_local$Tendencias1$ratiomax <- FALSE
   
@@ -532,6 +532,7 @@ wf_septiembre <- function( pnombrewf )
   DR_drifting_base(metodo="rank_cero_fijo")
   FEhist_base()
   CN_canaritos_asesinos_base_sub(ratio=1.50, desvio=1.50) # CN suboptimo
+  #CN_canaritos_asesinos_base_opt(ratio=0.95, desvio=2.35) # CN optimo
   FErf_attributes_base()
   #CN_canaritos_asesinos_base_opt(ratio=0.95, desvio=2.35) # CN optimo
   #CN_canaritos_asesinos_base_sub(ratio=1.50, desvio=1.50) # CN suboptimo
