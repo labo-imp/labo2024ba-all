@@ -837,6 +837,50 @@ AgregarVariables_IntraMes <- function(dataset) {
   
   
   
+  
+  
+  
+  
+  
+  # Septima tanda
+  
+  if(atributos_presentes(c("deuda_cliente_prestamos", "mrentabilidad")))
+    dataset[, relacion_deudaprestamos_rentabilidadbco := deuda_cliente_prestamos/mrentabilidad]
+  
+  if(atributos_presentes(c("mrentabilidad", "mrentabilidad_annual")))
+    dataset[, relacion_mmensual_ganacias  := mrentabilidad/(mrentabilidad_annual/12)]
+  
+  if(atributos_presentes(c("Master_mlimitecompra", "Master_mfinanciacion_limite","mrentabilidad")))
+    dataset[, relacion_financiacionmaster_rentabilidad  := (Master_mlimitecompra - Master_mfinanciacion_limite) / mrentabilidad]
+  
+  if(atributos_presentes(c("Visa_mlimitecompra", "Visa_mfinanciacion_limite","mrentabilidad")))
+    dataset[, relacion_financiacionvisa_rentabilidad  := (Visa_mlimitecompra - Visa_mfinanciacion_limite) / mrentabilidad]
+  
+  if(atributos_presentes(c("proporcion_rechazos_cantidad", "mrentabilidad")))
+    dataset[, relacion_ccheques_emitidos_rech_rentabilidad := proporcion_rechazos_cantidad/mrentabilidad]
+  
+  if(atributos_presentes(c("ccheques_emitidos_rechazados", "cliente_edad")))
+    dataset[, relacion_ccheques_emit_rech_edad := ccheques_emitidos_rechazados /cliente_edad]
+  
+  if(atributos_presentes(c("mcheques_emitidos_rechazados", "cliente_edad")))
+    dataset[, relacion_mcheques_emit_rech_edad := mcheques_emitidos_rechazados /cliente_edad]
+  
+  if(atributos_presentes(c("ccheques_emitidos", "cliente_edad")))
+    dataset[, relacion_ccheques_emit_edad := ccheques_emitidos/cliente_edad]
+  
+  if(atributos_presentes(c("mccheques_emitidos", "cliente_edad")))
+    dataset[, relacion_mcheques_emit_antiguedad := mccheques_emitidos/cliente_edad]
+  
+  if(atributos_presentes(c("ccheques_emitidos", "cliente_antiguedad")))
+    dataset[, relacion_ccheques_emitidos_antiguedad := ccheques_emitidos/cliente_antiguedad]
+  
+  if(atributos_presentes(c("mccheques_emitidos", "cliente_antiguedad")))
+    dataset[, relacion_mcheques_emitidos_antiguedad := mccheques_emitidos/cliente_antiguedad]
+  
+  
+  
+  
+  
   # valvula de seguridad para evitar valores infinitos
   # paso los infinitos a NULOS
   infinitos <- lapply(
