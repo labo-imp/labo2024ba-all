@@ -343,7 +343,7 @@ HT_tuning_base <- function( pinputexps, bypass=FALSE)
     extra_trees = FALSE,
     
     # Parte variable
-    learning_rate = c(0.001, 0.15),
+    learning_rate = c(0.01, 0.15),
     num_leaves = c( 8L, 8196L, "integer"),
     min_data_in_leaf = c( 5L, 50000L, "integer"),
     lambda_l1 = c(1.0, 1000.0),
@@ -353,7 +353,7 @@ HT_tuning_base <- function( pinputexps, bypass=FALSE)
   
   
   # una Bayesian humilde, pero no descabellada
-  param_local$bo_iteraciones <- 100 # iteraciones de la Optimizacion Bayesiana
+  param_local$bo_iteraciones <- 500 # iteraciones de la Optimizacion Bayesiana
   
   return( exp_correr_script( param_local ) ) # linea fija
 }
