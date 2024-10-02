@@ -25,7 +25,7 @@ PARAM$experimento <- 3990
 PARAM$active <- list(
   "rpart" = FALSE, # deshabilitado, muy pobres ganancias
   "arbolesazarosos" = TRUE,
-  "ranger" = FALSE
+  "ranger" = TRUE
 )
 
 
@@ -41,19 +41,19 @@ PARAM$rpart <- list(
 
 PARAM$arbolesazarosos <- list(
   "feature_fraction" = 0.5,
-  "num_trees" = 128,
+  "num_trees" = 50,
   "cp" = -1,
   "minsplit" = 100,
-  "minbucket" = 5,
-  "maxdepth" = 6
+  "minbucket" = 10,
+  "maxdepth" = 10
 )
 
 
 PARAM$ranger <- list(
-  "num.trees" = 303, # cantidad de arboles
-  "mtry" = 2, # cantidad de atributos que participan en cada split
-  "min.node.size" = 313, # tamaño minimo de las hojas
-  "max.depth" = 16 # 0 significa profundidad infinita
+  "num.trees" = 300, # cantidad de arboles
+  "mtry" = 7, # cantidad de atributos que participan en cada split
+  "min.node.size" = 380, # tamaño minimo de las hojas
+  "max.depth" = 20 # 0 significa profundidad infinita
 )
 
 #------------------------------------------------------------------------------
