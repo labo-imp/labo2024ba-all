@@ -191,8 +191,8 @@ FErf_attributes_base <- function( pinputexps, ratio, desvio)
   param_local$lgb_param <- list(
     # parametros que se pueden cambiar
     num_iterations = 50,
-    num_leaves  = 12,
-    min_data_in_leaf = 1000,
+    num_leaves  = 16,
+    min_data_in_leaf = 2,
     feature_fraction_bynode  = 0.8,
 
     # para que LightGBM emule Random Forest
