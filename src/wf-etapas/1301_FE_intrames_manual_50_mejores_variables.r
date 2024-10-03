@@ -304,6 +304,101 @@ AgregarVariables_IntraMes <- function(dataset) {
   if(atributos_presentes(c("cpagomiscuentas")))
     dataset[, flag_cpagomiscuentas := ifelse(cpagomiscuentas > 0, 1, 0)]
   
+  if(atributos_presentes(c("mtransferencias_emitidas", "cliente_edad"))) 
+    dataset[, mtrasnferencias_emitidas_vs_edad := mtransferencias_emitidas / cliente_edad]
+  
+  if(atributos_presentes(c('Master_msaldototal','Master_mconsumototal')))
+    dataset[, delta_saldo_total_master := (Master_msaldototal - Master_mconsumototal)]
+  
+  if(atributos_presentes(c("Visa_mpagado", "Visa_mlimitecompra"))) 
+    dataset[, ratio_pagos_limite_visa := Visa_mpagado / Visa_mlimitecompra]
+  
+  if(atributos_presentes(c("cextraccion_autoservicio", "cliente_edad"))) 
+    dataset[, cextracciones_edad := cextraccion_autoservicio / cliente_edad]
+  
+  if(atributos_presentes(c("mpayroll","mpayroll2","deuda_cliente_prestamos","Visa_mlimitecompra")))
+    dataset[, relacion_ingresodisponible_vs_limitetarjeta_visa := ((mpayroll+mpayroll2)-deuda_cliente_prestamos)/Visa_mlimitecompra]
+  
+  if(atributos_presentes(c("Visa_mpagominimo", "Visa_mpagado"))) 
+    dataset[, ratio_pago_minimo_total_visa := Visa_mpagominimo / Visa_mpagado]
+  
+  if(atributos_presentes(c("ctarjeta_debito_transacciones","ctarjeta_visa_transacciones","ctarjeta_master_transacciones",
+                           "cpagodeservicios","cpagomiscuentas","cforex","ctransferencias_recibidas",
+                           "ctransferencias_emitidas","cextraccion_autoservicio","ccheques_depositados",
+                           "ccallcenter_transacciones","chomebanking_transacciones","ccajas_transacciones",
+                           "ccajas_depositos","catm_trx","catm_trx_other","cmobile_app_trx","Master_cconsumos",
+                           "Master_cadelantosefectivo","Visa_cconsumos","Visa_cadelantosefectivo")))
+    dataset[, cantidad_total_transacciones :=
+              ifelse( is.na(ctarjeta_debito_transacciones), 0, ctarjeta_debito_transacciones) +
+              ifelse( is.na(ctarjeta_visa_transacciones), 0, ctarjeta_visa_transacciones) +
+              ifelse( is.na(ctarjeta_master_transacciones), 0, ctarjeta_master_transacciones) + 
+              ifelse( is.na(cpagodeservicios), 0, cpagodeservicios) +
+              ifelse( is.na(cpagomiscuentas), 0, cpagomiscuentas) +
+              ifelse( is.na(cforex), 0, cforex) +
+              ifelse( is.na(ctransferencias_recibidas), 0, ctransferencias_recibidas) +
+              ifelse( is.na(ctransferencias_emitidas), 0, ctransferencias_emitidas) +
+              ifelse( is.na(cextraccion_autoservicio), 0, cextraccion_autoservicio) +
+              ifelse( is.na(ccheques_depositados), 0, ccheques_depositados) +
+              ifelse( is.na(ccallcenter_transacciones), 0, ccallcenter_transacciones) +
+              ifelse( is.na(chomebanking_transacciones), 0, chomebanking_transacciones) +
+              ifelse( is.na(ccajas_transacciones), 0, ccajas_transacciones) +
+              ifelse( is.na(ccajas_depositos), 0, ccajas_depositos) +
+              ifelse( is.na(catm_trx), 0, catm_trx) +
+              ifelse( is.na(catm_trx_other), 0, catm_trx_other) +
+              ifelse( is.na(cmobile_app_trx), 0, cmobile_app_trx) +
+              ifelse( is.na(Master_cconsumos), 0, Master_cconsumos) +
+              ifelse( is.na(Master_cadelantosefectivo), 0, Master_cadelantosefectivo) +
+              ifelse( is.na(Visa_cconsumos), 0, Visa_cconsumos) +
+              ifelse( is.na(Visa_cadelantosefectivo), 0, Visa_cadelantosefectivo)
+    ]
+  
+  if(atributos_presentes(c('Master_status')))
+    dataset[, flag_estado_cuenta_master_cerrada := ifelse(Master_status == 9,1,0)]
+  
+  if(atributos_presentes(c("ccuenta_debitos_automaticos")))
+    dataset[, flag_ccuenta_debitos_automaticos := ifelse(ccuenta_debitos_automaticos > 0, 1, 0)]
+  
+  if(atributos_presentes(c("mpayroll","mpayroll2","deuda_cliente_prestamos","Master_mlimitecompra")))
+    dataset[, relacion_ingresodisponible_vs_limitetarjeta_master := ((mpayroll+mpayroll2)-deuda_cliente_prestamos)/Master_mlimitecompra]
+  
+  if(atributos_presentes(c("mtarjeta_master_consumo", "Master_mlimitecompra")))
+    dataset[, relacion_consumo_vs_limitecompra_master := mtarjeta_master_consumo/Master_mlimitecompra]
+  
+  if(atributos_presentes(c("Master_mpagominimo","Visa_mpagominimo","mpayroll","mpayroll2")))
+    dataset[, responsabilidad_comprador := (Master_mpagominimo + Visa_mpagominimo) / (mpayroll + mpayroll2)]
+  
+  if(atributos_presentes(c("Visa_mfinanciacion_limite","Visa_mlimitecompra","Master_mfinanciacion_limite","Master_mlimitecompra")))
+    dataset[, ratio_mfinancion_limite_vs_limitecompra_master := (Master_mfinanciacion_limite+Visa_mfinanciacion_limite)/(Master_mlimitecompra+Visa_mlimitecompra)]
+  
+  if(atributos_presentes(c("cpagomiscuentas")))
+    dataset[, flag_cpagomiscuentas_masquemedia := ifelse(cpagomiscuentas > mean(cpagomiscuentas), 1, 0)]
+  
+  if(atributos_presentes(c("Visa_mpagominimo","Visa_mlimitecompra")))
+    dataset[, relacion_mpagomin_limitecompra_visa := Visa_mpagominimo/Visa_mlimitecompra ]
+  
+  if(atributos_presentes(c("Visa_mconsumospesos","Visa_mconsumosdolares"))) 
+    dataset[,ratio_consumos_pesos_dolares_visa := Visa_mconsumospesos / Visa_mconsumosdolares]
+  
+  if(atributos_presentes(c("deuda_cliente_prestamos", "Master_mlimitecompra")))
+    dataset[, relacion_deuda_vs_limitecompra_master := deuda_cliente_prestamos/Master_mlimitecompra]
+  
+  if(atributos_presentes(c("Master_mpagominimo","Master_mlimitecompra")))
+    dataset[, relacion_mpagomin_limitecompra_master := Master_mpagominimo/Master_mlimitecompra ]
+  
+  if(atributos_presentes(c("ctarjeta_debito_transacciones","ctarjeta_visa_transacciones","ctarjeta_master_transacciones",
+                           "cpagodeservicios","cpagomiscuentas","cforex","ctransferencias_recibidas",
+                           "ctransferencias_emitidas","cextraccion_autoservicio","ccheques_depositados",
+                           "ccallcenter_transacciones","chomebanking_transacciones","ccajas_transacciones",
+                           "ccajas_depositos","catm_trx","catm_trx_other","cmobile_app_trx","Master_cconsumos",
+                           "Master_cadelantosefectivo","Visa_cconsumos","Visa_cadelantosefectivo")))
+    dataset[, frecuencia_transacciones := (ctarjeta_debito_transacciones + ctarjeta_visa_transacciones + 
+                                             ctarjeta_master_transacciones + cpagodeservicios + cpagomiscuentas + cforex + ctransferencias_recibidas + 
+                                             ctransferencias_emitidas + cextraccion_autoservicio + ccheques_depositados + ccallcenter_transacciones + 
+                                             chomebanking_transacciones + ccajas_transacciones + ccajas_depositos + catm_trx + catm_trx_other + 
+                                             cmobile_app_trx + Master_cconsumos + Master_cadelantosefectivo + Visa_cconsumos + Visa_cadelantosefectivo)/30] 
+  
+  if(atributos_presentes(c("cliente_edad")))
+    dataset[, segmento_edad_adulto := ifelse(cliente_edad > 35 & cliente_edad <= 60, 1, 0)]
   
   
   
