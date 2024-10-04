@@ -191,8 +191,8 @@ FErf_attributes_base <- function( pinputexps, ratio, desvio)
   param_local$lgb_param <- list(
     # parametros que se pueden cambiar
     num_iterations = 50,
-    num_leaves  = 12,
-    min_data_in_leaf = 250,
+    num_leaves  = 20,
+    min_data_in_leaf = 2,
     feature_fraction_bynode  = 0.8,
 
     # para que LightGBM emule Random Forest
@@ -436,7 +436,7 @@ wf_julio <- function( pnombrewf )
   FEintra_manual_base()
   DR_drifting_base(metodo="deflacion")
   FEhist_base()
-  #FErf_attributes_base()
+  FErf_attributes_base()
   #CN_canaritos_asesinos_base(ratio=0.2, desvio=4.0)
 
   ts7 <- TS_strategy_base7()
