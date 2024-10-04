@@ -344,11 +344,11 @@ HT_tuning_base <- function( pinputexps, bypass=FALSE)
     skip_drop = 0.5, # 0.0 <= skip_drop <= 1.0
     feature_fraction = 0.15,
     learning_rate = 0.15,
+    min_data_in_leaf = 20,
 
     extra_trees = FALSE,
     # Parte variable
-    num_leaves = c( 8L, 2048L,  "integer" ),
-    min_data_in_leaf = c( 20L, 2000L, "integer" )
+    num_leaves = c( 8L, 2048L,  "integer" )
   )
 
 
