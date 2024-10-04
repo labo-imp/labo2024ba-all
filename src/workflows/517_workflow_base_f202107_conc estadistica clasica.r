@@ -15,9 +15,8 @@ envg$EXPENV$bucket_dir <- "~/buckets/b1"
 envg$EXPENV$exp_dir <- "~/buckets/b1/expw/"
 envg$EXPENV$wf_dir <- "~/buckets/b1/flow/"
 envg$EXPENV$repo_dir <- "~/labo2024ba/"
-envg$EXPENV$datasets_dir <- "~/buckets/b1/datasets/"
+envg$EXPENV$datasets_dir <- "~/datasets/"
 envg$EXPENV$arch_ambiente <- "miAmbiente.yml"
-envg$EXPENV$arch_sem <- "mis_semillas.txt"
 envg$EXPENV$messenger <- "~/install/zulip_enviar.sh"
 
 # leo el unico parametro del script
@@ -43,8 +42,8 @@ options(error = function() {
 
 dir.create( envg$EXPENV$exp_dir, showWarnings = FALSE)
 dir.create( envg$EXPENV$wf_dir, showWarnings = FALSE)
-#------------------------------------------------------------------------------
 
+#------------------------------------------------------------------------------
 # ambiente
 
 envg$EXPENV$miAmbiente <- read_yaml( 
@@ -90,8 +89,9 @@ CA_catastrophe_base <- function( pinputexps, metodo )
 
   param_local$meta$script <- "/src/wf-etapas/z1201_CA_reparar_dataset.r"
 
-  # Opciones MachineLearning EstadisticaClasica Ninguno
+  # Opciones : MachineLearning EstadisticaClasica MICE Ninguno
   param_local$metodo <- metodo
+  param_local$atributos_eliminar <- c( "tmobile_app", "cmobile_app_trx" )
   param_local$semilla <- NULL  # no usa semilla, es deterministico
 
   return( exp_correr_script( param_local ) ) # linea fija}
@@ -123,7 +123,10 @@ DR_drifting_base <- function( pinputexps, metodo)
   param_local$meta$script <- "/src/wf-etapas/z1401_DR_corregir_drifting.r"
 
   # valores posibles
-  #  "ninguno", "rank_simple", "rank_cero_fijo", "deflacion", "estandarizar"
+  #   "ninguno", 
+  #   "rank_simple", "rank_cero_fijo", 
+  #   "deflacion", "dolar_blue", "dolar_oficial", "UVA",
+  #   "estandarizar"
   param_local$metodo <- metodo
   param_local$semilla <- NULL  # no usa semilla, es deterministico
 
@@ -261,25 +264,25 @@ CN_canaritos_asesinos_base <- function( pinputexps, ratio, desvio)
 #   y solo incluyo en el dataset al 20% de los CONTINUA
 #  azaroso, utiliza semilla
 
-TS_strategy_base9 <- function( pinputexps )
+TS_strategy_base7 <- function( pinputexps )
 {
   if( -1 == (param_local <- exp_init())$resultado ) return( 0 )# linea fija
 
   param_local$meta$script <- "/src/wf-etapas/z2101_TS_training_strategy.r"
 
 
-  param_local$future <- c(202109)
+  param_local$future <- c(202107)
 
   param_local$final_train$undersampling <- 1.0
   param_local$final_train$clase_minoritaria <- c( "BAJA+1", "BAJA+2")
-  param_local$final_train$training <- c(202107, 202106, 202105, 202104, 202103, 202102,
-    202101, 202012, 202011)
+  param_local$final_train$training <- c(202105, 202104, 202103, 202102,
+    202101, 202012, 202011, 202010, 202009)
 
 
-  param_local$train$training <- c(202105, 202104, 202103, 202102, 202101,
-    202012, 202011, 202010, 202009)
-  param_local$train$validation <- c(202106)
-  param_local$train$testing <- c(202107)
+  param_local$train$training <- c(202103, 202102, 202101,
+    202012, 202011, 202010, 202009, 202008, 202007)
+  param_local$train$validation <- c(202104)
+  param_local$train$testing <- c(202105)
 
   # Atencion  0.2  de  undersampling de la clase mayoritaria,  los CONTINUA
   # 1.0 significa NO undersampling
@@ -374,7 +377,6 @@ FM_final_models_lightgbm <- function( pinputexps, ranks, qsemillas )
   param_local$train$clase01_valor1 <- c( "BAJA+2", "BAJA+1")
   param_local$train$positivos <- c( "BAJA+2")
 
-  # default 20 semillas
   param_local$qsemillas <- qsemillas
 
   return( exp_correr_script( param_local ) ) # linea fija
@@ -394,23 +396,26 @@ SC_scoring <- function( pinputexps )
   return( exp_correr_script( param_local ) ) # linea fija
 }
 #------------------------------------------------------------------------------
-# proceso KA_evaluate_kaggle
+# proceso EV_conclase  Baseline
 # deterministico, SIN random
 
-KA_evaluate_kaggle <- function( pinputexps )
+EV_evaluate_conclase_gan <- function( pinputexps )
 {
   if( -1 == (param_local <- exp_init())$resultado ) return( 0 )# linea fija
 
-  param_local$meta$script <- "/src/wf-etapas/z2601_KA_evaluate_kaggle.r"
+  param_local$meta$script <- "/src/wf-etapas/z2501_EV_evaluate_conclase_gan.r"
 
   param_local$semilla <- NULL  # no usa semilla, es deterministico
 
-  param_local$isems_submit <- 1:20 # misterioso parametro, no preguntar
+  param_local$train$positivos <- c( "BAJA+2")
+  param_local$train$gan1 <- 117000
+  param_local$train$gan0 <-  -3000
+  param_local$train$meseta <- 401
 
-  param_local$envios_desde <-  1600L
-  param_local$envios_hasta <-  2200L
-  param_local$envios_salto <-   100L
-  param_local$competition <- "labo-i-conceptual-2024-ba"
+  # para graficar
+  param_local$graficar$envios_desde <-  1000L
+  param_local$graficar$envios_hasta <-  5000L
+  param_local$graficar$ventana_suavizado <- 401L
 
   return( exp_correr_script( param_local ) ) # linea fija
 }
@@ -422,24 +427,24 @@ KA_evaluate_kaggle <- function( pinputexps )
 # Que predice 202107 donde conozco la clase
 # y ya genera graficos
 
-wf_septiembre <- function( pnombrewf )
+wf_julio <- function( pnombrewf )
 {
   param_local <- exp_wf_init( pnombrewf ) # linea fija
 
   DT_incorporar_dataset_competencia2024()
-  CA_catastrophe_base( metodo="Mice")
+  CA_catastrophe_base( metodo="EstadisticaClasica")
   FEintra_manual_base()
-  DR_drifting_base(metodo="rank_cero_fijo")
+  DR_drifting_base(metodo="deflacion")
   FEhist_base()
   FErf_attributes_base()
   #CN_canaritos_asesinos_base(ratio=0.2, desvio=4.0)
 
-  ts9 <- TS_strategy_base9()
+  ts7 <- TS_strategy_base7()
   ht <- HT_tuning_base()
 
-  fm <- FM_final_models_lightgbm( c(ht, ts9), ranks=c(1), qsemillas=5 )
-  SC_scoring( c(fm, ts9) )
-  KA_evaluate_kaggle()
+  fm <- FM_final_models_lightgbm( c(ht, ts7), ranks=c(1), qsemillas=10 )
+  SC_scoring( c(fm, ts7) )
+  EV_evaluate_conclase_gan()
 
   return( exp_wf_end() ) # linea fija
 }
@@ -447,6 +452,6 @@ wf_septiembre <- function( pnombrewf )
 #------------------------------------------------------------------------------
 # Aqui comienza el programa
 
-# llamo al workflow con future = 202109
-wf_septiembre()
+# llamo al workflow con future = 202107
+wf_julio()
 

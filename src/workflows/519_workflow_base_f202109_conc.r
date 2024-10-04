@@ -91,7 +91,7 @@ CA_catastrophe_base <- function( pinputexps, metodo )
   param_local$meta$script <- "/src/wf-etapas/z1201_CA_reparar_dataset.r"
 
   # Opciones MachineLearning EstadisticaClasica Ninguno
-  param_local$metodo <- metodo
+  param_local$metodo <- Mice
   param_local$semilla <- NULL  # no usa semilla, es deterministico
 
   return( exp_correr_script( param_local ) ) # linea fija}
@@ -124,7 +124,7 @@ DR_drifting_base <- function( pinputexps, metodo)
 
   # valores posibles
   #  "ninguno", "rank_simple", "rank_cero_fijo", "deflacion", "estandarizar"
-  param_local$metodo <- metodo
+  param_local$metodo <- rank_cero_fijo
   param_local$semilla <- NULL  # no usa semilla, es deterministico
 
   return( exp_correr_script( param_local ) ) # linea fija
@@ -427,7 +427,7 @@ wf_septiembre <- function( pnombrewf )
   param_local <- exp_wf_init( pnombrewf ) # linea fija
 
   DT_incorporar_dataset_competencia2024()
-  CA_catastrophe_base( metodo="MICE")
+  CA_catastrophe_base( metodo="Mice")
   FEintra_manual_base()
   DR_drifting_base(metodo="rank_cero_fijo")
   FEhist_base()
