@@ -18,9 +18,9 @@ require("ggplot2")
 
 # cambiar aqui los parametros
 PARAM <- list()
-PARAM$minsplit <- 300
-PARAM$minbucket <- 20
-PARAM$maxdepth <- 11
+PARAM$minsplit <- 15000
+PARAM$minbucket <- 7500
+PARAM$maxdepth <- 3
 
 #------------------------------------------------------------------------------
 # particionar agrega una columna llamada fold a un dataset
