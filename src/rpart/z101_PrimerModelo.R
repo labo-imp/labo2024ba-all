@@ -25,7 +25,7 @@ modelo <- rpart(
     cp = -0.3, # esto significa no limitar la complejidad de los splits
     minsplit = 0, # minima cantidad de registros para que se haga el split
     minbucket = 1, # tamaño minimo de una hoja
-    maxdepth = 3  # profundidad maxima del arbol
+    maxdepth = 8  # profundidad maxima del arbol
 )
 
 
@@ -64,3 +64,13 @@ fwrite(dapply[, list(numero_de_cliente, Predicted)],
         file = "./exp/KA2001/K101_001_viv.csv",
         sep = ","
 )
+
+# Identificar la columna con la probabilidad máxima en cada fila
+max_prob_col <- apply(prediccion, 1, function(row) {
+  colnames(prediccion)[which.max(row)]
+})
+
+# Calcular la frecuencia de cada columna
+frecuencias <- table(max_prob_col)
+print(frecuencias)
+
