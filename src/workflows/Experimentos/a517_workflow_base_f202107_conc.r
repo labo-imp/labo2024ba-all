@@ -342,19 +342,19 @@ HT_tuning_base <- function( pinputexps, bypass=FALSE)
     drop_rate = 0.1, # 0.0 < neg_bagging_fraction <= 1.0
     max_drop = 50, # <=0 means no limit
     skip_drop = 0.5, # 0.0 <= skip_drop <= 1.0
-    feature_fraction = 0.15,
-    learning_rate = 0.15,
-    min_data_in_leaf = 20,
 
     extra_trees = FALSE,
     # Parte variable
-    num_leaves = c( 8L, 2048L,  "integer" )
+    learning_rate = c( 0.01, 0.3 ),
+    feature_fraction = c( 0.05, 0.99),
+    num_leaves = c( 8L, 8196L,  "integer" ), ## Sugerencia GDN Reajustar en experimento de HT39
+    min_data_in_leaf = c( 5L, 50000L, "integer" ) ## Sugerencia GDN Reajustar en experimento de HT39
   )
-
-
+  
+  
   # una Bayesian humilde, pero no descabellada
-  param_local$bo_iteraciones <- 60 # iteraciones de la Optimizacion Bayesiana
-
+  param_local$bo_iteraciones <- 1000 # iteraciones de la Optimizacion Bayesiana
+  
   return( exp_correr_script( param_local ) ) # linea fija
 }
 #------------------------------------------------------------------------------
