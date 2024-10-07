@@ -176,7 +176,7 @@ FEhist_base <- function( pinputexps)
 # Feature Engineering Intra Mes   Baseline
 # deterministico, SIN random
 
-FEintra_manual_base <- function( pinputexps )
+FEintra_manual_base2 <- function( pinputexps )
 {
   if( -1 == (param_local <- exp_init())$resultado ) return( 0 ) # linea fija
   
@@ -452,6 +452,7 @@ wf_julio <- function( pnombrewf )
   FEintra_manual_base()
   DR_drifting_base(metodo="deflacion")
   FEhist_base()
+  FEintra_manual_base2()
   FErf_attributes_base()
   #CN_canaritos_asesinos_base(ratio=0.2, desvio=4.0)
 
