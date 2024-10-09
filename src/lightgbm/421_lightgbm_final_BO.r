@@ -22,8 +22,9 @@ PARAM$finalmodel$learning_rate <- 0.0185
 PARAM$finalmodel$feature_fraction <- 0.839
 PARAM$finalmodel$min_data_in_leaf <- 37
 PARAM$finalmodel$num_leaves <- 467
-PARAM$finalmodel$lambda_l1 <- 0.194535302481166
-PARAM$finalmodel$lambda_l2 <- 44.5975263183999
+PARAM$finalmodel$lambda_l1 <- 0.194
+PARAM$finalmodel$lambda_l2 <- 44.6
+PARAM$finalmodel$max_depth <- 18
 
 PARAM$finalmodel$max_bin <- 31
 
@@ -121,6 +122,7 @@ modelo <- lgb.train(
     feature_fraction = PARAM$finalmodel$feature_fraction,
     lambda_l1 = PARAM$finalmodel$lambda_l1,
     lambda_l2 = PARAM$finalmodel$lambda_l2,
+    max_depth = PARAM$finalmodel$max_depth,
     seed = miAmbiente$semilla_primigenia
   )
 )
@@ -189,6 +191,9 @@ for (envios in cortes) {
     " num_leaves=", PARAM$finalmodel$num_leaves,
     " min_data_in_leaf=", PARAM$finalmodel$min_data_in_leaf,
     " feature_fraction=", PARAM$finalmodel$feature_fraction,
+    " lambda_l1 =", PARAM$finalmodel$lambda_l1,
+    "lambda_l2 =", PARAM$finalmodel$lambda_l2,
+    "max_depth =", PARAM$finalmodel$max_depth,
     "'"
   )
 
