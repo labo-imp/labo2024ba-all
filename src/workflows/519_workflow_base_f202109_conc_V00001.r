@@ -173,7 +173,7 @@ FEhist_base <- function( pinputexps)
 #  atencion, parmetros para generar variables, NO para buen modelo
 #  azaroso, utiliza semilla
 
-#FErf_attributes_base <- function( pinputexps, ratio, desvio)
+FErf_attributes_base <- function( pinputexps, ratio, desvio)
 {
   if( -1 == (param_local <- exp_init())$resultado ) return( 0 )# linea fija
 
@@ -225,7 +225,7 @@ FEhist_base <- function( pinputexps)
   )
 
 
-  return( exp_correr_script( param_local ) ) # linea fija
+#  return( exp_correr_script( param_local ) ) # linea fija
 }
 #------------------------------------------------------------------------------
 # Canaritos Asesinos   Baseline
