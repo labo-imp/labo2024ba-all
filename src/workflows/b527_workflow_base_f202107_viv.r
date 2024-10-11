@@ -193,7 +193,7 @@ FErf_attributes_base <- function( pinputexps, ratio, desvio)
     num_iterations = 20,
     num_leaves  = 16,
     min_data_in_leaf = 2,
-    feature_fraction_bynode  = 0.9,
+    feature_fraction_bynode  = 0.8,
 
     # para que LightGBM emule Random Forest
     boosting = "rf",
@@ -442,7 +442,7 @@ wf_julio <- function( pnombrewf )
   ts7 <- TS_strategy_base7()
   ht <- HT_tuning_base()
 
-  fm <- FM_final_models_lightgbm( c(ht, ts7), ranks=c(1), qsemillas=10 )
+  fm <- FM_final_models_lightgbm( c(ht, ts7), ranks=c(1), qsemillas=20 )
   SC_scoring( c(fm, ts7) )
   EV_evaluate_conclase_gan()
 
