@@ -4,21 +4,20 @@
 rm(list = ls(all.names = TRUE)) # remove all objects
 gc(full = TRUE) # garbage collection
 
-require("rlang") # INstala los paquetes necesarios
-require("yaml")  # INstala los paquetes necesarios
-require("data.table")  # INstala los paquetes necesarios
+require("rlang")
+require("yaml")
+require("data.table")
 
 if( !exists("envg") ) envg <- env()  # global environment 
 
-envg$EXPENV <- list() # genera una lista vacia 
-envg$EXPENV$bucket_dir <- "~/buckets/b1" # Establece la direccion del bucket
-envg$EXPENV$exp_dir <- "~/buckets/b1/expw/" # Establece la direccion del xp 
-envg$EXPENV$wf_dir <- "~/buckets/b1/flow/" # Establece la direccion del wf
-envg$EXPENV$repo_dir <- "~/labo2024ba/" # Establece la direccion del repo
-envg$EXPENV$datasets_dir <- "~/buckets/b1/datasets/" #Establece donde busca el dataset
-envg$EXPENV$arch_ambiente <- "miAmbiente.yml" #Toma los parametros de ambiente
-envg$EXPENV$arch_sem <- "mis_semillas.txt" #Toma mis semillas. ¿Donde esta esto?
-envg$EXPENV$messenger <- "~/install/zulip_enviar.sh" #Marca el archivo shell que va a buscarse para enviar notif. por zulip.
+envg$EXPENV <- list()
+envg$EXPENV$bucket_dir <- "~/buckets/b1"
+envg$EXPENV$exp_dir <- "~/buckets/b1/expw/"
+envg$EXPENV$wf_dir <- "~/buckets/b1/flow/"
+envg$EXPENV$repo_dir <- "~/labo2024ba/"
+envg$EXPENV$datasets_dir <- "~/datasets/"
+envg$EXPENV$arch_ambiente <- "miAmbiente.yml"
+envg$EXPENV$messenger <- "~/install/zulip_enviar.sh"
 
 # leo el unico parametro del script
 args <- commandArgs(trailingOnly=TRUE)
@@ -43,8 +42,8 @@ options(error = function() {
 
 dir.create( envg$EXPENV$exp_dir, showWarnings = FALSE)
 dir.create( envg$EXPENV$wf_dir, showWarnings = FALSE)
-#------------------------------------------------------------------------------
 
+#------------------------------------------------------------------------------
 # ambiente
 
 envg$EXPENV$miAmbiente <- read_yaml( 
@@ -67,10 +66,10 @@ DT_incorporar_dataset_competencia2024 <- function()
 {
   if( -1 == (param_local <- exp_init())$resultado ) return( 0 ) # linea fija
 
-  param_local$meta$script <- "/src/wf-etapas/z1101_DT_incorporar_dataset.r" #ELijo el script de incorporar dataset
+  param_local$meta$script <- "/src/wf-etapas/z1101_DT_incorporar_dataset.r"
 
   param_local$archivo_absoluto <- envg$EXPENV$miAmbiente$dataset_competencia
-  param_local$primarykey <- c("numero_de_cliente", "foto_mes" )  # Elijo una primary key y foto objetivo
+  param_local$primarykey <- c("numero_de_cliente", "foto_mes" )
   param_local$entity_id <- c("numero_de_cliente" )
   param_local$periodo <- c("foto_mes" )
   param_local$clase <- c("clase_ternaria" )
@@ -90,8 +89,9 @@ CA_catastrophe_base <- function( pinputexps, metodo )
 
   param_local$meta$script <- "/src/wf-etapas/z1201_CA_reparar_dataset.r"
 
-  # Opciones MachineLearning EstadisticaClasica Ninguno
+  # Opciones : MachineLearning EstadisticaClasica MICE Ninguno
   param_local$metodo <- metodo
+  param_local$atributos_eliminar <- c( "tmobile_app", "cmobile_app_trx" )
   param_local$semilla <- NULL  # no usa semilla, es deterministico
 
   return( exp_correr_script( param_local ) ) # linea fija}
@@ -123,7 +123,10 @@ DR_drifting_base <- function( pinputexps, metodo)
   param_local$meta$script <- "/src/wf-etapas/z1401_DR_corregir_drifting.r"
 
   # valores posibles
-  #  "ninguno", "rank_simple", "rank_cero_fijo", "deflacion", "estandarizar"
+  #   "ninguno", 
+  #   "rank_simple", "rank_cero_fijo", 
+  #   "deflacion", "dolar_blue", "dolar_oficial", "UVA",
+  #   "estandarizar"
   param_local$metodo <- metodo
   param_local$semilla <- NULL  # no usa semilla, es deterministico
 
@@ -261,25 +264,35 @@ CN_canaritos_asesinos_base <- function( pinputexps, ratio, desvio)
 #   y solo incluyo en el dataset al 20% de los CONTINUA
 #  azaroso, utiliza semilla
 
-TS_strategy_base9 <- function( pinputexps )
+TS_strategy_base7 <- function( pinputexps )
 {
   if( -1 == (param_local <- exp_init())$resultado ) return( 0 )# linea fija
 
   param_local$meta$script <- "/src/wf-etapas/z2101_TS_training_strategy.r"
 
 
-  param_local$future <- c(202109)
+  param_local$future <- c(202107)
 
   param_local$final_train$undersampling <- 1.0
   param_local$final_train$clase_minoritaria <- c( "BAJA+1", "BAJA+2")
-  param_local$final_train$training <- c(202107, 202106, 202105, 202104, 202103, 202102,
-    202101, 202012, 202011)
+  
+  param_local$final_train$training <- c(202105, 202104, 202103, 202102,
+                                        202101, 202012, 202011, 202010, 202009, 202008, 202007, 202006, 202005,
+                                        202004, 202003)
+  
 
+  ##param_local$final_train$training <- c(202105, 202104, 202103, 202102,
+    ##202101, 202012, 202011, 202010, 202009)
 
-  param_local$train$training <- c(202105, 202104, 202103, 202102, 202101,
-    202012, 202011, 202010, 202009)
-  param_local$train$validation <- c(202106)
-  param_local$train$testing <- c(202107)
+  
+  param_local$train$training <- c(202103, 202102, 202101,
+                                  202012, 202011, 202010, 202009, 202008, 202007, 202006, 202005,
+                                  202004, 202003, 202002, 202001)
+  
+##  param_local$train$training <- c(202103, 202102, 202101,
+  ##  202012, 202011, 202010, 202009, 202008, 202007)
+  param_local$train$validation <- c(202104)
+  param_local$train$testing <- c(202105)
 
   # Atencion  0.2  de  undersampling de la clase mayoritaria,  los CONTINUA
   # 1.0 significa NO undersampling
@@ -292,7 +305,7 @@ TS_strategy_base9 <- function( pinputexps )
 # Hyperparamteter Tuning Baseline
 #  donde la Bayuesian Optimization solo considera 4 hiperparámetros
 #  azaroso, utiliza semilla
-#  puede llegar a recibir  bypass, que por default esta en false #Que pasa si le seteo bypass en true?
+#  puede llegar a recibir  bypass, que por default esta en false
 
 HT_tuning_base <- function( pinputexps, bypass=FALSE)
 {
@@ -300,7 +313,7 @@ HT_tuning_base <- function( pinputexps, bypass=FALSE)
 
   param_local$meta$script <- "/src/wf-etapas/z2201_HT_lightgbm_gan.r"
 
-  # En caso que se haga cross validation, se usa esta cantidad de folds. Por que no utilizar los otros folds?
+  # En caso que se haga cross validation, se usa esta cantidad de folds
   param_local$lgb_crossvalidation_folds <- 5
 
   param_local$train$clase01_valor1 <- c( "BAJA+2", "BAJA+1")
@@ -342,15 +355,15 @@ HT_tuning_base <- function( pinputexps, bypass=FALSE)
 
     extra_trees = FALSE,
     # Parte variable
-    learning_rate = c( 0.02, 0.3 ),
-    feature_fraction = c( 0.5, 0.9 ),
-    num_leaves = c( 8L, 2048L,  "integer" ),
-    min_data_in_leaf = c( 20L, 2000L, "integer" )
+    learning_rate = c( 0.02, 0.3 ), ## Corrida original
+    feature_fraction = c( 0.05, 0.99), ## Sugerencia GDN
+    num_leaves = c( 8L, 8196L,  "integer" ), ## Sugerencia GDN Reajustar en experimento de HT39
+    min_data_in_leaf = c( 5L, 50000L, "integer" ) ## Sugerencia GDN Reajustar en experimento de HT39
   )
 
 
   # una Bayesian humilde, pero no descabellada
-  param_local$bo_iteraciones <- 60 # iteraciones de la Optimizacion Bayesiana
+  param_local$bo_iteraciones <- 100# iteraciones de la Optimizacion Bayesiana
 
   return( exp_correr_script( param_local ) ) # linea fija
 }
@@ -374,7 +387,6 @@ FM_final_models_lightgbm <- function( pinputexps, ranks, qsemillas )
   param_local$train$clase01_valor1 <- c( "BAJA+2", "BAJA+1")
   param_local$train$positivos <- c( "BAJA+2")
 
-  # default 20 semillas
   param_local$qsemillas <- qsemillas
 
   return( exp_correr_script( param_local ) ) # linea fija
@@ -394,23 +406,26 @@ SC_scoring <- function( pinputexps )
   return( exp_correr_script( param_local ) ) # linea fija
 }
 #------------------------------------------------------------------------------
-# proceso KA_evaluate_kaggle
+# proceso EV_conclase  Baseline
 # deterministico, SIN random
 
-KA_evaluate_kaggle <- function( pinputexps )
+EV_evaluate_conclase_gan <- function( pinputexps )
 {
   if( -1 == (param_local <- exp_init())$resultado ) return( 0 )# linea fija
 
-  param_local$meta$script <- "/src/wf-etapas/z2601_KA_evaluate_kaggle.r"
+  param_local$meta$script <- "/src/wf-etapas/z2501_EV_evaluate_conclase_gan.r"
 
   param_local$semilla <- NULL  # no usa semilla, es deterministico
 
-  param_local$isems_submit <- 1:20 # misterioso parametro, no preguntar. ¿Que es?
+  param_local$train$positivos <- c( "BAJA+2")
+  param_local$train$gan1 <- 117000
+  param_local$train$gan0 <-  -3000
+  param_local$train$meseta <- 401
 
-  param_local$envios_desde <-  1600L
-  param_local$envios_hasta <-  2200L
-  param_local$envios_salto <-   100L
-  param_local$competition <- "labo-i-conceptual-2024-ba"
+  # para graficar
+  param_local$graficar$envios_desde <-  1000L
+  param_local$graficar$envios_hasta <-  5000L
+  param_local$graficar$ventana_suavizado <- 401L
 
   return( exp_correr_script( param_local ) ) # linea fija
 }
@@ -422,24 +437,24 @@ KA_evaluate_kaggle <- function( pinputexps )
 # Que predice 202107 donde conozco la clase
 # y ya genera graficos
 
-wf_septiembre <- function( pnombrewf )
+wf_julio <- function( pnombrewf )
 {
   param_local <- exp_wf_init( pnombrewf ) # linea fija
 
   DT_incorporar_dataset_competencia2024()
   CA_catastrophe_base( metodo="MachineLearning")
   FEintra_manual_base()
-  DR_drifting_base(metodo="rank_cero_fijo")
+  DR_drifting_base(metodo="deflacion")
   FEhist_base()
   FErf_attributes_base()
   #CN_canaritos_asesinos_base(ratio=0.2, desvio=4.0)
 
-  ts9 <- TS_strategy_base9()
+  ts7 <- TS_strategy_base7()
   ht <- HT_tuning_base()
 
-  fm <- FM_final_models_lightgbm( c(ht, ts9), ranks=c(1), qsemillas=5 )
-  SC_scoring( c(fm, ts9) )
-  KA_evaluate_kaggle()
+  fm <- FM_final_models_lightgbm( c(ht, ts7), ranks=c(1), qsemillas=20 )
+  SC_scoring( c(fm, ts7) )
+  EV_evaluate_conclase_gan()
 
   return( exp_wf_end() ) # linea fija
 }
@@ -447,6 +462,6 @@ wf_septiembre <- function( pnombrewf )
 #------------------------------------------------------------------------------
 # Aqui comienza el programa
 
-# llamo al workflow con future = 202109
-wf_septiembre()
+# llamo al workflow con future = 202107
+wf_julio()
 

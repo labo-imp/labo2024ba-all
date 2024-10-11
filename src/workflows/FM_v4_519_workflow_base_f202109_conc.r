@@ -141,7 +141,7 @@ FEhist_base <- function( pinputexps)
   param_local$meta$script <- "/src/wf-etapas/z1501_FE_historia.r"
 
   param_local$lag1 <- TRUE
-  param_local$lag2 <- TRUE # no me engraso con los lags de orden 2
+  param_local$lag2 <- FALSE # no me engraso con los lags de orden 2
   param_local$lag3 <- FALSE # no me engraso con los lags de orden 3
 
   # no me engraso las manos con las tendencias
@@ -150,17 +150,17 @@ FEhist_base <- function( pinputexps)
   param_local$Tendencias1$tendencia <- TRUE
   param_local$Tendencias1$minimo <- FALSE
   param_local$Tendencias1$maximo <- FALSE
-  param_local$Tendencias1$promedio <- TRUE
+  param_local$Tendencias1$promedio <- FALSE
   param_local$Tendencias1$ratioavg <- FALSE
   param_local$Tendencias1$ratiomax <- FALSE
 
   # no me engraso las manos con las tendencias de segundo orden
-  param_local$Tendencias2$run <- TRUE
+  param_local$Tendencias2$run <- FALSE
   param_local$Tendencias2$ventana <- 12
-  param_local$Tendencias2$tendencia <- TRUE
+  param_local$Tendencias2$tendencia <- FALSE
   param_local$Tendencias2$minimo <- FALSE
   param_local$Tendencias2$maximo <- FALSE
-  param_local$Tendencias2$promedio <- TRUE
+  param_local$Tendencias2$promedio <- FALSE
   param_local$Tendencias2$ratioavg <- FALSE
   param_local$Tendencias2$ratiomax <- FALSE
 
@@ -269,18 +269,24 @@ TS_strategy_base9 <- function( pinputexps )
 
 
   param_local$future <- c(202109)
-
+  
   param_local$final_train$undersampling <- 1.0
   param_local$final_train$clase_minoritaria <- c( "BAJA+1", "BAJA+2")
   param_local$final_train$training <- c(202107, 202106, 202105, 202104, 202103, 202102,
-    202101, 202012, 202011)
-
-
+                                        202101, 202012, 202011, 202010, 202009, 202008, 202007, 202006, 202005,
+                                        202002, 202001, 201912, 201911, 
+                                        201910, 201909, 201908, 201907, 201906, 201905)
+  
+  
   param_local$train$training <- c(202105, 202104, 202103, 202102, 202101,
-    202012, 202011, 202010, 202009)
+                                  202012, 202011, 202010, 202009, 202008, 202007, 202006, 202005,
+                                  202002, 202001, 201912, 201911, 201910, 201909, 
+                                  201908, 201907, 201906, 201905, 201904, 201903)
   param_local$train$validation <- c(202106)
   param_local$train$testing <- c(202107)
-
+  
+  
+  
   # Atencion  0.2  de  undersampling de la clase mayoritaria,  los CONTINUA
   # 1.0 significa NO undersampling
   param_local$train$undersampling <- 0.2
@@ -294,7 +300,7 @@ TS_strategy_base9 <- function( pinputexps )
 #  azaroso, utiliza semilla
 #  puede llegar a recibir  bypass, que por default esta en false
 
-HT_tuning_base <- function( pinputexps, bypass=FALSE)
+HT_tuning_base <- function( pinputexps, bypass=TRUE)
 {
   if( -1 == (param_local <- exp_init(pbypass=bypass))$resultado ) return( 0 ) # linea fija bypass
 
@@ -314,7 +320,7 @@ HT_tuning_base <- function( pinputexps, bypass=FALSE)
   #  los que tienen un vector,  son los que participan de la Bayesian Optimization
 
   param_local$lgb_param <- list(
-    boosting = "gbdt", # puede ir  dart  , ni pruebe random_forest
+    boosting = "dart", # puede ir  dart  , ni pruebe random_forest
     objective = "binary",
     metric = "custom",
     first_metric_only = TRUE,
@@ -342,15 +348,12 @@ HT_tuning_base <- function( pinputexps, bypass=FALSE)
 
     extra_trees = FALSE,
     # Parte variable
-    learning_rate = c( 0.02, 0.3 ),
-    feature_fraction = c( 0.5, 0.9 ),
-    num_leaves = c( 8L, 2048L,  "integer" ),
-    min_data_in_leaf = c( 20L, 2000L, "integer" )
+    learning_rate = c( 0.02, 0.3 ), 
+    feature_fraction = c( 0.05, 0.99), 
+    num_leaves = c( 8L, 8196L,  "integer" ),
+    min_data_in_leaf = c( 5L, 5000L, "integer" )
   )
 
-  ## Preguntar si la optimizacion es solo con los variables o incluye los fijos
-  ## Los comentados por ejemplo drop_rate, puedo transformarlos en variables?
-  ## Que definimos como funcional?
 
   # una Bayesian humilde, pero no descabellada
   param_local$bo_iteraciones <- 60 # iteraciones de la Optimizacion Bayesiana
@@ -430,9 +433,9 @@ wf_septiembre <- function( pnombrewf )
   param_local <- exp_wf_init( pnombrewf ) # linea fija
 
   DT_incorporar_dataset_competencia2024()
-  CA_catastrophe_base( metodo="MICE")
+  CA_catastrophe_base( metodo="MachineLearning")
   FEintra_manual_base()
-  DR_drifting_base(metodo="deflacion")
+  DR_drifting_base(metodo="rank_cero_fijo")
   FEhist_base()
   FErf_attributes_base()
   #CN_canaritos_asesinos_base(ratio=0.2, desvio=4.0)
@@ -440,7 +443,7 @@ wf_septiembre <- function( pnombrewf )
   ts9 <- TS_strategy_base9()
   ht <- HT_tuning_base()
 
-  fm <- FM_final_models_lightgbm( c(ht, ts9), ranks=c(1), qsemillas=5 )
+  fm <- FM_final_models_lightgbm( c(ht, ts9), ranks=c(1), qsemillas=20 )
   SC_scoring( c(fm, ts9) )
   KA_evaluate_kaggle()
 

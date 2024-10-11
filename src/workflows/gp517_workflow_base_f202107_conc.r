@@ -342,13 +342,13 @@ HT_tuning_base <- function( pinputexps, bypass=FALSE)
     drop_rate = 0.1, # 0.0 < neg_bagging_fraction <= 1.0
     max_drop = 50, # <=0 means no limit
     skip_drop = 0.5, # 0.0 <= skip_drop <= 1.0
-    feature_fraction = 0.15,
-    learning_rate = 0.15,
+    feature_fraction = 0.11,
+    learning_rate = 0.11,
+    min_data_in_leaf = 20,
 
     extra_trees = FALSE,
     # Parte variable
-    num_leaves = c( 8L, 2048L,  "integer" ),
-    min_data_in_leaf = c( 20L, 2000L, "integer" )
+    num_leaves = c( 8L, 4096L,  "integer" )
   )
 
 
@@ -442,7 +442,7 @@ wf_julio <- function( pnombrewf )
   ts7 <- TS_strategy_base7()
   ht <- HT_tuning_base()
 
-  fm <- FM_final_models_lightgbm( c(ht, ts7), ranks=c(1), qsemillas=10 )
+  fm <- FM_final_models_lightgbm( c(ht, ts7), ranks=c(1), qsemillas=20 )
   SC_scoring( c(fm, ts7) )
   EV_evaluate_conclase_gan()
 
