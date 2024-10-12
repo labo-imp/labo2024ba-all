@@ -190,8 +190,8 @@ FErf_attributes_base <- function( pinputexps, ratio, desvio)
   # parametros para que LightGBM se comporte como Random Forest
   param_local$lgb_param <- list(
     # parametros que se pueden cambiar
-    num_iterations = 20,
-    num_leaves  = 16,
+    num_iterations = 50,
+    num_leaves  = 6,
     min_data_in_leaf = 2,
     feature_fraction_bynode  = 0.8,
 
@@ -442,7 +442,7 @@ wf_julio <- function( pnombrewf )
   ts7 <- TS_strategy_base7()
   ht <- HT_tuning_base()
 
-  fm <- FM_final_models_lightgbm( c(ht, ts7), ranks=c(1), qsemillas=20 )
+  fm <- FM_final_models_lightgbm( c(ht, ts7), ranks=c(1), qsemillasb=20 )
   SC_scoring( c(fm, ts7) )
   EV_evaluate_conclase_gan()
 
