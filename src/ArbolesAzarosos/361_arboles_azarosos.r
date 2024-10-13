@@ -24,7 +24,7 @@ PARAM$rpart <- data.table(
   "cp" = -1,
   "minsplit" = 50,
   "minbucket" = 20,
-  "maxdepth" = 6
+  "maxdepth" = 10
 )
 
 # parametros  arbol
