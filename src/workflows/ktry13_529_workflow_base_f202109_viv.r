@@ -334,7 +334,7 @@ HT_tuning_base <- function( pinputexps, bypass=FALSE)
     force_row_wise = TRUE, # para reducir warnings
     verbosity = -100,
     max_depth = -1L, # -1 significa no limitar,  por ahora lo dejo fijo
-    min_gain_to_split = c( 0.0, 20.0 ), # min_gain_to_split >= 0.0
+    min_gain_to_split = 0.0, # min_gain_to_split >= 0.0
     min_sum_hessian_in_leaf = 0.001, #  min_sum_hessian_in_leaf >= 0.0
     lambda_l1 = c( 1, 1000 ), # lambda_l1 >= 0.0
     lambda_l2 = c( 1, 1000 ), # lambda_l2 >= 0.0
@@ -353,10 +353,11 @@ HT_tuning_base <- function( pinputexps, bypass=FALSE)
     
     extra_trees = FALSE,
     # Parte variable
-    learning_rate = c( 0.02, 0.15 ),
-    feature_fraction = 0.5,
+    learning_rate = c( 0.02, 0.3 ),
+    feature_fraction = c( 0.5, 0.9 ),
     num_leaves = c( 8L, 8196L,  "integer" ),
-    min_data_in_leaf = c( 5L, 50000L, "integer" )
+    min_data_in_leaf = c( 5L, 50000L, "integer" ),
+    max_delta_step = c( 1.0, 10.0 )
   )
   
   
@@ -438,13 +439,13 @@ wf_septiembre <- function( pnombrewf )
   param_local <- exp_wf_init( pnombrewf ) # linea fija
   
   DT_incorporar_dataset_competencia2024()
-  CA_catastrophe_base( metodo="EstadisticaClasica")
+  CA_catastrophe_base( metodo="Ninguno")
   FEintra_manual_base()
   DR_drifting_base(metodo="rank_simple")
   
   FEhist_base()
   # primera rasurada de canaritos
-  CN_canaritos_asesinos_base(ratio=2, desvio=-1)
+  #CN_canaritos_asesinos_base(ratio=2, desvio=-1)
   
   FErf_attributes_base()
   # segunda rasurada de canaritos
