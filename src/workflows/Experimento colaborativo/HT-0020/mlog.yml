@@ -1,0 +1,73 @@
+larch:
+  qty: 1.0
+  archivos:
+    BO_log.txt:
+      nom_arch: BO_log.txt
+      cols_fijas:
+        expw: /home/sofimoretti01/buckets/b1/expw/HT-0020
+      mlflow:
+        contador: 1052.0
+        exp_name: /test-3a20da
+        run_name: HT-0020
+        padre_creado: yes
+        exp_id: '7'
+        padre_exp:
+          run_uuid: 8195f1e47153407696c0ebe922f3a814
+          experiment_id: '7'
+          run_name: upbeat-mink-91
+          user_id: sofimoretti01
+          status: RUNNING
+          start_time: 1.7281596e+09
+          artifact_uri: mlflow-artifacts:/7/8195f1e47153407696c0ebe922f3a814/artifacts
+          lifecycle_stage: active
+          run_id: 8195f1e47153407696c0ebe922f3a814
+          end_time: .na
+          metrics: .na
+          params: .na
+          tags:
+          - key:
+            - mlflow.user
+            - mlflow.source.name
+            - mlflow.source.type
+            - mlflow.runName
+            value:
+            - sofimoretti01
+            - z2201_HT_lightgbm_gan.r
+            - LOCAL
+            - upbeat-mink-91
+        padre_activo: no
+        hijo_exp:
+          run_uuid: 91c16029b8b94b27a45f722aa6d2c74e
+          experiment_id: '7'
+          run_name: spiffy-wolf-225
+          user_id: sofimoretti01
+          status: RUNNING
+          start_time: 1.7282223e+09
+          artifact_uri: mlflow-artifacts:/7/91c16029b8b94b27a45f722aa6d2c74e/artifacts
+          lifecycle_stage: active
+          run_id: 91c16029b8b94b27a45f722aa6d2c74e
+          end_time: .na
+          metrics: .na
+          params: .na
+          tags:
+          - key:
+            - mlflow.user
+            - mlflow.source.name
+            - mlflow.source.type
+            - mlflow.parentRunId
+            - mlflow.runName
+            value:
+            - sofimoretti01
+            - z2201_HT_lightgbm_gan.r
+            - LOCAL
+            - 8195f1e47153407696c0ebe922f3a814
+            - spiffy-wolf-225
+mlflow:
+  iniciado: yes
+  conn:
+    tracking_username: labo2024ba
+    tracking_password: constructivism
+    tracking_uri: http://34.125.167.177/labo2024ba/
+usuario: sofimoretti01
+maquina: desktop-conceptual
+persistir: yes

@@ -323,10 +323,10 @@ HT_tuning_base <- function( pinputexps, bypass=FALSE)
     force_row_wise = TRUE, # para reducir warnings
     verbosity = -100,
     max_depth = -1L, # -1 significa no limitar,  por ahora lo dejo fijo
-    #min_gain_to_split = 0.0, # min_gain_to_split >= 0.0
+    min_gain_to_split = 0.0, # min_gain_to_split >= 0.0
     min_sum_hessian_in_leaf = 0.001, #  min_sum_hessian_in_leaf >= 0.0
-    #lambda_l1 = 0.0, # lambda_l1 >= 0.0
-    #lambda_l2 = 0.0, # lambda_l2 >= 0.0
+    lambda_l1 = 0.0, # lambda_l1 >= 0.0
+    lambda_l2 = 0.0, # lambda_l2 >= 0.0
     max_bin = 31L, # lo debo dejar fijo, no participa de la BO
     num_iterations = 9999, # un numero muy grande, lo limita early_stopping_rounds
     
@@ -341,19 +341,18 @@ HT_tuning_base <- function( pinputexps, bypass=FALSE)
     skip_drop = 0.5, # 0.0 <= skip_drop <= 1.0
     
     extra_trees = FALSE,
+    learning_rate = 0.2,
+    feature_fraction = 0.5,
+    min_data_in_leaf = 80,
     
     # Parte variable
-    learning_rate = c(0.01, 0.15),
-    num_leaves = c( 8L, 8196L, "integer"),
-    min_data_in_leaf = c( 5L, 50000L, "integer"),
-    lambda_l1 = c(1.0, 1000.0),
-    lambda_l2 = c(1.0, 1000.0),
-    min_gain_to_split = c(0.0, 20.0)
+    num_leaves = c(20L, 100L, 'integer')
   )
   
   
+  
   # una Bayesian humilde, pero no descabellada
-  param_local$bo_iteraciones <- 500 # iteraciones de la Optimizacion Bayesiana
+  param_local$bo_iteraciones <- 100 # iteraciones de la Optimizacion Bayesiana
   
   return( exp_correr_script( param_local ) ) # linea fija
 }
@@ -440,7 +439,7 @@ wf_septiembre <- function( pnombrewf )
   ts9 <- TS_strategy_base9()
   ht <- HT_tuning_base()
   
-  fm <- FM_final_models_lightgbm( c(ht, ts9), ranks=c(1), qsemillas=5 )
+  fm <- FM_final_models_lightgbm( c(ht, ts9), ranks=c(1), qsemillas=20 )
   SC_scoring( c(fm, ts9) )
   KA_evaluate_kaggle()
   
