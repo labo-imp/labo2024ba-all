@@ -1,0 +1,28 @@
+input_exps: SC-0001
+meta:
+  script: /src/wf-etapas/z2601_KA_evaluate_kaggle.r
+isems_submit:
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+- 8
+- 9
+- 10
+- 11
+- 12
+- 13
+- 14
+- 15
+- 16
+- 17
+- 18
+- 19
+- 20
+envios_desde: 9000
+envios_hasta: 13000
+envios_salto: 500
+competition: labo-i-vivencial-2024-ba
