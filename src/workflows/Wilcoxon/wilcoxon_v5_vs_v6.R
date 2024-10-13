@@ -1,6 +1,12 @@
+# Ejecuta este comando para seleccionar el archivo y obtener la ruta completa
+file_path <- file.choose()
+
+# Muestra la ruta del archivo
+print(file_path)
+
 # Cargar ambos archivos .txt
-data_v1 <- read.table("/home/consultorio_grazianimp/buckets/b1/flow/wf_julio-002/011-EV_evaluate_conclase_gan/ganancias_01_069_v2.txt", header = TRUE, sep = "\t")
-data_v2 <- read.table("/home/consultorio_grazianimp/buckets/b1/flow/wf_julio-003/011-EV_evaluate_conclase_gan/ganancias_01_011_v3.txt", header = TRUE, sep = "\t")
+data_v1 <- read.table("/home/consultorio_grazianimp/buckets/b1/flow/wf_julio-006/011-EV_evaluate_conclase_gan/ganancias_01_054_v5.txt", header = TRUE, sep = "\t")
+data_v2 <- read.table("/home/consultorio_grazianimp/buckets/b1/flow/wf_julio-007/011-EV_evaluate_conclase_gan/ganancias_01_076_v6.txt", header = TRUE, sep = "\t")
 
 # Asegurarse de que la columna de "envios" sea numérica y verificar los nombres de las columnas
 data_v1$envios <- as.numeric(data_v1$envios)
@@ -39,11 +45,11 @@ data_v1$p_value <- p_values
 final_data <- data_v1[, c("envios", "ganancia_promedio_exp1", "ganancia_promedio_exp2", "p_value")]
 
 # Renombrar las columnas de ganancia
-colnames(final_data)[2] <- "ganancia_promedio_exp2"
-colnames(final_data)[3] <- "ganancia_promedio_exp3"
+colnames(final_data)[2] <- "ganancia_promedio_exp5"
+colnames(final_data)[3] <- "ganancia_promedio_exp6"
 
 # Mostrar los resultados
 print(final_data)
 
 # Exportar el resultado a un archivo CSV
-write.csv(final_data, "/home/consultorio_grazianimp/buckets/b1/comparaciones/resultado_comparacion_v2_vs_v3.csv", row.names = FALSE)
+write.csv(final_data, "/home/consultorio_grazianimp/buckets/b1/comparaciones/resultado_comparacion_v5_vs_v6.csv", row.names = FALSE)

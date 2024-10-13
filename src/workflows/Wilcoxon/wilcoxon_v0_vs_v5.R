@@ -1,6 +1,6 @@
 # Cargar ambos archivos .txt
 data_v0 <- read.table("/home/consultorio_grazianimp/buckets/b1/flow/wf_julio-010/011-EV_evaluate_conclase_gan/ganancias_01_037_v0.txt", header = TRUE, sep = "\t")
-data_v1 <- read.table("/home/consultorio_grazianimp/buckets/b1/flow/wf_julio-001/011-EV_evaluate_conclase_gan/ganancias_01_020_v1.txt", header = TRUE, sep = "\t")
+data_v1 <- read.table("/home/consultorio_grazianimp/buckets/b1/flow/wf_julio-006/011-EV_evaluate_conclase_gan/ganancias_01_054_v5.txt", header = TRUE, sep = "\t")
 
 # Asegurarse de que la columna de "envios" sea numérica y verificar los nombres de las columnas
 data_v0$envios <- as.numeric(data_v0$envios)
@@ -40,10 +40,10 @@ final_data <- data_v0[, c("envios", "ganancia_promedio_exp1", "ganancia_promedio
 
 # Renombrar las columnas de ganancia
 colnames(final_data)[2] <- "ganancia_promedio_exp0"
-colnames(final_data)[3] <- "ganancia_promedio_exp1"
+colnames(final_data)[3] <- "ganancia_promedio_exp5"
 
 # Mostrar los resultados
 print(final_data)
 
 # Exportar el resultado a un archivo CSV
-write.csv(final_data, "/home/consultorio_grazianimp/buckets/b1/comparaciones/resultado_comparacion_v0_vs_v1.csv", row.names = FALSE)
+write.csv(final_data, "/home/consultorio_grazianimp/buckets/b1/comparaciones/resultado_comparacion_v0_vs_v5.csv", row.names = FALSE)
