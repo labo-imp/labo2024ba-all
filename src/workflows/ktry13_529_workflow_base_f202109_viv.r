@@ -114,7 +114,7 @@ FEintra_manual_base <- function( pinputexps )
   if( -1 == (param_local <- exp_init())$resultado ) return( 0 ) # linea fija
   
   
-  param_local$meta$script <- "/src/wf-etapas/z1301_FE_intrames_manual.r"
+  param_local$meta$script <- "/src/wf-etapas/1301_FE_intrames_manual_modeloFinal.r"
   
   param_local$semilla <- NULL  # no usa semilla, es deterministico
   
@@ -279,20 +279,22 @@ TS_strategy_base9 <- function( pinputexps )
   
   param_local$future <- c(202109)
   
-  param_local$final_train$undersampling <- 0.5
+  param_local$final_train$undersampling <- 0.85
   param_local$final_train$clase_minoritaria <- c( "BAJA+1", "BAJA+2")
-  param_local$final_train$training <- c(202107, 202106, 202105, 202104, 202103, 202102, 202101, 202012, 202011, 202008, 
-                                        202007, 202004, 202003, 201912, 201911,201908, 201907,201904, 201903)
+  param_local$final_train$training <- c(202107, 202106, 202105, 202104, 202103, 202102, 202101, 202012, 202011, 202010, 
+                                        202009, 202008, 202007, 202006, 202005, 202004, 202002, 202001, 201912, 201911, 
+                                        201910, 201909, 201908, 201907)
   
   
-  param_local$train$training <- c(202105, 202104, 202103, 202102, 202101, 202012, 202011, 202010, 202009, 202006, 202005, 
-                                  202002, 202001, 201910, 201909,201906, 201905,201902, 201901)
+  param_local$train$training <- c(202105, 202104, 202103, 202102, 202101, 202012, 202011, 202010, 202009, 202008, 202007,
+                                  202006, 202005, 202004, 202002, 202001, 201912, 201910, 201909, 201908, 201907, 201906,
+                                  201905, 201904)
   param_local$train$validation <- c(202106)
   param_local$train$testing <- c(202107)
   
   # Atencion  0.2  de  undersampling de la clase mayoritaria,  los CONTINUA
   # 1.0 significa NO undersampling
-  param_local$train$undersampling <- 0.25
+  param_local$train$undersampling <- 0.85
   param_local$train$clase_minoritaria <- c( "BAJA+1", "BAJA+2")
   
   return( exp_correr_script( param_local ) ) # linea fija
@@ -332,10 +334,10 @@ HT_tuning_base <- function( pinputexps, bypass=FALSE)
     force_row_wise = TRUE, # para reducir warnings
     verbosity = -100,
     max_depth = -1L, # -1 significa no limitar,  por ahora lo dejo fijo
-    min_gain_to_split = 0.0, # min_gain_to_split >= 0.0
+    min_gain_to_split = c( 0.0, 20.0 ), # min_gain_to_split >= 0.0
     min_sum_hessian_in_leaf = 0.001, #  min_sum_hessian_in_leaf >= 0.0
-    lambda_l1 = 0.0, # lambda_l1 >= 0.0
-    lambda_l2 = 0.0, # lambda_l2 >= 0.0
+    lambda_l1 = c( 1, 1000 ), # lambda_l1 >= 0.0
+    lambda_l2 = c( 1, 1000 ), # lambda_l2 >= 0.0
     max_bin = 31L, # lo debo dejar fijo, no participa de la BO
     num_iterations = 9999, # un numero muy grande, lo limita early_stopping_rounds
     
@@ -351,8 +353,8 @@ HT_tuning_base <- function( pinputexps, bypass=FALSE)
     
     extra_trees = FALSE,
     # Parte variable
-    learning_rate = c( 0.02, 0.3 ),
-    feature_fraction = c( 0.05, 0.99 ),
+    learning_rate = c( 0.02, 0.15 ),
+    feature_fraction = 0.5,
     num_leaves = c( 8L, 8196L,  "integer" ),
     min_data_in_leaf = c( 5L, 50000L, "integer" )
   )
@@ -416,8 +418,8 @@ KA_evaluate_kaggle <- function( pinputexps )
   
   param_local$isems_submit <- 1:20 # misterioso parametro, no preguntar
   
-  param_local$envios_desde <-  10000L
-  param_local$envios_hasta <-  12000L
+  param_local$envios_desde <-  9000L
+  param_local$envios_hasta <-  13000L
   param_local$envios_salto <-    500L
   param_local$competition <- "labo-i-vivencial-2024-ba"
   
@@ -442,7 +444,7 @@ wf_septiembre <- function( pnombrewf )
   
   FEhist_base()
   # primera rasurada de canaritos
-  CN_canaritos_asesinos_base(ratio=0.95, desvio=2.35)
+  CN_canaritos_asesinos_base(ratio=2, desvio=-1)
   
   FErf_attributes_base()
   # segunda rasurada de canaritos
@@ -451,7 +453,7 @@ wf_septiembre <- function( pnombrewf )
   ts9 <- TS_strategy_base9()
   ht <- HT_tuning_base()
   
-  fm <- FM_final_models_lightgbm( c(ht, ts9), ranks=c(1, 2), qsemillas=40 )
+  fm <- FM_final_models_lightgbm( c(ht, ts9), ranks=c(1, 2), qsemillas=20 )
   SC_scoring( c(fm, ts9) )
   KA_evaluate_kaggle()
   
