@@ -353,7 +353,7 @@ HT_tuning_base <- function( pinputexps, bypass=FALSE)
   )
 
 
-  # una Bayesian humilde, pero no descabellada
+  # una Bayesian intermedia respecto de la de 14HT
   param_local$bo_iteraciones <- 500# iteraciones de la Optimizacion Bayesiana
 
   return( exp_correr_script( param_local ) ) # linea fija
