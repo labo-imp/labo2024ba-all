@@ -1,7 +1,7 @@
 require("rlang")
 
 # workflow que voy a correr
-PARAM <- "src/workflows/ep517_workflow_base_f202107_conc.r"
+PARAM <- "src/workflows/ult517_workflow_base_f202107_conc.r"
 
 envg <- env()
 
@@ -13,6 +13,7 @@ envg$EXPENV$repo_dir <- "~/labo2024ba/"
 correr_workflow <- function( wf_scriptname )
 {
   dir.create( "~/tmp", showWarnings = FALSE)
+  setwd("~/tmp" )
 
   # creo el script que corre el experimento
   comando <- paste0( 

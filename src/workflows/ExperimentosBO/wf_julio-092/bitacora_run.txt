@@ -1,0 +1,12 @@
+fecha	id	status	workflow	expw	funcion
+20241013.120640	1	previo_end	~/buckets/b1/flow/wf_julio-092	~/buckets/b1/expw/DT-0001	DT_incorporar_dataset_competencia2024
+20241013.120643	2	previo_end	~/buckets/b1/flow/wf_julio-092	~/buckets/b1/expw/CA-0003	CA_catastrophe_base
+20241013.120644	3	previo_end	~/buckets/b1/flow/wf_julio-092	~/buckets/b1/expw/FEintra-0003	FEintra_manual_base
+20241013.120645	4	previo_end	~/buckets/b1/flow/wf_julio-092	~/buckets/b1/expw/DR-0004	DR_drifting_base
+20241013.120647	5	previo_end	~/buckets/b1/flow/wf_julio-092	~/buckets/b1/expw/FEhist-0005	FEhist_base
+20241013.120648	6	previo_end	~/buckets/b1/flow/wf_julio-092	~/buckets/b1/expw/FErf-0005	FErf_attributes_base
+20241013.120650	7	previo_end	~/buckets/b1/flow/wf_julio-092	~/buckets/b1/expw/TS-0005	TS_strategy_base7
+20241013.120651	8	previo_end	~/buckets/b1/flow/wf_julio-092	~/buckets/b1/expw/HT-0077	HT_tuning_base
+20241013.120653	9	actual_run	~/buckets/b1/flow/wf_julio-092	~/buckets/b1/expw/FM-0068	FM_final_models_lightgbm
+20241013.121954	10	actual_run	~/buckets/b1/flow/wf_julio-092	~/buckets/b1/expw/SC-0060	SC_scoring
+20241013.122021	11	actual_run	~/buckets/b1/flow/wf_julio-092	~/buckets/b1/expw/EV-0045	EV_evaluate_conclase_gan

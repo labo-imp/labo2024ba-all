@@ -64,9 +64,10 @@ realizar_test_wilcoxon <- function(mejor_vector, archivo_ganancias, nombre_salid
 
 # Especificar las rutas de los archivos originales
 rutas_archivos <- c(
-  "/home/icelaye363/labo2024ba/src/workflows/ExperimentosBO/wf_julio-060/011-EV_evaluate_conclase_gan/ganancias_01_012.txt",
-  "/home/icelaye363/labo2024ba/src/workflows/ExperimentosBO/wf_julio-061/011-EV_evaluate_conclase_gan/ganancias_01_058.txt",
-  "/home/icelaye363/labo2024ba/src/workflows/ExperimentosBO/wf_julio-062/011-EV_evaluate_conclase_gan/ganancias_01_701.txt"
+  "/home/icelaye363/labo2024ba/src/workflows/ExperimentosBO/wf_julio-089/011-EV_evaluate_conclase_gan/ganancias_01_012.txt", #1ht
+  "/home/icelaye363/labo2024ba/src/workflows/ExperimentosBO/wf_julio-090/011-EV_evaluate_conclase_gan/ganancias_01_058.txt", #4ht
+  "/home/icelaye363/labo2024ba/src/workflows/ExperimentosBO/wf_julio-091/011-EV_evaluate_conclase_gan/ganancias_01_701.txt", #14ht
+  "/home/icelaye363/labo2024ba/src/workflows/ExperimentosBO/wf_julio-092/011-EV_evaluate_conclase_gan/ganancias_01_056.txt" #7ht
 )
 
 # Crear una lista para almacenar las rutas de los archivos de mejores vectores
