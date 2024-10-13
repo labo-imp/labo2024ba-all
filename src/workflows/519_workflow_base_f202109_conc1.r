@@ -150,15 +150,15 @@ FEhist_base <- function( pinputexps)
   param_local$Tendencias1$tendencia <- TRUE
   param_local$Tendencias1$minimo <- TRUE
   param_local$Tendencias1$maximo <- TRUE
-  param_local$Tendencias1$promedio <- TRUE
+  param_local$Tendencias1$promedio <- FALSE
   param_local$Tendencias1$ratioavg <- FALSE
   param_local$Tendencias1$ratiomax <- FALSE
 
   # no me engraso las manos con las tendencias de segundo orden
-  param_local$Tendencias2$run <- FALSE
+  param_local$Tendencias2$run <- TRUE
   param_local$Tendencias2$ventana <- 12
-  param_local$Tendencias2$tendencia <- FALSE
-  param_local$Tendencias2$minimo <- FALSE
+  param_local$Tendencias2$tendencia <- TRUE
+  param_local$Tendencias2$minimo <- TRUE
   param_local$Tendencias2$maximo <- FALSE
   param_local$Tendencias2$promedio <- FALSE
   param_local$Tendencias2$ratioavg <- FALSE
@@ -209,8 +209,8 @@ FErf_attributes_base <- function( pinputexps, ratio, desvio)
     max_depth = -1L,
     min_gain_to_split = 0.0,
     min_sum_hessian_in_leaf = 0.001,
-    lambda_l1 = 0.0,
-    lambda_l2 = 0.0,
+    lambda_l1 = 0.2,
+    lambda_l2 = 0.2,
 
     pos_bagging_fraction = 1.0,
     neg_bagging_fraction = 1.0,
@@ -273,11 +273,11 @@ TS_strategy_base9 <- function( pinputexps )
   param_local$final_train$undersampling <- 1.0
   param_local$final_train$clase_minoritaria <- c( "BAJA+1", "BAJA+2")
   param_local$final_train$training <- c(202107, 202106, 202105, 202104, 202103, 202102,
-    202101, 202012, 202011,201010,202009,202008)
+    202101, 202012, 202011)
 
 
   param_local$train$training <- c(202105, 202104, 202103, 202102, 202101,
-    202012, 202011, 202010, 202009,202008)
+    202012, 202011, 202010, 202009)
   param_local$train$validation <- c(202106)
   param_local$train$testing <- c(202107)
 
@@ -343,7 +343,7 @@ HT_tuning_base <- function( pinputexps, bypass=FALSE)
     extra_trees = FALSE,
     # Parte variable
     learning_rate = c( 0.02, 0.3 ),
-    feature_fraction = c( 0.5, 0.9 ),
+    feature_fraction = c( 0.6, 0.9 ),
     num_leaves = c( 8L, 2048L,  "integer" ),
     min_data_in_leaf = c( 20L, 2000L, "integer" )
   )

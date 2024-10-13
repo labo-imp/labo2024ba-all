@@ -9,7 +9,7 @@ envg$EXPENV <- list()
 envg$EXPENV$repo_dir <- "~/labo2024ba/"
 
 #------------------------------------------------------------------------------
-c
+
 correr_workflow <- function( wf_scriptname )
 {
   dir.create( "~/tmp", showWarnings = FALSE)

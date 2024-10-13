@@ -141,7 +141,7 @@ FEhist_base <- function( pinputexps)
   param_local$meta$script <- "/src/wf-etapas/z1501_FE_historia.r"
 
   param_local$lag1 <- TRUE
-  param_local$lag2 <- FALSE # no me engraso con los lags de orden 2
+  param_local$lag2 <- TRUE # no me engraso con los lags de orden 2
   param_local$lag3 <- FALSE # no me engraso con los lags de orden 3
 
   # no me engraso las manos con las tendencias
@@ -149,20 +149,20 @@ FEhist_base <- function( pinputexps)
   param_local$Tendencias1$ventana <- 6
   param_local$Tendencias1$tendencia <- TRUE
   param_local$Tendencias1$minimo <- TRUE
-  param_local$Tendencias1$maximo <- TRUE
-  param_local$Tendencias1$promedio <- TRUE
+  param_local$Tendencias1$maximo <- FALSE
+  param_local$Tendencias1$promedio <- FALSE
   param_local$Tendencias1$ratioavg <- FALSE
-  param_local$Tendencias1$ratiomax <- FALSE
+  param_local$Tendencias1$ratiomax <- TRUE
 
   # no me engraso las manos con las tendencias de segundo orden
-  param_local$Tendencias2$run <- FALSE
+  param_local$Tendencias2$run <- TRUE
   param_local$Tendencias2$ventana <- 12
-  param_local$Tendencias2$tendencia <- FALSE
-  param_local$Tendencias2$minimo <- FALSE
+  param_local$Tendencias2$tendencia <- TRUE
+  param_local$Tendencias2$minimo <- TRUE
   param_local$Tendencias2$maximo <- FALSE
   param_local$Tendencias2$promedio <- FALSE
   param_local$Tendencias2$ratioavg <- FALSE
-  param_local$Tendencias2$ratiomax <- FALSE
+  param_local$Tendencias2$ratiomax <- TRUE
 
   param_local$semilla <- NULL # no usa semilla, es deterministico
 
@@ -250,9 +250,9 @@ CN_canaritos_asesinos_base <- function( pinputexps, ratio, desvio)
 
   # ratio varia de 0.0 a 2.0
   # desvio varia de -4.0 a 4.0
-  param_local$CanaritosAsesinos$ratio <- ratio
+  param_local$CanaritosAsesinos$ratio <- 1
   # desvios estandar de la media, para el cutoff
-  param_local$CanaritosAsesinos$desvios <- desvio
+  param_local$CanaritosAsesinos$desvios <- -1
 
   return( exp_correr_script( param_local ) ) # linea fija
 }
@@ -273,11 +273,11 @@ TS_strategy_base9 <- function( pinputexps )
   param_local$final_train$undersampling <- 1.0
   param_local$final_train$clase_minoritaria <- c( "BAJA+1", "BAJA+2")
   param_local$final_train$training <- c(202107, 202106, 202105, 202104, 202103, 202102,
-    202101, 202012, 202011,201010,202009,202008)
+    202101, 202012, 202011)
 
 
   param_local$train$training <- c(202105, 202104, 202103, 202102, 202101,
-    202012, 202011, 202010, 202009,202008)
+    202012, 202011, 202010, 202009)
   param_local$train$validation <- c(202106)
   param_local$train$testing <- c(202107)
 
@@ -325,8 +325,8 @@ HT_tuning_base <- function( pinputexps, bypass=FALSE)
     max_depth = -1L, # -1 significa no limitar,  por ahora lo dejo fijo
     min_gain_to_split = 0.0, # min_gain_to_split >= 0.0
     min_sum_hessian_in_leaf = 0.001, #  min_sum_hessian_in_leaf >= 0.0
-    lambda_l1 = 0.0, # lambda_l1 >= 0.0
-    lambda_l2 = 0.0, # lambda_l2 >= 0.0
+    lambda_l1 = 0.3, # lambda_l1 >= 0.0
+    lambda_l2 = 0.3, # lambda_l2 >= 0.0
     max_bin = 31L, # lo debo dejar fijo, no participa de la BO
     num_iterations = 9999, # un numero muy grande, lo limita early_stopping_rounds
 
@@ -342,7 +342,7 @@ HT_tuning_base <- function( pinputexps, bypass=FALSE)
 
     extra_trees = FALSE,
     # Parte variable
-    learning_rate = c( 0.02, 0.3 ),
+    learning_rate = c( 0.005, 0.3 ),
     feature_fraction = c( 0.5, 0.9 ),
     num_leaves = c( 8L, 2048L,  "integer" ),
     min_data_in_leaf = c( 20L, 2000L, "integer" )
@@ -363,6 +363,7 @@ FM_final_models_lightgbm <- function( pinputexps, ranks, qsemillas )
   if( -1 == (param_local <- exp_init())$resultado ) return( 0 )# linea fija
 
   param_local$meta$script <- "/src/wf-etapas/z2301_FM_final_models_lightgbm.r"
+  
 
   # Que modelos quiero, segun su posicion en el ranking de la Bayesian Optimizacion, ordenado por metrica descendente
   param_local$modelos_rank <- ranks
@@ -407,8 +408,8 @@ KA_evaluate_kaggle <- function( pinputexps )
 
   param_local$isems_submit <- 1:20 # misterioso parametro, no preguntar
 
-  param_local$envios_desde <-  1600L
-  param_local$envios_hasta <-  2200L
+  param_local$envios_desde <-  1000L
+  param_local$envios_hasta <-  1700L
   param_local$envios_salto <-   100L
   param_local$competition <- "labo-i-conceptual-2024-ba"
 
