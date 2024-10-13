@@ -292,8 +292,8 @@ TS_strategy_base7 <- function( pinputexps )
   return( exp_correr_script( param_local ) ) # linea fija
 }
 #------------------------------------------------------------------------------
-# Hyperparamteter Tuning Baseline
-#  donde la Bayuesian Optimization solo considera 4 hiperparámetros
+# Hyperparamteter Tuning
+#  donde la Bayuesian Optimization considera 7 hiperparámetros
 #  azaroso, utiliza semilla
 #  puede llegar a recibir  bypass, que por default esta en false
 
@@ -343,10 +343,10 @@ HT_tuning_base <- function( pinputexps, bypass=FALSE)
 
     extra_trees = FALSE,
     # Parte variable
-    learning_rate = c( 0.02, 0.3 ), ## Corrida original
-    feature_fraction = c( 0.05, 0.99), ## Sugerencia GDN
-    num_leaves = c( 8L, 8196L,  "integer" ), ## Sugerencia GDN Reajustar en experimento de HT39
-    min_data_in_leaf = c( 5L, 50000L, "integer" ), ## Sugerencia GDN Reajustar en experimento de HT39
+    learning_rate = c( 0.02, 0.3 ), 
+    feature_fraction = c( 0.05, 0.99), 
+    num_leaves = c( 8L, 8196L,  "integer" ), 
+    min_data_in_leaf = c( 5L, 50000L, "integer" ), 
     lambda_l1 = c(1.0, 1000.0),
     lambda_l2 = c(1.0, 1000.0),
     max_delta_step = c(1.0, 10.0)

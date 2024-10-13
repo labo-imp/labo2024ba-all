@@ -292,8 +292,8 @@ TS_strategy_base7 <- function( pinputexps )
   return( exp_correr_script( param_local ) ) # linea fija
 }
 #------------------------------------------------------------------------------
-# Hyperparamteter Tuning Baseline
-#  donde la Bayuesian Optimization solo considera 4 hiperparámetros
+# Hyperparamteter Tuning 
+#  donde la Bayuesian Optimization considera 14 hiperparámetros
 #  azaroso, utiliza semilla
 #  puede llegar a recibir  bypass, que por default esta en false
 
@@ -339,25 +339,25 @@ HT_tuning_base <- function( pinputexps, bypass=FALSE)
 
     extra_trees = FALSE,
     # Parte variable
-    learning_rate = c( 0.02, 0.3 ), ## Corrida original
-    feature_fraction = c( 0.05, 0.99), ## Sugerencia GDN
-    num_leaves = c( 8L, 8196L,  "integer" ), ## Sugerencia GDN Reajustar en experimento de HT39
-    min_data_in_leaf = c( 5L, 50000L, "integer" ), ## Sugerencia GDN Reajustar en experimento de HT39
-    lambda_l1 = c(1.0, 1000.0), ## Sugerencia GDN
-    lambda_l2 = c(1.0, 1000.0), ## Sugerencia GDN
-    bagging_fraction = c(0.0, 1.0), ## MIN - MAX
-    bagging_freq = c(1L, 10L, "integer"), ## Corrida original
-    min_gain_to_split = c(0.0, 20.0), ## Sugerencia GDN
-    min_sum_hessian_in_leaf = c(0.0, 10.0), ## No pase a 15 por miedo de no convergencia. PRobar si queda tiempo
-    max_delta_step = c(0.0, 10.0), ## Corrida original
-    feature_fraction_bynode = c(0.0, 1.0), ## Limites reales
-    pos_bagging_fraction = c(0.0, 1.0), ## Limites reales
-    neg_bagging_fraction = c(0.0, 1.0) ## Limites reales
+    learning_rate = c( 0.02, 0.3 ), 
+    feature_fraction = c( 0.05, 0.99), 
+    num_leaves = c( 8L, 8196L,  "integer" ), 
+    min_data_in_leaf = c( 5L, 50000L, "integer" ), 
+    lambda_l1 = c(1.0, 1000.0), 
+    lambda_l2 = c(1.0, 1000.0), 
+    bagging_fraction = c(0.0, 1.0), 
+    bagging_freq = c(1L, 10L, "integer"), 
+    min_gain_to_split = c(0.0, 20.0), 
+    min_sum_hessian_in_leaf = c(0.0, 10.0), 
+    max_delta_step = c(0.0, 10.0), 
+    feature_fraction_bynode = c(0.0, 1.0), 
+    pos_bagging_fraction = c(0.0, 1.0), 
+    neg_bagging_fraction = c(0.0, 1.0) 
 
   )
   
   
-  # una Bayesian humilde, pero no descabellada
+  # una Bayesian poco humilde, y MUY descabellada
   param_local$bo_iteraciones <- 1000 # iteraciones de la Optimizacion Bayesiana
 
   return( exp_correr_script( param_local ) ) # linea fija

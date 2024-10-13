@@ -292,8 +292,8 @@ TS_strategy_base7 <- function( pinputexps )
   return( exp_correr_script( param_local ) ) # linea fija
 }
 #------------------------------------------------------------------------------
-# Hyperparamteter Tuning Baseline
-#  donde la Bayuesian Optimization solo considera 4 hiperparámetros
+# Hyperparamteter Tuning 
+#  donde la Bayuesian Optimization solo considera 1 hiperparámetro
 #  azaroso, utiliza semilla
 #  puede llegar a recibir  bypass, que por default esta en false
 
