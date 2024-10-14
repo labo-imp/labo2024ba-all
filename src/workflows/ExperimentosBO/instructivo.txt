@@ -1,0 +1,21 @@
+## Como correr cada experimento
+
+## Volcar el script de cada experimento en la carpeta src/workflow.
+  experimento g517_workflow_base_f202107_conc.r # Experimento de 1 Hiperparametro #wf_julio-089
+  experimento h517_workflow_base_f202107_conc.r # Experimento de 4 Hiperparametros #wf_julio-090
+  experimento e517_workflow_base_f202107_conc.r # Experimento de 14 Hiperparametros #wf_julio-091
+  experimento ult517_workflow_base_f202107_conc.r # Experimento de 14 Hiperparametros #wf_julio-092
+## Solamente cambiar en el workflow base "501_run_workflow_conceptual.r" con el nombre del experimento.
+## En caso de querer tomar solo los hiperparametros elegidos, copiar TODA la parte de HT, ya que al hacerlo manual podrian dejar
+## un hiperparametro fijo y variable al mismo tiempo, lo que haria explotar el experimento.
+
+## Como correr wilcoxon
+
+## Linea 66 rutas_archivos - Modificar por las direcciones del archivo de ganancia del grupo B.
+## Verificar que los archivos de ganancia se encuentre en la misma carpeta (o posterior) que el archivo de wilcoxon.
+## Una vez realizada la salida.
+  
+  ## Verificar cual(es) son los vectores de mayor salida.
+  ## Para constatar si el promedio mayor es realmente mejor que otro modelo, entrar a "wilcoxon_xxx" (el numero de archivo de ganancia)
+  ## vs. mejor_vector_ganancias_01_xxx
+  ## Verificar si el pvalue maximo del archivo no es mayor al p-value predefinido para el test, se rechaza la hipótesis nula.
