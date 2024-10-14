@@ -105,7 +105,7 @@ FEintra_manual_base <- function( pinputexps )
   if( -1 == (param_local <- exp_init())$resultado ) return( 0 ) # linea fija
 
 
-  param_local$meta$script <- "/src/wf-etapas/1301_FE_intrames_manual_001.r"
+  param_local$meta$script <- "/src/wf-etapas/1301_FE_intrames_manual_002ok.r"
 
   param_local$semilla <- NULL  # no usa semilla, es deterministico
 
@@ -187,10 +187,10 @@ FErf_attributes_base <- function( pinputexps, ratio, desvio)
   # parametros para que LightGBM se comporte como Random Forest
   param_local$lgb_param <- list(
     # parametros que se pueden cambiar
-    num_iterations = 20,
+    num_iterations = 50,
     num_leaves  = 16,
-    min_data_in_leaf = 1000,
-    feature_fraction_bynode  = 0.2,
+    min_data_in_leaf = 2,
+    feature_fraction_bynode  = 0.8,
 
     # para que LightGBM emule Random Forest
     boosting = "rf",
@@ -407,8 +407,8 @@ KA_evaluate_kaggle <- function( pinputexps )
 
   param_local$isems_submit <- 1:20 # misterioso parametro, no preguntar
 
-  param_local$envios_desde <-   9000L
-  param_local$envios_hasta <-  13000L
+  param_local$envios_desde <-   10000L
+  param_local$envios_hasta <-  11000L
   param_local$envios_salto <-    500L
   param_local$competition <- "labo-i-vivencial-2024-ba"
 
@@ -427,12 +427,12 @@ wf_septiembre <- function( pnombrewf )
   param_local <- exp_wf_init( pnombrewf ) # linea fija
 
   DT_incorporar_dataset_competencia2024()
-  CA_catastrophe_base( metodo="MachineLearning")
+  #CA_catastrophe_base( metodo="MachineLearning")
   FEintra_manual_base()
-  DR_drifting_base(metodo="rank_cero_fijo")
+  DR_drifting_base(metodo="rank_simple")
   FEhist_base()
   FErf_attributes_base()
-  #CN_canaritos_asesinos_base(ratio=0.2, desvio=4.0)
+  CN_canaritos_asesinos_base(ratio=0.95, desvio=2.35)
 
   ts9 <- TS_strategy_base9()
   ht <- HT_tuning_base()
