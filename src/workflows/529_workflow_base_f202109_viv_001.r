@@ -327,8 +327,8 @@ HT_tuning_base <- function( pinputexps, bypass=FALSE)
     
     max_bin = 31L, # lo debo dejar fijo, no participa de la BO
     num_iterations = 9999, # un numero muy grande, lo limita early_stopping_rounds
-    lambda_l1 = c(1.0, 1000.0),
-    lambda_l2 = c(1.0, 1000.0),
+    #lambda_l1 = c(1.0, 1000.0),
+    #lambda_l2 = c(1.0, 1000.0),
     bagging_fraction = 1.0, # 0.0 < bagging_fraction <= 1.0
     pos_bagging_fraction = 1.0, # 0.0 < pos_bagging_fraction <= 1.0
     neg_bagging_fraction = 1.0, # 0.0 < neg_bagging_fraction <= 1.0
@@ -345,7 +345,8 @@ HT_tuning_base <- function( pinputexps, bypass=FALSE)
     feature_fraction = c( 0.5, 0.99 ),
     num_leaves = c( 8L, 8196L,  "integer" ),
     min_data_in_leaf = c( 5L, 50000L, "integer" ),
-    
+    lambda_l1 = c(1.0, 1500.0),
+    lambda_l2 = c(1.0, 1500.0),
     max_delta_step = c(1.0, 10.0)
     
   )
