@@ -459,8 +459,8 @@ wf_SEMI_sep <- function( pnombrewf )
   fm <- FM_final_models_lightgbm_semillerio( 
     c(ht, ts9), # los inputs
     ranks = c(1:3), # 1 = el mejor de la bayesian optimization
-    semillerio = 30,   # cantidad de semillas finales
-    repeticiones_exp = 10 )
+    semillerio = 33,   # cantidad de semillas finales
+    repeticiones_exp = 1 )
   
   SC_scoring_semillerio( c(fm, ts9) )
   KA_evaluate_kaggle_semillerio()
