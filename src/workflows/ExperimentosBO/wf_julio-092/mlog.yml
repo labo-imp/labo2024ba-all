@@ -1,0 +1,72 @@
+larch:
+  qty: 1.0
+  archivos:
+    bitacora_run.txt:
+      nom_arch: bitacora_run.txt
+      cols_fijas: []
+      mlflow:
+        contador: 11.0
+        exp_name: /flow
+        run_name: wf_julio-092
+        padre_creado: yes
+        exp_id: '2'
+        padre_exp:
+          run_uuid: f1134be3865d465eacbdd8495472f62b
+          experiment_id: '2'
+          run_name: sneaky-fish-851
+          user_id: icelaye363
+          status: RUNNING
+          start_time: 1.7288212e+09
+          artifact_uri: mlflow-artifacts:/2/f1134be3865d465eacbdd8495472f62b/artifacts
+          lifecycle_stage: active
+          run_id: f1134be3865d465eacbdd8495472f62b
+          end_time: .na
+          metrics: .na
+          params: .na
+          tags:
+          - key:
+            - mlflow.user
+            - mlflow.source.name
+            - mlflow.source.type
+            - mlflow.runName
+            value:
+            - icelaye363
+            - /home/icelaye363/labo2024ba/src/workflows/ult517_workflow_base_f202107_conc.r
+            - LOCAL
+            - sneaky-fish-851
+        padre_activo: no
+        hijo_exp:
+          run_uuid: ffc912e571b94e9bb5a3e494cb02fdd5
+          experiment_id: '2'
+          run_name: funny-midge-8
+          user_id: icelaye363
+          status: RUNNING
+          start_time: 1.728822e+09
+          artifact_uri: mlflow-artifacts:/2/ffc912e571b94e9bb5a3e494cb02fdd5/artifacts
+          lifecycle_stage: active
+          run_id: ffc912e571b94e9bb5a3e494cb02fdd5
+          end_time: .na
+          metrics: .na
+          params: .na
+          tags:
+          - key:
+            - mlflow.user
+            - mlflow.source.name
+            - mlflow.source.type
+            - mlflow.parentRunId
+            - mlflow.runName
+            value:
+            - icelaye363
+            - /home/icelaye363/labo2024ba/src/workflows/ult517_workflow_base_f202107_conc.r
+            - LOCAL
+            - f1134be3865d465eacbdd8495472f62b
+            - funny-midge-8
+mlflow:
+  iniciado: yes
+  conn:
+    tracking_username: labo2024ba
+    tracking_password: constructivism
+    tracking_uri: http://34.125.167.177/labo2024ba/
+usuario: icelaye363
+maquina: desktop-conceptual
+persistir: yes

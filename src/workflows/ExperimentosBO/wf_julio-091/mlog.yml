@@ -1,0 +1,72 @@
+larch:
+  qty: 1.0
+  archivos:
+    bitacora_run.txt:
+      nom_arch: bitacora_run.txt
+      cols_fijas: []
+      mlflow:
+        contador: 11.0
+        exp_name: /flow
+        run_name: wf_julio-091
+        padre_creado: yes
+        exp_id: '2'
+        padre_exp:
+          run_uuid: 6f1f45f8d05142798ea777c22bd96ab4
+          experiment_id: '2'
+          run_name: nebulous-zebra-543
+          user_id: icelaye363
+          status: RUNNING
+          start_time: 1.7288191e+09
+          artifact_uri: mlflow-artifacts:/2/6f1f45f8d05142798ea777c22bd96ab4/artifacts
+          lifecycle_stage: active
+          run_id: 6f1f45f8d05142798ea777c22bd96ab4
+          end_time: .na
+          metrics: .na
+          params: .na
+          tags:
+          - key:
+            - mlflow.user
+            - mlflow.source.name
+            - mlflow.source.type
+            - mlflow.runName
+            value:
+            - icelaye363
+            - /home/icelaye363/labo2024ba/src/workflows/e517_workflow_base_f202107_conc.r
+            - LOCAL
+            - nebulous-zebra-543
+        padre_activo: no
+        hijo_exp:
+          run_uuid: 73d7ed731866431c815a3675039785c1
+          experiment_id: '2'
+          run_name: youthful-midge-873
+          user_id: icelaye363
+          status: RUNNING
+          start_time: 1.7288199e+09
+          artifact_uri: mlflow-artifacts:/2/73d7ed731866431c815a3675039785c1/artifacts
+          lifecycle_stage: active
+          run_id: 73d7ed731866431c815a3675039785c1
+          end_time: .na
+          metrics: .na
+          params: .na
+          tags:
+          - key:
+            - mlflow.user
+            - mlflow.source.name
+            - mlflow.source.type
+            - mlflow.parentRunId
+            - mlflow.runName
+            value:
+            - icelaye363
+            - /home/icelaye363/labo2024ba/src/workflows/e517_workflow_base_f202107_conc.r
+            - LOCAL
+            - 6f1f45f8d05142798ea777c22bd96ab4
+            - youthful-midge-873
+mlflow:
+  iniciado: yes
+  conn:
+    tracking_username: labo2024ba
+    tracking_password: constructivism
+    tracking_uri: http://34.125.167.177/labo2024ba/
+usuario: icelaye363
+maquina: desktop-conceptual
+persistir: yes
