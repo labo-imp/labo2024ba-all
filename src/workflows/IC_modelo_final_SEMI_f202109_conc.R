@@ -105,7 +105,7 @@ FEintra_manual_base <- function( pinputexps )
   if( -1 == (param_local <- exp_init())$resultado ) return( 0 ) # linea fija
   
   
-  param_local$meta$script <- "/src/wf-etapas/1301_FE_intrames_manual.r"
+  param_local$meta$script <- "/src/wf-etapas/z1301_FE_intrames_manual.r"
   
   param_local$semilla <- NULL  # no usa semilla, es deterministico
   
@@ -361,7 +361,7 @@ HT_tuning_semillerio <- function( pinputexps, semillerio, bo_iteraciones, bypass
     # Parte variable
     learning_rate = c( 0.2, 1.2 ),
     feature_fraction = c( 0.01, 0.9 ),
-
+    
     num_iterations_log = c(2, 8),  # directo a num_iterations 2^ 
     leaf_size_log = c( -11, -5),   # deriva en min_data_in_leaf
     coverage_log = c( -4, 0 )      # deriva en num_leaves
@@ -449,9 +449,9 @@ wf_SEMI_sep <- function( pnombrewf )
   param_local <- exp_wf_init( pnombrewf ) # linea fija
   
   DT_incorporar_dataset_competencia2024()
-  CA_catastrophe_base( metodo="MachineLearning")
+  CA_catastrophe_base( metodo="Ninguno")
   FEintra_manual_base()
-  DR_drifting_base(metodo="rank_cero_fijo")
+  DR_drifting_base(metodo="rank_simple")
   FEhist_base()
   FErf_attributes_base()
   #CN_canaritos_asesinos_base(ratio=0.2, desvio=4.0)
@@ -466,7 +466,7 @@ wf_SEMI_sep <- function( pnombrewf )
   
   fm <- FM_final_models_lightgbm_semillerio( 
     c(ht, ts9), # los inputs
-    ranks = c(1:7), # 1 = el mejor de la bayesian optimization
+    ranks = c(1, 3, 5, 7, 9), # 1 = el mejor de la bayesian optimization
     semillerio = 30,   # cantidad de semillas finales
     repeticiones_exp = 1 )
   
