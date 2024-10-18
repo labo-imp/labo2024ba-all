@@ -265,47 +265,50 @@ CN_canaritos_asesinos_base <- function( pinputexps, ratio, desvio)
 TS_strategy_base9 <- function( pinputexps )
 {
   if( -1 == (param_local <- exp_init())$resultado ) return( 0 )# linea fija
-  
+
   param_local$meta$script <- "/src/wf-etapas/z2101_TS_training_strategy.r"
-  
+
   param_local$future <- c(202109)
-  
+
   param_local$final_train$undersampling <- 1.0
   param_local$final_train$clase_minoritaria <- c( "BAJA+1", "BAJA+2")
   param_local$final_train$training <- c(
-    #202107, 202106, 
-    202105, 202104,202103,
-    202102, 202101, 
+    #202107, 202106,
+    202105, 202104, 202103, 202102, 202101, 
     202012, 202011, 202010, 202009, 202008, 202007, 
     # 202006  Excluyo por variables rotas
-    202005, 202004, 202002, 202001,
+    202005, 202004, #202003,
+    202002, 202001,
     201912, 201911,
-    # 201910 variables rotas
-    201909, 201908, 201907
-    # 201905   variables rotas
-    # 201904, 201903
+    # 201910 Excluyo por variables rotas
+    201909, 201908, 201907, 201906,
+    # 201905  Excluyo por variables rotas
+    201904, 201903
   )
-  
-  
+
+
   param_local$train$training <- c(
     202105, 202104, 202103, 202102, 202101, 
     202012, 202011, 202010, 202009, 202008, 202007,
-    # 202006   variables rotas
-    202005, 202004, 202002, 202001,
+    # 202006  Excluyo por variables rotas
+    202005, 202004, #202003,
+    202002, 202001,
     201912, 201911,
-    # 201910  variables rotas
+    # 201910 Excluyo por variables rotas
     201909, 201908, 201907, 201906
-    # 201905   variables rotas
+    # 201905  Excluyo por variables rotas
     #201904, 201903, 201902, 201901
-  )
-  
+    )
+
   param_local$train$validation <- c(202106)
   param_local$train$testing <- c(202107)
-  
-  
+
+
+  # Atencion  0.2  de  undersampling de la clase mayoritaria,  los CONTINUA
+  # 1.0 significa NO undersamplin
   param_local$train$undersampling <- 0.2
   param_local$train$clase_minoritaria <- c( "BAJA+1", "BAJA+2")
-  
+
   return( exp_correr_script( param_local ) ) # linea fija
 }
 #------------------------------------------------------------------------------
