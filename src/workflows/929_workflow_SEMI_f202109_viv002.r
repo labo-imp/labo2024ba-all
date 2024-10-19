@@ -292,7 +292,7 @@ TS_strategy_base9 <- function( pinputexps )
     201909, 201908, 201907, 201906
     )
 
-  param_local$train$validation <- c(202106, 202007)
+  param_local$train$validation <- c(202106)
   param_local$train$testing <- c(202107)
 
 
