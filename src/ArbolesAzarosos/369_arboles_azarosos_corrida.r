@@ -23,9 +23,9 @@ PARAM$experimento <- 3690
 #  cargue aqui los hiperparametros elegidos
 PARAM$rpart <- data.table( 
   "cp" = c(-1, -1, -1, -1, -1),
-  "minsplit" = c(100, 250, 1000, 250, 50),
-  "minbucket" = c(5, 50, 50, 5, 5),
-  "maxdepth" = c(8, 6, 6, 6, 12)
+  "minsplit" = c(100, 25, 500, 1000, 25),
+  "minbucket" = c(5, 10, 50, 20, 10),
+  "maxdepth" = c(4, 12, 6, 10, 10)
 )
 
 # parametros  arbol
