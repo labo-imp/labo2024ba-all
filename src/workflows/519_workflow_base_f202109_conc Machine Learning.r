@@ -92,7 +92,7 @@ CA_catastrophe_base <- function( pinputexps, metodo )
 
   # Opciones MachineLearning EstadisticaClasica Ninguno
   param_local$metodo <- metodo
-  param_local$semilla <- NULL  # no usa semilla, es deterministico
+  param_local$semilla <- 251861  # no usa semilla, es deterministico
 
   return( exp_correr_script( param_local ) ) # linea fija}
 }
@@ -427,7 +427,7 @@ wf_septiembre <- function( pnombrewf )
   param_local <- exp_wf_init( pnombrewf ) # linea fija
 
   DT_incorporar_dataset_competencia2024()
-  CA_catastrophe_base( metodo="Mice")
+  CA_catastrophe_base( metodo="MachineLearning")
   FEintra_manual_base()
   DR_drifting_base(metodo="rank_cero_fijo")
   FEhist_base()
