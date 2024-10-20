@@ -432,7 +432,7 @@ wf_julio <- function( pnombrewf )
   param_local <- exp_wf_init( pnombrewf ) # linea fija
 
   DT_incorporar_dataset_competencia2024()
-  CA_catastrophe_base( metodo="Ninguno")
+  CA_catastrophe_base( metodo="EstadisticaClasica")
   FEintra_manual_base()
   DR_drifting_base(metodo="deflacion")
   FEhist_base()
@@ -442,7 +442,7 @@ wf_julio <- function( pnombrewf )
   ts7 <- TS_strategy_base7()
   ht <- HT_tuning_base()
 
-  fm <- FM_final_models_lightgbm( c(ht, ts7), ranks=c(1), qsemillas=20 )
+  fm <- FM_final_models_lightgbm( c(ht, ts7), ranks=c(1), qsemillas=40 )
   SC_scoring( c(fm, ts7) )
   EV_evaluate_conclase_gan()
 
