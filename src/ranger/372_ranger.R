@@ -16,11 +16,12 @@ PARAM$experimento <- 3720
 
 # hiperparámetros de Random Forest
 PARAM$ranger <- list(
-  "num.trees" = 300, # cantidad de arboles
-  "mtry" = 13, # cantidad de atributos que participan en cada split
-  "min.node.size" = 50, # tamaño minimo de las hojas
-  "max.depth" = 10 # 0 significa profundidad infinita
+  "num.trees" = 500, # cantidad de arboles
+  "mtry" = 2, # cantidad de atributos que participan en cada split
+  "min.node.size" = 217, # tamaño minimo de las hojas
+  "max.depth" = 25 # 0 significa profundidad infinita
 )
+
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
@@ -31,7 +32,7 @@ setwd("~/buckets/b1/") # Establezco el Working Directory
 dir.create("./exp/", showWarnings = FALSE)
 carpeta_experimento <- paste0("./exp/KA", PARAM$experimento, "/")
 dir.create(paste0("./exp/KA", PARAM$experimento, "/"),
-  showWarnings = FALSE
+           showWarnings = FALSE
 )
 
 setwd(carpeta_experimento)
@@ -106,33 +107,33 @@ nom_arch_kaggle <- "KA3720_001.csv"
 
 # genero el archivo para Kaggle
 fwrite(entrega,
-  file = nom_arch_kaggle,
-  sep = ","
+       file = nom_arch_kaggle,
+       sep = ","
 )
 
 
 # subo a Kaggle
 # preparo todo para el submit
 comentario <- paste0( "'",
-  "num.trees=", PARAM$ranger$num.trees,
-  " mtry=", PARAM$ranger$mtry,
-  " min.node.size=", PARAM$ranger$min.node.size,
-  " max.depth=", PARAM$ranger$max.depth,
-  "'"
+                      "num.trees=", PARAM$ranger$num.trees,
+                      " mtry=", PARAM$ranger$mtry,
+                      " min.node.size=", PARAM$ranger$min.node.size,
+                      " max.depth=", PARAM$ranger$max.depth,
+                      "'"
 )
 
 comando <- paste0( "~/install/proc_kaggle_submit.sh ",
-  "TRUE ",
-  miAmbiente$modalidad, " ",
-  nom_arch_kaggle, " ",
-  comentario
+                   "TRUE ",
+                   miAmbiente$modalidad, " ",
+                   nom_arch_kaggle, " ",
+                   comentario
 )
 
 ganancia <- system( comando, intern=TRUE )
 
 cat( paste0( ganancia, "\t", nom_arch_kaggle, "\n"),
-  file="tb_ganancias.txt",
-  append=TRUE
+     file="tb_ganancias.txt",
+     append=TRUE
 )
 
 
