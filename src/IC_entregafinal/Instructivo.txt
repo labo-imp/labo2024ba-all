@@ -1,0 +1,18 @@
+Instructivo para ejecución del modelo:
+
+1. Dentro de la carpeta src/workflows/ colocar el archivo "FM_2_IC_modelo_70_SEMI_f202109_conc.r
+
+2. En el directorio de /home/*USER*/buckets/b1 ubicar el archivo miAmbiente.yml
+
+3. En el directorio de /home/*USER*/labo2024ba/src/wf-etapas colocar el archivo b1301_FE_Intrames_manual.r
+
+Donde /*USER*/ debe ser reemplazado por el usuario que corre el archivo.
+
+4. Ejecutar el archivo 901_run_workflow_SEMI_conceptual
+
+Una vez ejecutado el modelo, se deberan obtener los archivos que generaron el mismo resultado. Particularmente, se eligio el archivo
+KA-0027_05_030_r1_01900.csv
+
+El racional detrás de esto fue que, si bien obtiene menos ganancia que el modelo 3, al haber utilizado menos meses en training para la optimizacion, se vieron num_leaves y min_data_in_leaf muy altos, lo que puede generar overfitting. Es por eso que se fue con el archivo "5"
+
+El valor "0027" va a cambiar dependiendo de quien lo ejecute, por lo que el generico seria "KA-XXXX_05_030_r1_01900.csv"
