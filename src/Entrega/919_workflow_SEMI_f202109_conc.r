@@ -189,7 +189,7 @@ FErf_attributes_base <- function( pinputexps, ratio, desvio)
     # parametros que se pueden cambiar
     num_iterations = 50,
     num_leaves  = 8,
-    min_data_in_leaf = 2, #este valor es raro pero realmente me da buena ganancia, IDK
+    min_data_in_leaf = 2,
     feature_fraction_bynode  = 0.8,
 
     # para que LightGBM emule Random Forest
@@ -322,7 +322,7 @@ HT_tuning_semillerio <- function( pinputexps, semillerio, bo_iteraciones, bypass
   #  los que tienen un vector,  son los que participan de la Bayesian Optimization
 
   param_local$lgb_param <- list(
-    boosting = "dart", # puede ir  dart  , ni pruebe random_forest
+    boosting = "gbdt", # puede ir  dart  , ni pruebe random_forest
     objective = "binary",
     metric = "custom",
     first_metric_only = TRUE,
