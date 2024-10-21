@@ -105,7 +105,7 @@ FEintra_manual_base <- function( pinputexps )
   if( -1 == (param_local <- exp_init())$resultado ) return( 0 ) # linea fija
   
   
-  param_local$meta$script <- "/src/wf-etapas/z1301_FE_intrames_manual.r"
+  param_local$meta$script <- "/src/wf-etapas/b1301_FE_intrames_manual.r"
   
   param_local$semilla <- NULL  # no usa semilla, es deterministico
   
@@ -139,6 +139,7 @@ FEhist_base <- function( pinputexps)
   
   
   param_local$meta$script <- "/src/wf-etapas/z1501_FE_historia.r"
+  
   
   param_local$lag1 <- TRUE
   param_local$lag2 <- FALSE # no me engraso con los lags de orden 2
@@ -188,7 +189,7 @@ FErf_attributes_base <- function( pinputexps, ratio, desvio)
   param_local$lgb_param <- list(
     # parametros que se pueden cambiar
     num_iterations = 20,
-    num_leaves  = 16,
+    num_leaves  = 12,
     min_data_in_leaf = 1000,
     feature_fraction_bynode  = 0.2,
     
@@ -273,21 +274,26 @@ TS_strategy_base9 <- function( pinputexps )
   param_local$final_train$clase_minoritaria <- c( "BAJA+1", "BAJA+2")
   param_local$final_train$training <- c(
     202105, 202104, 202103, 202102, 202101, 
-    202012, 202011, 202010, 202009, 202008, 202007,202006,  #Excluyo por variables rotas
+    202012, 202011, 202010, 202009, 202008, 202007, 
+    202006,  #Excluyo por variables rotas
     202005, 202004, 202003, 202002, 202001,
-    201912, 201911, 201910,
-    201909, 201908, 201907
+    201912, 201911,
+    201910, #Excluyo por variables rotas
+    201909, 201908, 201907 # Excluyo por variables rotas
+    
   )
   
   
   param_local$train$training <- c(
     202105, 202104, 202103, 202102, 202101, 
     202012, 202011, 202010, 202009, 202008, 202007,
-    202006,  #Excluyo por variables rotas
+    202006, #  Excluyo por variables rotas
     202005, 202004, 202003, 202002, 202001,
     201912, 201911,
-    201910, #Excluyo por variables rotas
-    201909, 201908, 201907, 201906, 201905  #Excluyo por variables rotas
+    201910, # Excluyo por variables rotas
+    201909, 201908, 201907, 201906,
+    201905 #  Excluyo por variables rotas
+    
   )
   
   param_local$train$validation <- c(202106)
@@ -451,10 +457,10 @@ wf_SEMI_sep <- function( pnombrewf )
   DT_incorporar_dataset_competencia2024()
   CA_catastrophe_base( metodo="Ninguno")
   FEintra_manual_base()
-  DR_drifting_base(metodo="rank_simple")
+  DR_drifting_base(metodo="rank_cero_fijo")
   FEhist_base()
   FErf_attributes_base()
-  #CN_canaritos_asesinos_base(ratio=0.2, desvio=4.0)
+  CN_canaritos_asesinos_base(ratio=2, desvio=1)
   
   ts9 <- TS_strategy_base9()
   
@@ -466,7 +472,7 @@ wf_SEMI_sep <- function( pnombrewf )
   
   fm <- FM_final_models_lightgbm_semillerio( 
     c(ht, ts9), # los inputs
-    ranks = c(1, 3, 5, 7, 9), # 1 = el mejor de la bayesian optimization
+    ranks = c(1,3), # 1 = el mejor de la bayesian optimization
     semillerio = 30,   # cantidad de semillas finales
     repeticiones_exp = 1 )
   
@@ -481,4 +487,3 @@ wf_SEMI_sep <- function( pnombrewf )
 
 # llamo al workflow con future = 202109
 wf_SEMI_sep()
-
