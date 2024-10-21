@@ -8,7 +8,7 @@ Instructivo para ejecución del modelo:
 
 Donde /*USER*/ debe ser reemplazado por el usuario que corre el archivo.
 
-4. Ejecutar el archivo 901_run_workflow_SEMI_conceptual
+4. Ejecutar el archivo 901_run_workflow_SEMI_conceptual.r
 
 Una vez ejecutado el modelo, se deberan obtener los archivos que generaron el mismo resultado. Particularmente, se eligio el archivo
 KA-0027_05_030_r1_01900.csv
